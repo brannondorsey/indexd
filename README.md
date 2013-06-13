@@ -1,5 +1,4 @@
 #The Artist's Web Union
-
 ##Abstract
 The Artists Web Union (name pending) is an open sourced web development project that aims to archive and connect an extensive collection of independent artists websites. The project intends go give independent artist's websites the same virality perks that artists have access to when they host their websites through large web conglomerates like Cargo Collective, Carbonmade, Behance, and Wordpress. We hope to create an attractive and powerful database to explore unique homemade websites.
 
@@ -14,4 +13,4 @@ Joining is free and easy! All you need to do is put our small widget badge on yo
 
 _Add the badge, get discovered._
 
-###AWU is currently being developed. If you would like more information or would like to be involved in its development please [email](mailto:bdorse@saic.edu) us!
+__AWU is currently being developed. If you would like more information or would like to be involved in its development please [email](mailto:bdorse@saic.edu) us!__
