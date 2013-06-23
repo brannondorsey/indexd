@@ -2,7 +2,7 @@
 
 class Database {
 
-	public $table    = "AWU";
+	public $table    = "users";
 
 	protected $user     = "root";
 	protected $password = "root";
