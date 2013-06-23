@@ -12,6 +12,7 @@ class Database {
 	protected $tmp_result;
 	protected $connection;
 
+	public function __construct(){}
 	
 	public function execute_sql($query) {
 	
