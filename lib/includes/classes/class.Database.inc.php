@@ -11,16 +11,16 @@ class Database {
 	protected $result;
 	protected $tmp_result;
 	
-	//execute sql query statement
+	//execute sql query statement. Used for INSERT and UPDATE mostly
 	public function execute_sql($query) {
 	
 		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
-		$query = $mysqli->real_escape_string($query);
+		$query = $this->clean($query);
 		$mysqli->query($query);
 		$mysqli->close();
 	}
 	
-	//returns array of one result row or 2D array of all returned rows
+	//returns array of one result row if one result was found or 2D array of all returned rows if multiple were found
 	public function get_all_results($query) {
 	
 		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
@@ -56,6 +56,9 @@ class Database {
 		return $string;
 	}
 
+//------------------------------------------------------------------------------
+//HELPERS
+	
 	//series of cleans to be perfomed on one string
 	protected function clean_string($string, &$mysqli){
 		$string = htmlspecialchars($string);

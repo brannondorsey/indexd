@@ -17,16 +17,32 @@ class API {
 			"id, first_name, last_name, url, email, city, state, country, datetime_joined, description, media, tags";
 	}
 
-	public function get_JSON_from_GET(&$get_array){
+	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
+	public function output_JSON_from_GET(&$get_array){
 		$query = $this->form_query($get_array);
+		$results_array = $this->db->get_all_results($query);
 		echo $query;
 		echo "<br/><br/>";
-		$results_array = $this->db->get_all_results($query);
-		$JSON = json_encode($results_array);
-		echo $JSON;
-	}	
-
-	public function form_query(&$get_array){
+		echo '{"data":[';
+		$i = 0;
+		foreach ($results_array as $user_row) {
+			echo "{";
+			$j = 0;
+			foreach($user_row as $key => $value){
+				echo '"' . $key . '"' . ':';
+				echo '"' . $value . '"';
+				if ($j != sizeof($user_row) -1) echo ',';
+				$j++;
+			}
+			echo "}";
+			if ($i != sizeof($results_array) -1) echo ',';
+			$i++;
+		}
+		echo ']}';
+	}
+	
+	//builds a dynamic MySQL query statement from a $_GET array. Array must be sanitized before using this function.
+	protected function form_query(&$get_array){
 		$query = "SELECT " . $this->columns_to_provide . " FROM "  . $this->db->table ." ";
 		$column_parameters = array();
 		$columns_to_provide_array = explode(', ', $this->columns_to_provide);
@@ -89,10 +105,15 @@ class API {
 		return $query;
 	}
 
+//------------------------------------------------------------------------------
+//HELPERS
+
+	//appends and prepends slashes to string for WHERE statement values
 	protected function add_single_quotes(&$string){
 		$string = "'" . $string . "'";
 	}
 
+	//checks if a parameter string is also the name of a SELECT statement's requested column
 	protected function is_column_parameter($parameter_name, $columns_to_provide_array){
 		return in_array ($parameter_name, $columns_to_provide_array);
 	}
