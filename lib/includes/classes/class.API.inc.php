@@ -9,6 +9,7 @@ class API {
 	protected $max_output_limit = 250;
 	protected $default_order_by = "ORDER BY last_name ";
 	protected $default_flow = "ASC ";
+	protected $JSON_string;
 
 	
 	public function __construct(){
@@ -18,7 +19,7 @@ class API {
 	}
 
 	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
-	public function output_JSON_from_GET(&$get_array){
+	public function echo_JSON_from_GET(&$get_array){
 		$query = $this->form_query($get_array);
 		//if there were results output them as a JSON data obj
 		if($results_array = $this->db->get_all_results($query)){
