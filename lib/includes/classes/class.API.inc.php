@@ -9,6 +9,7 @@ class API {
 	protected $max_output_limit = 250;
 	protected $default_order_by = "ORDER BY last_name ";
 	protected $default_flow = "ASC ";
+	protected $JSON_string;
 
 	
 	public function __construct(){
@@ -18,29 +19,56 @@ class API {
 	}
 
 	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
-	public function output_JSON_from_GET(&$get_array){
+	public function echo_JSON_from_GET(&$get_array){
 		$query = $this->form_query($get_array);
-		$results_array = $this->db->get_all_results($query);
-		echo $query;
-		echo "<br/><br/>";
-		echo '{"data":[';
-		$i = 0;
-		foreach ($results_array as $user_row) {
-			echo "{";
-			$j = 0;
-			foreach($user_row as $key => $value){
-				echo '"' . $key . '"' . ':';
-				echo '"' . $value . '"';
-				if ($j != sizeof($user_row) -1) echo ',';
-				$j++;
-			}
-			echo "}";
-			if ($i != sizeof($results_array) -1) echo ',';
-			$i++;
+		//if there were results output them as a JSON data obj
+		if($results_array = $this->db->get_all_results($query)){
+			echo "<br/><br/>";
+			echo '{"data":[';
+			$this->output_objects($results_array);
+			echo ']}';
 		}
-		echo ']}';
+		//if no results were found return a JSON error obj
+		else $this->output_error("no results found");
 	}
-	
+
+	//outputs JSON object from 1D or 2D MySQL results array
+	protected function output_objects($results_array){
+		if(isset($results_array[0])){
+			$i = 0;
+			foreach ($results_array as $user_row) {
+				echo "{";
+				$j = 0;
+				foreach($user_row as $key => $value){
+					echo '"' . $key . '"' . ':';
+					echo '"' . $value . '"';
+					if ($j != sizeof($user_row) -1) echo ',';
+					$j++;
+				}
+				echo "}";
+				if ($i != sizeof($results_array) -1) echo ',';
+				$i++;
+			}
+		}
+		else{
+			$user_row = $results_array;
+			echo "{";
+				$j = 0;
+				foreach($user_row as $key => $value){
+					echo '"' . $key . '"' . ':';
+					echo '"' . $value . '"';
+					if ($j != sizeof($user_row) -1) echo ',';
+					$j++;
+				}
+				echo "}";
+		}
+	}
+
+	//outputs JSON error object with error message argument
+	protected function output_error($error_message){
+		echo "{\"error\": \"$error_message\"}";
+	}
+
 	//builds a dynamic MySQL query statement from a $_GET array. Array must be sanitized before using this function.
 	protected function form_query(&$get_array){
 		$query = "SELECT " . $this->columns_to_provide . " FROM "  . $this->db->table ." ";
