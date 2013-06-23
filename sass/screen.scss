@@ -1,0 +1,211 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3";
+@import "variables";
+@import "fonts";
+
+* {
+	@include box-sizing(border-box);
+}
+
+%button {
+	@include transition(background-color .3s ease);
+
+	padding: 1em;
+	background-color: $_red;
+	color: $_white;
+	text-decoration: none;
+	display: inline-block;
+	cursor: pointer;
+	margin: 0;
+	line-height: 1;
+
+	&:hover {
+		background-color: shade($_red, 30%);
+	}
+}
+
+%button-lightBlue {
+	@extend %button;
+	background-color: $_lightBlue;
+	&:hover {
+		background-color: shade($_lightBlue, 30%);
+	}
+}
+
+%button-darkBlue {
+	@extend %button;
+	background-color: $_black;
+	&:hover {
+		background-color: shade($_black, 30%);
+	}
+}
+
+%button-darkRed {
+	@extend %button;
+	background-color: $_darkRed;
+	&:hover {
+		background-color: shade($_darkRed, 30%);
+	}
+}
+
+%section {
+	width: 100%;
+	margin-bottom: 2em
+}
+
+%default-text-style {
+	font-size: 18px;
+	color: $_black;
+	font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
+	line-height: 1.3888888888
+}
+
+%clear-default-input-style {
+	outline: none;
+	border: none;
+	@extend %default-text-style;
+	padding: calc(1em - 2px);
+	background-color: $_lightBlue;
+	margin: 0;
+	line-height: 1;
+	width: 250px;
+	vertical-align: top;
+}
+
+%homepage-info-div {
+	width: 40%;
+	margin: 3em auto 5em;
+	color: $_white;
+
+	h2 {
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+
+	img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: .7em;
+	}
+}
+
+body {
+	@extend %default-text-style;
+	margin: 0;
+}
+
+img {
+	max-width: 100%;
+}
+
+::-webkit-input-placeholder {
+   color: $_white;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: $_white;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: $_white;  
+}
+
+:-ms-input-placeholder {  
+   color: $_white;  
+}
+
+
+// HEADER STYLES
+
+.search {
+	width: 50%;
+	float: left;
+
+	img {
+		display: none;
+		width: 45px;
+	}
+
+	input {
+		@include transition(width .3s ease .5s, padding .3s ease .5s);
+		@extend %clear-default-input-style;
+
+		width: 0;
+		padding: 16px 0;
+	}
+
+	&:hover {
+		input {
+			@include transition(width .3s ease, padding .3s ease);
+			width: 250px;
+			padding: calc(1em - 2px);
+		}
+	}
+}
+
+.login {
+	width: 50%;
+	float: right;
+	text-align: right;
+}
+
+.search-button {
+	@extend %icon;
+	@extend %button-darkBlue;
+	color: $_white;
+}
+
+.login-button {
+	@extend %button;
+}
+
+.register-button {
+	@extend %button-darkRed;
+}
+
+.header {
+	width: 100%;
+	background-color: $_gray;
+	overflow: hidden;
+}
+
+// INDEX PAGE STYLES
+
+.brand {
+	.logo {
+		margin: 6em auto 1em auto;
+		text-align: center;
+	}
+
+	h1 {
+		text-align: center;
+		letter-spacing: 1;
+		margin-bottom: 6em;
+
+		.logo-color-1 {
+			color: $_red;
+		}
+
+		.logo-color-2 {
+			color: $_lightBlue;
+		}
+	}
+}
+
+.about {
+	background-color: $_red;
+	padding: 1em 0;
+
+	.network, .membercard, .site {
+		@extend %homepage-info-div;
+	}
+}
+
+
