@@ -2,13 +2,16 @@
 
 class Database {
 
+	public $table    = "AWU";
+
 	protected $user     = "root";
 	protected $password = "root";
-	protected $db       = "linelocker";
+	protected $db       = "AWU";
 	protected $host     = "localhost";
 	protected $result;
 	protected $tmp_result;
 	protected $connection;
+
 	
 	public function execute_sql($query) {
 	
