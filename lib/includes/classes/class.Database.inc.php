@@ -10,55 +10,58 @@ class Database {
 	protected $host     = "localhost";
 	protected $result;
 	protected $tmp_result;
-	protected $connection;
-
-	public function __construct(){}
 	
+	//execute sql query statement
 	public function execute_sql($query) {
 	
-		$this->connection = new mysqli($this->host, $this->user, $this->password, $this->db);
-		$this->connection->query($query);
-		$this->connection->close();
+		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
+		$query = $mysqli->real_escape_string($query);
+		$mysqli->query($query);
+		$mysqli->close();
 	}
 	
-	public function retrieve_sql($query) {
-	
-		$this->connection = new mysqli($this->host, $this->user, $this->password, $this->db);
-		$this->result = $this->connection->query($query)->fetch_assoc();
-		$this->connection->close();
-		
-	}
-	
-	public function get_result($key=NULL) {
-		
-		return $this->result[$key];
-		
-	}
-	
+	//returns array of one result row or 2D array of all returned rows
 	public function get_all_results($query) {
 	
-		$this->connection = new mysqli($this->host, $this->user, $this->password, $this->db);
-		
-		if ($result = $this->connection->query($query)) {
-		
-			$i=0;
-			while ($row = $result->fetch_assoc()) {
-				$this->result[$i] = $row;
-				$i++;	
-			}
-			
-		$this->connection->close();
-		
+		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
+		if ($result = $mysqli->query($query)) {
+				$i=0;
+				while ($row = $result->fetch_assoc()) {
+					$this->result[$i] = $row;
+					$i++;	
+				}
+			$mysqli->close();
 			if (count($this->result) > 1) {
 				return $this->result;
 			} else {
 				return $this->result[0];
 			}
-		
 		}
-		
+		else echo " MYSQL QUERY FAILED";
 	}
 
+	//returns string or assosciative array of strings
+	public function clean($string){
+		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
+		$new_string_array;
+		if(is_array($string)){
+			foreach($string as $string_array_key => $string_array_value){
+				$string_array_value = $this->clean_string($string_array_value, $mysqli);
+				$new_string_array[$string_array_key] = $string_array_value;
+			}
+			$string = $new_string_array;
+		}
+		else $string = $this->clean_string($string, $mysqli);
+		$mysqli->close();
+		return $string;
+	}
+
+	//series of cleans to be perfomed on one string
+	protected function clean_string($string, &$mysqli){
+		$string = htmlspecialchars($string);
+		//$string = $mysqli->real_escape_string($string);
+		return $string;
+	}
 }
 
 ?>

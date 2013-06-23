@@ -3,12 +3,12 @@ require_once("class.Database.inc.php");
 
 class API {
 
-	protected $db;
+	public $db;
 	protected $columns_to_provide;
 	protected $default_output_limit = 25;
 	protected $max_output_limit = 250;
 	protected $default_order_by = "ORDER BY last_name ";
-	protected $default_flow = "DESC ";
+	protected $default_flow = "ASC ";
 
 	
 	public function __construct(){
@@ -20,6 +20,10 @@ class API {
 	public function get_JSON_from_GET(&$get_array){
 		$query = $this->form_query($get_array);
 		echo $query;
+		echo "<br/><br/>";
+		$results_array = $this->db->get_all_results($query);
+		$JSON = json_encode($results_array);
+		echo $JSON;
 	}	
 
 	public function form_query(&$get_array){
@@ -43,8 +47,10 @@ class API {
 		//add WHERE statements
 		if(sizeof($column_parameters) > 0){
 			$i = 0;
+			$query = $query . "WHERE ";
 			foreach ($column_parameters as $parameter => $value) {
-				$query = $query . "WHERE $parameter =$value ";
+				$this->add_single_quotes($value);
+				$query = $query . "$parameter=$value ";
 				if($i != sizeof($column_parameters) -1) $query = $query . "AND ";
 				$i++;
 			}
@@ -73,6 +79,7 @@ class API {
 		//add LIMIT statement
 		$limit_string;
 		if($limit != ""){
+			$limit = (int) $limit;
 			if((int) $limit > $this->max_output_limit) $limit = $this->max_output_limit;
 			if((int) $limit < 1) $limit = 1;
 			$limit_string = "LIMIT $limit";
@@ -80,6 +87,10 @@ class API {
 		else $limit_string = "LIMIT $this->default_output_limit";
 		$query = $query . $limit_string;
 		return $query;
+	}
+
+	protected function add_single_quotes(&$string){
+		$string = "'" . $string . "'";
 	}
 
 	protected function is_column_parameter($parameter_name, $columns_to_provide_array){
