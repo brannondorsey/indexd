@@ -24,6 +24,7 @@ class Database {
 	public function get_all_results($query) {
 	
 		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
+		echo $query;
 		if ($result = $mysqli->query($query)) {
 				$i=0;
 				while ($row = $result->fetch_assoc()) {
@@ -33,9 +34,11 @@ class Database {
 			$mysqli->close();
 			if (count($this->result) > 1) {
 				return $this->result;
-			} else {
+			} 
+			else if(count($this->result) == 1) {
 				return $this->result[0];
-			}
+			} 
+			else return false; //there were no results found
 		}
 		else echo " MYSQL QUERY FAILED";
 	}
@@ -58,7 +61,7 @@ class Database {
 
 //------------------------------------------------------------------------------
 //HELPERS
-	
+
 	//series of cleans to be perfomed on one string
 	protected function clean_string($string, &$mysqli){
 		$string = htmlspecialchars($string);
