@@ -95,8 +95,11 @@ class API {
 			$i = 0;
 			$query .= "WHERE ";
 			foreach ($column_parameters as $parameter => $value) {
-				$this->add_single_quotes($value);
-				$query .= "$parameter=$value ";
+				if($parameter == 'id'){
+					$this->add_single_quotes($value);
+				 	$query .= "$parameter = $value";
+				}
+				else $query .= "$parameter LIKE '%$value%' ";
 				if($i != sizeof($column_parameters) -1) $query .= "AND ";
 				$i++;
 			}
