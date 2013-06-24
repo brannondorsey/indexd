@@ -10,12 +10,14 @@ class API {
 	protected $default_order_by = "ORDER BY last_name ";
 	protected $default_flow = "ASC ";
 	protected $JSON_string;
+	protected $full_text_columns;
 
 	
 	public function __construct(){
 		$this->db = new Database();
 		$this->columns_to_provide = 
 			"id, first_name, last_name, url, email, city, state, country, zip, lat_lon, datetime_joined, description, media, tags, likes";
+		$this->full_text_columns = "first_name, last_name, email, url, description, media, tags, city, state, country";
 	}
 
 	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
@@ -73,57 +75,77 @@ class API {
 
 	//builds a dynamic MySQL query statement from a $_GET array. Array must be sanitized before using this function.
 	protected function form_query(&$get_array){
-		$query = "SELECT " . $this->columns_to_provide . " FROM "  . $this->db->table ." ";
+
 		$column_parameters = array();
 		$columns_to_provide_array = explode(', ', $this->columns_to_provide);
-		$limit = "";
+		$search = "";
 		$order_by = "";
 		$flow = "";
+		$limit = "";
+		$exact = false;
 
 		//distribute $_GETs to their appropriate arrays/vars
 		foreach($get_array as $parameter => $value){
 			if($this->is_column_parameter($parameter, $columns_to_provide_array)){ 
 				$column_parameters[$parameter] = $value;
 			}
+			else if($parameter == 'search') $search = $value;
 			else if($parameter == 'limit') $limit = $value;
 			else if($parameter =='order_by') $order_by = $value;
 			else if($parameter == 'flow') $flow = $value;
-		}
-
-		//add WHERE statements
-		if(sizeof($column_parameters) > 0){
-			$i = 0;
-			$query .= "WHERE ";
-			foreach ($column_parameters as $parameter => $value) {
-				if($parameter == 'id'){
-					$this->add_single_quotes($value);
-				 	$query .= "$parameter = $value";
-				}
-				else $query .= "$parameter LIKE '%$value%' ";
-				if($i != sizeof($column_parameters) -1) $query .= "AND ";
-				$i++;
+			else if($parameter == 'exact'){
+				if(strtolower($value) == "true") $exact = true;
 			}
 		}
 
-		//add ORDER BY statement
-		$order_by_string;
-		if($order_by != "" &&
-		$this->is_column_parameter($order_by, $columns_to_provide_array)){
-			$order_by_string = "ORDER BY $order_by ";
-		}
-		else $order_by_string = $this->default_order_by;
-		$query .= $order_by_string;
+		$match_against_statement = 'MATCH (' . $this->full_text_columns . ') AGAINST (\'' . $search . '\' IN BOOLEAN MODE) ';
+		$query = "SELECT " . $this->columns_to_provide;
+		if($search != "") $query .= ", " . $match_against_statement . "AS score";
+		$query .= " FROM "  . $this->db->table ." ";
 
-		//add FLOW statement
-		$flow_string;
-		$flow = strtoupper($flow);
-		if($flow != "" &&
-		$flow == 'ASC' ||
-		$flow == 'DESC'){
-			$flow_string = "$flow ";
+		//if search was a parameter overide column paramters and use MATCH...AGAINST
+		if($search != ""){
+			$this->append_prepend($search, "'");
+			$query .= "WHERE $match_against_statement ORDER BY score DESC ";
 		}
-		else $flow_string = $this->default_flow;
-		$query .= $flow_string;
+		//if search was not used use LIKE
+		else{
+			//add WHERE statements
+			if(sizeof($column_parameters) > 0){
+				$i = 0;
+				$query .= "WHERE ";
+				foreach ($column_parameters as $parameter => $value) {
+					//if column parameter is id search by = not LIKE
+					if($parameter == 'id' || $exact){
+						$this->append_prepend($value, "'");
+					 	$query .= "$parameter = $value";
+					}
+					else $query .= "$parameter LIKE '%$value%' ";
+					if($i != sizeof($column_parameters) -1) $query .= "AND ";
+					$i++;
+				}
+			}
+		
+			//add ORDER BY statement
+			$order_by_string;
+			if($order_by != "" &&
+			$this->is_column_parameter($order_by, $columns_to_provide_array)){
+				$order_by_string = "ORDER BY $order_by ";
+			}
+			else $order_by_string = $this->default_order_by;
+			$query .= $order_by_string;
+
+			//add FLOW statement
+			$flow_string;
+			$flow = strtoupper($flow);
+			if($flow != "" &&
+			$flow == 'ASC' ||
+			$flow == 'DESC'){
+				$flow_string = "$flow ";
+			}
+			else $flow_string = $this->default_flow;
+			$query .= $flow_string;
+		}
 
 		//add LIMIT statement
 		$limit_string;
@@ -142,8 +164,8 @@ class API {
 //HELPERS
 
 	//appends and prepends slashes to string for WHERE statement values
-	protected function add_single_quotes(&$string){
-		$string = "'" . $string . "'";
+	protected function append_prepend(&$string, $char){
+		$string = $char . $string . $char;
 	}
 
 	//checks if a parameter string is also the name of a SELECT statement's requested column
