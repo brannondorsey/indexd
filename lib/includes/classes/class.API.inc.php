@@ -23,8 +23,8 @@ class API {
 	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
 	public function echo_JSON_from_GET(&$get_array){
 		$query = $this->form_query($get_array);
-		echo $query;
-		echo "<br/><br/>";
+		// echo $query;
+		// echo "<br/><br/>";
 		//if there were results output them as a JSON data obj
 		if($results_array = $this->db->get_all_results($query)){
 			$this->JSON_string .= '{"data":[';
