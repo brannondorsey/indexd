@@ -24,12 +24,13 @@ class API {
 		//if there were results output them as a JSON data obj
 		if($results_array = $this->db->get_all_results($query)){
 			echo "<br/><br/>";
-			echo '{"data":[';
+			$this->JSON_string .= '{"data":[';
 			$this->output_objects($results_array);
-			echo ']}';
+			$this->JSON_string .= ']}';
 		}
 		//if no results were found return a JSON error obj
 		else $this->output_error("no results found");
+		echo $this->JSON_string;
 	}
 
 	//outputs JSON object from 1D or 2D MySQL results array
@@ -37,36 +38,36 @@ class API {
 		if(isset($results_array[0])){
 			$i = 0;
 			foreach ($results_array as $user_row) {
-				echo "{";
+				$this->JSON_string .= "{";
 				$j = 0;
 				foreach($user_row as $key => $value){
-					echo '"' . $key . '"' . ':';
-					echo '"' . $value . '"';
-					if ($j != sizeof($user_row) -1) echo ',';
+					$this->JSON_string .= '"' . $key . '"' . ':';
+					$this->JSON_string .= '"' . $value . '"';
+					if ($j != sizeof($user_row) -1) $this->JSON_string .= ',';
 					$j++;
 				}
-				echo "}";
-				if ($i != sizeof($results_array) -1) echo ',';
+				$this->JSON_string .= "}";
+				if ($i != sizeof($results_array) -1) $this->JSON_string .= ',';
 				$i++;
 			}
 		}
 		else{
 			$user_row = $results_array;
-			echo "{";
+			$this->JSON_string .= "{";
 				$j = 0;
 				foreach($user_row as $key => $value){
-					echo '"' . $key . '"' . ':';
-					echo '"' . $value . '"';
-					if ($j != sizeof($user_row) -1) echo ',';
+					$this->JSON_string .= '"' . $key . '"' . ':';
+					$this->JSON_string .= '"' . $value . '"';
+					if ($j != sizeof($user_row) -1) $this->JSON_string .= ',';
 					$j++;
 				}
-				echo "}";
+				$this->JSON_string .= "}";
 		}
 	}
 
 	//outputs JSON error object with error message argument
 	protected function output_error($error_message){
-		echo "{\"error\": \"$error_message\"}";
+		$this->JSON_string .= "{\"error\": \"$error_message\"}";
 	}
 
 	//builds a dynamic MySQL query statement from a $_GET array. Array must be sanitized before using this function.
@@ -91,11 +92,11 @@ class API {
 		//add WHERE statements
 		if(sizeof($column_parameters) > 0){
 			$i = 0;
-			$query = $query . "WHERE ";
+			$query .= "WHERE ";
 			foreach ($column_parameters as $parameter => $value) {
 				$this->add_single_quotes($value);
-				$query = $query . "$parameter=$value ";
-				if($i != sizeof($column_parameters) -1) $query = $query . "AND ";
+				$query .= "$parameter=$value ";
+				if($i != sizeof($column_parameters) -1) $query .= "AND ";
 				$i++;
 			}
 		}
@@ -107,7 +108,7 @@ class API {
 			$order_by_string = "ORDER BY $order_by ";
 		}
 		else $order_by_string = $this->default_order_by;
-		$query = $query . $order_by_string;
+		$query .= $order_by_string;
 
 		//add FLOW statement
 		$flow_string;
@@ -118,7 +119,7 @@ class API {
 			$flow_string = "$flow ";
 		}
 		else $flow_string = $this->default_flow;
-		$query = $query . $flow_string;
+		$query .= $flow_string;
 
 		//add LIMIT statement
 		$limit_string;
@@ -129,7 +130,7 @@ class API {
 			$limit_string = "LIMIT $limit";
 		} 
 		else $limit_string = "LIMIT $this->default_output_limit";
-		$query = $query . $limit_string;
+		$query .= $limit_string;
 		return $query;
 	}
 
