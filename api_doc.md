@@ -18,6 +18,9 @@ __keys__
 + description
 + media
 + tags (comma delimited)
++ zip
++ lat_lon
++ likes
 
 __values__ match each key and include desired user information
 
@@ -56,4 +59,4 @@ __values__
 + ASC
 + DESC
 
-_note:_ If parameter is unspecified flow defaults to order ascending. case insensitive.
+_note:_ If parameter is unspecified flow defaults to order ascending. Case insensitive.
