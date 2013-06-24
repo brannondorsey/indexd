@@ -54,6 +54,15 @@
 	}
 }
 
+%button-plainText {
+	@extend %button;
+	background-color: rgba(255,255,255,0);
+	color: $_red;
+	&:hover {
+		background-color: shade($_gray, 5%);
+		color: $_red;
+	}
+} 
 %section {
 	width: 100%;
 	margin-bottom: 2em
@@ -246,11 +255,11 @@ a {
 }
 
 .login-button {
-	@extend %button;
+	@extend %button-plainText;
 }
 
 .register-button {
-	@extend %button-darkRed;
+	@extend %button-plainText;
 }
 
 .header {
@@ -291,10 +300,20 @@ a {
 	}
 }
 
-.profile {
+.query {
+
 	@extend %listing-block;
 
-	margin-bottom: 6em;
+	margin-bottom: 1em;
+
+	.profile {
+		margin-bottom: 4em;
+	}
+
+	.search-term {
+		color: $_red;
+	}
+
 	.media {
 		display: block;
 		border-bottom: 1px solid $_lightBlue;
@@ -326,15 +345,6 @@ a {
 
 }
 
-.filters {
-	@extend %listing-block;
-
-	#drop-target {
-		padding: 2em;
-		background-color: $_gray;
-	}
-}
-
 .result {
 	@extend %listing-block;
 
@@ -354,23 +364,42 @@ a {
 
 .pagination {
 
-	.pagination-inner {
+	margin-bottom: 4em;
+
+	.pagination-container {
 		@extend %responsive-block;
+		position: relative;
 	}
 
 	.prev {
 		@extend %icon;
 		text-align: left;
+		position: absolute;
+		top: 2px;
+		left: 0;
+		cursor: pointer;
 	}
 
-	.position {
+	.count {
 		text-align: center;
+		display: block;
+		width: 100%;
 	}
 
 	.next {
 		@extend %icon;
 		text-align: right;
+		position: absolute;
+		top: 2px;
+		right: 0;
+		cursor: pointer;
 	}
+}
+
+//REGISTER PAGE STYLES
+
+.register-user {
+	@extend %responsive-block;
 }
 
 
