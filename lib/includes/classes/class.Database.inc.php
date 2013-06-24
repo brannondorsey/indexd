@@ -22,9 +22,7 @@ class Database {
 	
 	//returns array of one result row if one result was found or 2D array of all returned rows if multiple were found
 	public function get_all_results($query) {
-	
 		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
-		echo $query;
 		if ($result = $mysqli->query($query)) {
 				$i=0;
 				while ($row = $result->fetch_assoc()) {
