@@ -1,0 +1,10 @@
+API TODO:
++make api key call and query results call happen in the same connection
++log api calls each day and limit if it is reached
++leave php connection open and close at the end
+
+API COMPLETED:
+-add page= parameter(use LIMIT'S param)
+-make public api require valid key
+-make tags and mediums automatically searchable (Using LIKE statements)
+-make everything searchable

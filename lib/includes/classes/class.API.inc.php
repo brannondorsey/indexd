@@ -11,6 +11,7 @@ class API {
 	protected $default_flow = "ASC ";
 	protected $JSON_string;
 	protected $full_text_columns;
+	protected $API_key;
 
 	
 	public function __construct(){
@@ -21,19 +22,22 @@ class API {
 	}
 
 	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
-	public function echo_JSON_from_GET(&$get_array){
+	public function get_JSON_from_GET(&$get_array){
 		$query = $this->form_query($get_array);
-		// echo $query;
-		// echo "<br/><br/>";
-		//if there were results output them as a JSON data obj
-		if($results_array = $this->db->get_all_results($query)){
-			$this->JSON_string .= '{"data":[';
-			$this->output_objects($results_array);
-			$this->JSON_string .= ']}';
+		echo $query;
+		echo "<br/><br/>";
+		if($this->check_API_key()){
+			//if there were results output them as a JSON data obj
+			if($results_array = $this->db->get_all_results($query)){
+				$this->JSON_string = '{"data":[';
+				$this->output_objects($results_array);
+				$this->JSON_string .= ']}';
+			}
+			//if no results were found return a JSON error obj
+			else $this->JSON_string = $this->get_error("no results found");
 		}
-		//if no results were found return a JSON error obj
-		else $this->output_error("no results found");
-		echo $this->JSON_string;
+		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
+		return $this->JSON_string;
 	}
 
 	//outputs JSON object from 1D or 2D MySQL results array
@@ -69,8 +73,8 @@ class API {
 	}
 
 	//outputs JSON error object with error message argument
-	protected function output_error($error_message){
-		$this->JSON_string .= "{\"error\": \"$error_message\"}";
+	protected function get_error($error_message){
+		return "{\"error\": \"$error_message\"}";
 	}
 
 	//builds a dynamic MySQL query statement from a $_GET array. Array must be sanitized before using this function.
@@ -82,7 +86,9 @@ class API {
 		$order_by = "";
 		$flow = "";
 		$limit = "";
+		$page = 1;
 		$exact = false;
+		$this->API_key = "";
 
 		//distribute $_GETs to their appropriate arrays/vars
 		foreach($get_array as $parameter => $value){
@@ -90,12 +96,14 @@ class API {
 				$column_parameters[$parameter] = $value;
 			}
 			else if($parameter == 'search') $search = $value;
-			else if($parameter == 'limit') $limit = $value;
 			else if($parameter =='order_by') $order_by = $value;
 			else if($parameter == 'flow') $flow = $value;
+			else if($parameter == 'limit') $limit = $value;
+			else if($parameter == 'page') $page = (int) $value;
 			else if($parameter == 'exact'){
 				if(strtolower($value) == "true") $exact = true;
 			}
+			else if($parameter == 'key') $this->API_key = $value; 
 		}
 
 		$match_against_statement = 'MATCH (' . $this->full_text_columns . ') AGAINST (\'' . $search . '\' IN BOOLEAN MODE) ';
@@ -118,7 +126,7 @@ class API {
 					//if column parameter is id search by = not LIKE
 					if($parameter == 'id' || $exact){
 						$this->append_prepend($value, "'");
-					 	$query .= "$parameter = $value";
+					 	$query .= "$parameter = $value ";
 					}
 					else $query .= "$parameter LIKE '%$value%' ";
 					if($i != sizeof($column_parameters) -1) $query .= "AND ";
@@ -155,9 +163,37 @@ class API {
 			if((int) $limit < 1) $limit = 1;
 			$limit_string = "LIMIT $limit";
 		} 
-		else $limit_string = "LIMIT $this->default_output_limit";
+		else{
+			$limit = $this->default_output_limit;
+			$limit_string = "LIMIT $limit";	
+		} 
 		$query .= $limit_string;
+
+		//add PAGE statement
+		if($page != "" &&
+			$page > 1){
+			$query .= " OFFSET " . $limit * ($page -1);
+		}
+
+
 		return $query;
+	}
+
+	protected function check_API_key(){
+		$API_key_query = "SELECT id FROM " . $this->db->table . " WHERE API_key='" . $this->API_key ."' LIMIT 1";
+		//if the key was provided and it is the right length test it
+		if($this->API_key != "" &&
+			strlen($this->API_key) == 40){
+			$results = $this->db->get_all_results($API_key_query);
+			if($results &&
+				count($results) > 0){
+				//add insert SQL statement here to keep track of api hits 
+			 return true;
+			}
+			else return false;
+		}
+		//if the api key wasnt provided or isn't the right length return before querying
+		else return false;
 	}
 
 //------------------------------------------------------------------------------
