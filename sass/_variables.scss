@@ -6,8 +6,10 @@ $_lightBlue : #a8cfef;
 $_midBlue : #95b9d1;
 $_black : #1d5b89;
 $_white : #fff;
+$_whiteRGBA : rgba(255, 255, 255, 1);
+$_whiteRGBA0 : rgba(255,255,255, 0);
 $_gray : #ebeced;
 
-$bezier : cubic-bezier(.15, 0, 0, 1);
+$bezier : cubic-bezier(.75,0,.2,1);
 
 

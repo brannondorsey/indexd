@@ -13,7 +13,7 @@
 }
 
 %button {
-	@include transition(background-color .6s $bezier);
+	@include transition(background-color .2s ease);
 
 	padding: 1em;
 	background-color: $_red;
@@ -139,27 +139,23 @@ a {
 	}
 }
 
-::-webkit-input-placeholder {
-   color: $_white;
-}
-
-:-moz-placeholder { /* Firefox 18- */
-   color: $_white;  
-}
-
-::-moz-placeholder {  /* Firefox 19+ */
-   color: $_white;  
-}
-
-:-ms-input-placeholder {  
-   color: $_white;  
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: move;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
 }
 
 
 // HEADER STYLES
 
 .search {
-	width: 50%;
+
+	width: 30%;
 	float: left;
 
 	img {
@@ -167,7 +163,31 @@ a {
 		width: 45px;
 	}
 
-	input {
+	::-webkit-input-placeholder {
+		@include transition(opacity .6s $bezier .2s);
+		color: $_white;
+		opacity: 0;
+	}
+
+	:-moz-placeholder { /* Firefox 18- */
+		@include transition(opacity .6s $bezier .2s);
+		color: $_white;  
+		opacity: 0;
+	}
+
+	::-moz-placeholder {  /* Firefox 19+ */
+		@include transition(opacity .6s $bezier .2s);
+		color: $_white;
+		opacity: 0;
+	}
+
+	:-ms-input-placeholder {  
+		@include transition(opacity .6s $bezier .2s);
+		color: $_white; 
+		opacity: 0; 
+	}
+
+	input[type="text"] {
 		@include transition(width .6s $bezier .3s, padding .6s $bezier .3s);
 		@extend %clear-default-input-style;
 
@@ -176,17 +196,40 @@ a {
 	}
 
 	&:hover {
+
+		@include transition(opacity .6s $bezier);
+
+		::-webkit-input-placeholder {
+			@include transition(opacity .6s $bezier .2s);
+			opacity: 1;
+		}
+
+		:-moz-placeholder { /* Firefox 18- */
+			@include transition(opacity .6s $bezier .2s);
+			opacity: 1;
+		}
+
+		::-moz-placeholder {  /* Firefox 19+ */
+			@include transition(opacity .6s $bezier .2s);
+			opacity: 1;
+		}
+
+		:-ms-input-placeholder {  
+			@include transition(opacity .6s $bezier .2s);
+			opacity: 1;
+		}
+
 		input {
 			@include transition(width .6s $bezier, padding .6s $bezier);
-			width: 250px;
-			padding: calc(1em - 2px);
+			width: 280px;
+			padding: 16px;
 		}
 	}
 
-	input:focus {
+	input[type="text"]:focus {
 		@include transition(width .6s $bezier, padding .6s $bezier);
-		width: 250px;
-		padding: calc(1em - 2px);
+		width: 280px;
+		padding: 16px;
 	}
 }
 
@@ -268,6 +311,7 @@ a {
 		.tag {
 			display: inline-block;
 			margin: 0 .2em .4em 0;
+			position: relative;
 			a {
 				color: $_black;
 				padding: .2em .5em;
@@ -280,6 +324,15 @@ a {
 		}
 	}
 
+}
+
+.filters {
+	@extend %listing-block;
+
+	#drop-target {
+		padding: 2em;
+		background-color: $_gray;
+	}
 }
 
 .result {
