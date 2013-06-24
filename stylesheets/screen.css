@@ -147,10 +147,10 @@ you can use the generic selector below, but it's slower:
 
 /* line 15, ../sass/screen.scss */
 .search-button, .register-button, .login-button {
-  -webkit-transition: background-color 0.3s ease;
-  -moz-transition: background-color 0.3s ease;
-  -o-transition: background-color 0.3s ease;
-  transition: background-color 0.3s ease;
+  -webkit-transition: background-color 0.6s cubic-bezier(0.15, 0, 0, 1);
+  -moz-transition: background-color 0.6s cubic-bezier(0.15, 0, 0, 1);
+  -o-transition: background-color 0.6s cubic-bezier(0.15, 0, 0, 1);
+  transition: background-color 0.6s cubic-bezier(0.15, 0, 0, 1);
   padding: 1em;
   background-color: #ef7878;
   color: white;
@@ -303,29 +303,29 @@ a:hover {
 }
 /* line 170, ../sass/screen.scss */
 .search input {
-  -webkit-transition: width 0.3s ease, padding 0.3s ease;
-  -webkit-transition-delay: 0.5s, 0.5s;
-  -moz-transition: width 0.3s ease 0.5s, padding 0.3s ease 0.5s;
-  -o-transition: width 0.3s ease 0.5s, padding 0.3s ease 0.5s;
-  transition: width 0.3s ease 0.5s, padding 0.3s ease 0.5s;
+  -webkit-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
+  -webkit-transition-delay: 0.3s, 0.3s;
+  -moz-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s, padding 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s;
+  -o-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s, padding 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s;
+  transition: width 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s, padding 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s;
   width: 0;
   padding: 16px 0;
 }
 /* line 179, ../sass/screen.scss */
 .search:hover input {
-  -webkit-transition: width 0.3s ease, padding 0.3s ease;
-  -moz-transition: width 0.3s ease, padding 0.3s ease;
-  -o-transition: width 0.3s ease, padding 0.3s ease;
-  transition: width 0.3s ease, padding 0.3s ease;
+  -webkit-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
+  -moz-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
+  -o-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
+  transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
   width: 250px;
   padding: calc(1em - 2px);
 }
 /* line 186, ../sass/screen.scss */
 .search input:focus {
-  -webkit-transition: width 0.3s ease, padding 0.3s ease;
-  -moz-transition: width 0.3s ease, padding 0.3s ease;
-  -o-transition: width 0.3s ease, padding 0.3s ease;
-  transition: width 0.3s ease, padding 0.3s ease;
+  -webkit-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
+  -moz-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
+  -o-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
+  transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
   width: 250px;
   padding: calc(1em - 2px);
 }

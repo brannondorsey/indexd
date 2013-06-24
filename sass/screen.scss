@@ -13,7 +13,7 @@
 }
 
 %button {
-	@include transition(background-color .3s ease);
+	@include transition(background-color .6s $bezier);
 
 	padding: 1em;
 	background-color: $_red;
@@ -168,7 +168,7 @@ a {
 	}
 
 	input {
-		@include transition(width .3s ease .5s, padding .3s ease .5s);
+		@include transition(width .6s $bezier .3s, padding .6s $bezier .3s);
 		@extend %clear-default-input-style;
 
 		width: 0;
@@ -177,14 +177,14 @@ a {
 
 	&:hover {
 		input {
-			@include transition(width .3s ease, padding .3s ease);
+			@include transition(width .6s $bezier, padding .6s $bezier);
 			width: 250px;
 			padding: calc(1em - 2px);
 		}
 	}
 
 	input:focus {
-		@include transition(width .3s ease, padding .3s ease);
+		@include transition(width .6s $bezier, padding .6s $bezier);
 		width: 250px;
 		padding: calc(1em - 2px);
 	}
