@@ -127,7 +127,7 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 53, ../sass/_fonts.scss */
-.search-button {
+.search-button, .pagination .prev, .pagination .next {
   font-family: 'icomoon';
   speak: none;
   font-style: normal;
@@ -163,27 +163,28 @@ you can use the generic selector below, but it's slower:
 /* line 27, ../sass/screen.scss */
 .search-button:hover, .register-button:hover, .login-button:hover {
   background-color: #a75454;
+  color: white;
 }
 
-/* line 40, ../sass/screen.scss */
+/* line 41, ../sass/screen.scss */
 .search-button {
   background-color: #1d5b89;
 }
-/* line 43, ../sass/screen.scss */
+/* line 44, ../sass/screen.scss */
 .search-button:hover {
   background-color: #143f5f;
 }
 
-/* line 48, ../sass/screen.scss */
+/* line 49, ../sass/screen.scss */
 .register-button {
   background-color: #c96767;
 }
-/* line 51, ../sass/screen.scss */
+/* line 52, ../sass/screen.scss */
 .register-button:hover {
   background-color: #8c4848;
 }
 
-/* line 61, ../sass/screen.scss */
+/* line 62, ../sass/screen.scss */
 .search input, body {
   font-size: 18px;
   color: #1d5b89;
@@ -191,7 +192,7 @@ you can use the generic selector below, but it's slower:
   line-height: 1.38889;
 }
 
-/* line 68, ../sass/screen.scss */
+/* line 69, ../sass/screen.scss */
 .search input {
   outline: none;
   border: none;
@@ -203,19 +204,19 @@ you can use the generic selector below, but it's slower:
   vertical-align: top;
 }
 
-/* line 80, ../sass/screen.scss */
+/* line 81, ../sass/screen.scss */
 .about .network, .about .membercard, .about .site {
   width: 40%;
   margin: 3em auto 5em;
   color: white;
 }
-/* line 85, ../sass/screen.scss */
+/* line 86, ../sass/screen.scss */
 .about .network h2, .about .membercard h2, .about .site h2 {
   font-weight: bold;
   text-align: center;
   margin-bottom: 1em;
 }
-/* line 91, ../sass/screen.scss */
+/* line 92, ../sass/screen.scss */
 .about .network img, .about .membercard img, .about .site img {
   display: block;
   margin-left: auto;
@@ -223,49 +224,84 @@ you can use the generic selector below, but it's slower:
   margin-bottom: .7em;
 }
 
-/* line 99, ../sass/screen.scss */
+@media all and (min-width: 900px) {
+  /* line 100, ../sass/screen.scss */
+  .profile, .result, .pagination .pagination-inner {
+    width: 40%;
+    margin: auto;
+  }
+}
+
+/* line 107, ../sass/screen.scss */
+.profile, .result {
+  margin: 3em auto;
+}
+/* line 111, ../sass/screen.scss */
+.profile h2, .result h2 {
+  font-weight: bold;
+}
+/* line 115, ../sass/screen.scss */
+.profile a.email, .result a.email, .profile a.url, .result a.url {
+  padding-right: 1em;
+}
+/* line 119, ../sass/screen.scss */
+.profile p, .result p {
+  margin: 1em 0;
+}
+
+/* line 124, ../sass/screen.scss */
 body {
   margin: 0;
 }
 
-/* line 104, ../sass/screen.scss */
+/* line 129, ../sass/screen.scss */
 img {
   max-width: 100%;
 }
 
-/* line 108, ../sass/screen.scss */
+/* line 133, ../sass/screen.scss */
+a {
+  color: #ef7878;
+  text-decoration: none;
+}
+/* line 137, ../sass/screen.scss */
+a:hover {
+  color: #c96767;
+}
+
+/* line 142, ../sass/screen.scss */
 ::-webkit-input-placeholder {
   color: white;
 }
 
-/* line 112, ../sass/screen.scss */
+/* line 146, ../sass/screen.scss */
 :-moz-placeholder {
   /* Firefox 18- */
   color: white;
 }
 
-/* line 116, ../sass/screen.scss */
+/* line 150, ../sass/screen.scss */
 ::-moz-placeholder {
   /* Firefox 19+ */
   color: white;
 }
 
-/* line 120, ../sass/screen.scss */
+/* line 154, ../sass/screen.scss */
 :-ms-input-placeholder {
   color: white;
 }
 
-/* line 127, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .search {
   width: 50%;
   float: left;
 }
-/* line 131, ../sass/screen.scss */
+/* line 165, ../sass/screen.scss */
 .search img {
   display: none;
   width: 45px;
 }
-/* line 136, ../sass/screen.scss */
+/* line 170, ../sass/screen.scss */
 .search input {
   -webkit-transition: width 0.3s ease, padding 0.3s ease;
   -webkit-transition-delay: 0.5s, 0.5s;
@@ -275,7 +311,7 @@ img {
   width: 0;
   padding: 16px 0;
 }
-/* line 145, ../sass/screen.scss */
+/* line 179, ../sass/screen.scss */
 .search:hover input {
   -webkit-transition: width 0.3s ease, padding 0.3s ease;
   -moz-transition: width 0.3s ease, padding 0.3s ease;
@@ -284,48 +320,120 @@ img {
   width: 250px;
   padding: calc(1em - 2px);
 }
+/* line 186, ../sass/screen.scss */
+.search input:focus {
+  -webkit-transition: width 0.3s ease, padding 0.3s ease;
+  -moz-transition: width 0.3s ease, padding 0.3s ease;
+  -o-transition: width 0.3s ease, padding 0.3s ease;
+  transition: width 0.3s ease, padding 0.3s ease;
+  width: 250px;
+  padding: calc(1em - 2px);
+}
 
-/* line 153, ../sass/screen.scss */
+/* line 193, ../sass/screen.scss */
 .login {
   width: 50%;
   float: right;
   text-align: right;
 }
 
-/* line 159, ../sass/screen.scss */
+/* line 199, ../sass/screen.scss */
 .search-button {
   color: white;
 }
 
-/* line 173, ../sass/screen.scss */
+/* line 213, ../sass/screen.scss */
 .header {
   width: 100%;
   background-color: #ebeced;
   overflow: hidden;
 }
 
-/* line 182, ../sass/screen.scss */
+/* line 222, ../sass/screen.scss */
 .brand .logo {
   margin: 6em auto 1em auto;
   text-align: center;
 }
-/* line 187, ../sass/screen.scss */
+/* line 227, ../sass/screen.scss */
 .brand h1 {
   text-align: center;
   letter-spacing: 1;
   margin-bottom: 6em;
 }
-/* line 192, ../sass/screen.scss */
+/* line 232, ../sass/screen.scss */
 .brand h1 .logo-color-1 {
   color: #ef7878;
 }
-/* line 196, ../sass/screen.scss */
+/* line 236, ../sass/screen.scss */
 .brand h1 .logo-color-2 {
   color: #a8cfef;
 }
 
-/* line 202, ../sass/screen.scss */
+/* line 242, ../sass/screen.scss */
 .about {
   background-color: #ef7878;
   padding: 1em 0;
+}
+
+/* line 251, ../sass/screen.scss */
+.profile {
+  margin-bottom: 6em;
+}
+/* line 255, ../sass/screen.scss */
+.profile .media {
+  display: block;
+  border-bottom: 1px solid #a8cfef;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* line 262, ../sass/screen.scss */
+.profile .tags {
+  border-bottom: 1px solid #a8cfef;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* line 268, ../sass/screen.scss */
+.profile .tags .tag {
+  display: inline-block;
+  margin: 0 0.2em 0.4em 0;
+}
+/* line 271, ../sass/screen.scss */
+.profile .tags .tag a {
+  color: #1d5b89;
+  padding: 0.2em 0.5em;
+  background-color: #a8cfef;
+  display: inline-block;
+}
+/* line 276, ../sass/screen.scss */
+.profile .tags .tag a:hover {
+  background-color: #97bad7;
+}
+
+/* line 285, ../sass/screen.scss */
+.result {
+  margin-top: 0;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #a8cfef;
+}
+/* line 288, ../sass/screen.scss */
+.result p {
+  margin: 0.5em 0;
+}
+/* line 292, ../sass/screen.scss */
+.result h2 {
+  margin-top: 0;
+}
+
+/* line 308, ../sass/screen.scss */
+.pagination .prev {
+  text-align: left;
+}
+/* line 313, ../sass/screen.scss */
+.pagination .position {
+  text-align: center;
+}
+/* line 317, ../sass/screen.scss */
+.pagination .next {
+  text-align: right;
 }
