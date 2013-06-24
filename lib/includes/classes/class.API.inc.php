@@ -15,15 +15,16 @@ class API {
 	public function __construct(){
 		$this->db = new Database();
 		$this->columns_to_provide = 
-			"id, first_name, last_name, url, email, city, state, country, datetime_joined, description, media, tags";
+			"id, first_name, last_name, url, email, city, state, country, zip, lat_lon, datetime_joined, description, media, tags, likes";
 	}
 
 	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
 	public function echo_JSON_from_GET(&$get_array){
 		$query = $this->form_query($get_array);
+		echo $query;
+		echo "<br/><br/>";
 		//if there were results output them as a JSON data obj
 		if($results_array = $this->db->get_all_results($query)){
-			echo "<br/><br/>";
 			$this->JSON_string .= '{"data":[';
 			$this->output_objects($results_array);
 			$this->JSON_string .= ']}';
