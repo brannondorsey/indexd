@@ -147,10 +147,10 @@ you can use the generic selector below, but it's slower:
 
 /* line 15, ../sass/screen.scss */
 .search-button, .register-button, .login-button {
-  -webkit-transition: background-color 0.6s cubic-bezier(0.15, 0, 0, 1);
-  -moz-transition: background-color 0.6s cubic-bezier(0.15, 0, 0, 1);
-  -o-transition: background-color 0.6s cubic-bezier(0.15, 0, 0, 1);
-  transition: background-color 0.6s cubic-bezier(0.15, 0, 0, 1);
+  -webkit-transition: background-color 0.2s ease;
+  -moz-transition: background-color 0.2s ease;
+  -o-transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
   padding: 1em;
   background-color: #ef7878;
   color: white;
@@ -185,7 +185,7 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 62, ../sass/screen.scss */
-.search input, body {
+.search input[type="text"], body {
   font-size: 18px;
   color: #1d5b89;
   font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
@@ -193,7 +193,7 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 69, ../sass/screen.scss */
-.search input {
+.search input[type="text"] {
   outline: none;
   border: none;
   padding: calc(1em - 2px);
@@ -226,26 +226,26 @@ you can use the generic selector below, but it's slower:
 
 @media all and (min-width: 900px) {
   /* line 100, ../sass/screen.scss */
-  .profile, .result, .pagination .pagination-inner {
+  .profile, .filters, .result, .pagination .pagination-inner {
     width: 40%;
     margin: auto;
   }
 }
 
 /* line 107, ../sass/screen.scss */
-.profile, .result {
+.profile, .filters, .result {
   margin: 3em auto;
 }
 /* line 111, ../sass/screen.scss */
-.profile h2, .result h2 {
+.profile h2, .filters h2, .result h2 {
   font-weight: bold;
 }
 /* line 115, ../sass/screen.scss */
-.profile a.email, .result a.email, .profile a.url, .result a.url {
+.profile a.email, .filters a.email, .result a.email, .profile a.url, .filters a.url, .result a.url {
   padding-right: 1em;
 }
 /* line 119, ../sass/screen.scss */
-.profile p, .result p {
+.profile p, .filters p, .result p {
   margin: 1em 0;
 }
 
@@ -270,170 +270,254 @@ a:hover {
 }
 
 /* line 142, ../sass/screen.scss */
-::-webkit-input-placeholder {
-  color: white;
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: move;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
 }
 
-/* line 146, ../sass/screen.scss */
-:-moz-placeholder {
-  /* Firefox 18- */
-  color: white;
-}
-
-/* line 150, ../sass/screen.scss */
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: white;
-}
-
-/* line 154, ../sass/screen.scss */
-:-ms-input-placeholder {
-  color: white;
-}
-
-/* line 161, ../sass/screen.scss */
+/* line 156, ../sass/screen.scss */
 .search {
-  width: 50%;
+  width: 30%;
   float: left;
 }
-/* line 165, ../sass/screen.scss */
+/* line 161, ../sass/screen.scss */
 .search img {
   display: none;
   width: 45px;
 }
-/* line 170, ../sass/screen.scss */
-.search input {
-  -webkit-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
+/* line 166, ../sass/screen.scss */
+.search ::-webkit-input-placeholder {
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  color: white;
+  opacity: 0;
+}
+/* line 172, ../sass/screen.scss */
+.search :-moz-placeholder {
+  /* Firefox 18- */
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  color: white;
+  opacity: 0;
+}
+/* line 178, ../sass/screen.scss */
+.search ::-moz-placeholder {
+  /* Firefox 19+ */
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  color: white;
+  opacity: 0;
+}
+/* line 184, ../sass/screen.scss */
+.search :-ms-input-placeholder {
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  color: white;
+  opacity: 0;
+}
+/* line 190, ../sass/screen.scss */
+.search input[type="text"] {
+  -webkit-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -webkit-transition-delay: 0.3s, 0.3s;
-  -moz-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s, padding 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s;
-  -o-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s, padding 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s;
-  transition: width 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s, padding 0.6s cubic-bezier(0.15, 0, 0, 1) 0.3s;
+  -moz-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s, padding 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s;
+  -o-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s, padding 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s;
+  transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s, padding 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s;
   width: 0;
   padding: 16px 0;
 }
-/* line 179, ../sass/screen.scss */
-.search:hover input {
-  -webkit-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
-  -moz-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
-  -o-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
-  transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
-  width: 250px;
-  padding: calc(1em - 2px);
+/* line 198, ../sass/screen.scss */
+.search:hover {
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
 }
-/* line 186, ../sass/screen.scss */
-.search input:focus {
-  -webkit-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
-  -moz-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
-  -o-transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
-  transition: width 0.6s cubic-bezier(0.15, 0, 0, 1), padding 0.6s cubic-bezier(0.15, 0, 0, 1);
-  width: 250px;
-  padding: calc(1em - 2px);
+/* line 202, ../sass/screen.scss */
+.search:hover ::-webkit-input-placeholder {
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  opacity: 1;
+}
+/* line 207, ../sass/screen.scss */
+.search:hover :-moz-placeholder {
+  /* Firefox 18- */
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  opacity: 1;
+}
+/* line 212, ../sass/screen.scss */
+.search:hover ::-moz-placeholder {
+  /* Firefox 19+ */
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  opacity: 1;
+}
+/* line 217, ../sass/screen.scss */
+.search:hover :-ms-input-placeholder {
+  -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -webkit-transition-delay: 0.2s;
+  -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
+  opacity: 1;
+}
+/* line 222, ../sass/screen.scss */
+.search:hover input {
+  -webkit-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -moz-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -o-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  width: 280px;
+  padding: 16px;
+}
+/* line 229, ../sass/screen.scss */
+.search input[type="text"]:focus {
+  -webkit-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -moz-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  -o-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
+  width: 280px;
+  padding: 16px;
 }
 
-/* line 193, ../sass/screen.scss */
+/* line 236, ../sass/screen.scss */
 .login {
   width: 50%;
   float: right;
   text-align: right;
 }
 
-/* line 199, ../sass/screen.scss */
+/* line 242, ../sass/screen.scss */
 .search-button {
   color: white;
 }
 
-/* line 213, ../sass/screen.scss */
+/* line 256, ../sass/screen.scss */
 .header {
   width: 100%;
   background-color: #ebeced;
   overflow: hidden;
 }
 
-/* line 222, ../sass/screen.scss */
+/* line 265, ../sass/screen.scss */
 .brand .logo {
   margin: 6em auto 1em auto;
   text-align: center;
 }
-/* line 227, ../sass/screen.scss */
+/* line 270, ../sass/screen.scss */
 .brand h1 {
   text-align: center;
   letter-spacing: 1;
   margin-bottom: 6em;
 }
-/* line 232, ../sass/screen.scss */
+/* line 275, ../sass/screen.scss */
 .brand h1 .logo-color-1 {
   color: #ef7878;
 }
-/* line 236, ../sass/screen.scss */
+/* line 279, ../sass/screen.scss */
 .brand h1 .logo-color-2 {
   color: #a8cfef;
 }
 
-/* line 242, ../sass/screen.scss */
+/* line 285, ../sass/screen.scss */
 .about {
   background-color: #ef7878;
   padding: 1em 0;
 }
 
-/* line 251, ../sass/screen.scss */
+/* line 294, ../sass/screen.scss */
 .profile {
   margin-bottom: 6em;
 }
-/* line 255, ../sass/screen.scss */
+/* line 298, ../sass/screen.scss */
 .profile .media {
   display: block;
   border-bottom: 1px solid #a8cfef;
   padding-bottom: 1em;
   margin-bottom: 1em;
 }
-/* line 262, ../sass/screen.scss */
+/* line 305, ../sass/screen.scss */
 .profile .tags {
   border-bottom: 1px solid #a8cfef;
   padding-bottom: 1em;
   margin-bottom: 1em;
 }
-/* line 268, ../sass/screen.scss */
+/* line 311, ../sass/screen.scss */
 .profile .tags .tag {
   display: inline-block;
   margin: 0 0.2em 0.4em 0;
+  position: relative;
 }
-/* line 271, ../sass/screen.scss */
+/* line 315, ../sass/screen.scss */
 .profile .tags .tag a {
   color: #1d5b89;
   padding: 0.2em 0.5em;
   background-color: #a8cfef;
   display: inline-block;
 }
-/* line 276, ../sass/screen.scss */
+/* line 320, ../sass/screen.scss */
 .profile .tags .tag a:hover {
   background-color: #97bad7;
 }
 
-/* line 285, ../sass/screen.scss */
+/* line 332, ../sass/screen.scss */
+.filters #drop-target {
+  padding: 2em;
+  background-color: #ebeced;
+}
+
+/* line 338, ../sass/screen.scss */
 .result {
   margin-top: 0;
   padding-bottom: 1em;
   margin-bottom: 1em;
   border-bottom: 1px solid #a8cfef;
 }
-/* line 288, ../sass/screen.scss */
+/* line 341, ../sass/screen.scss */
 .result p {
   margin: 0.5em 0;
 }
-/* line 292, ../sass/screen.scss */
+/* line 345, ../sass/screen.scss */
 .result h2 {
   margin-top: 0;
 }
 
-/* line 308, ../sass/screen.scss */
+/* line 361, ../sass/screen.scss */
 .pagination .prev {
   text-align: left;
 }
-/* line 313, ../sass/screen.scss */
+/* line 366, ../sass/screen.scss */
 .pagination .position {
   text-align: center;
 }
-/* line 317, ../sass/screen.scss */
+/* line 370, ../sass/screen.scss */
 .pagination .next {
   text-align: right;
 }
