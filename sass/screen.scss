@@ -15,6 +15,10 @@
 %button {
 	@include transition(background-color .2s ease);
 
+	font-size: 18px;
+	font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
+	line-height: 1.3888888888;
+
 	padding: 1em;
 	background-color: $_red;
 	color: $_white;
@@ -23,6 +27,8 @@
 	cursor: pointer;
 	margin: 0;
 	line-height: 1;
+	outline: none;
+	border: none;
 
 	&:hover {
 		background-color: shade($_red, 30%);
@@ -400,6 +406,83 @@ a {
 
 .register-user {
 	@extend %responsive-block;
+	margin-top: 3em;
+
+	h2 {
+		font-weight: bold;
+	}
+}
+
+#registration {
+	margin-bottom: 2em;
+	overflow: hidden;
+
+	label {
+		color: $_red;
+	}
+
+	fieldset {
+		float: left;
+		margin-top: 1em;
+		&.half {
+			width: 50%;
+			&:nth-of-type(even) {
+				padding-left: 1em;
+			}
+
+			&:nth-of-type(odd) {
+				padding-right: 1em;
+			}
+
+			&:nth-of-type(10) {
+				padding-right: 1em;
+				padding-left: 0;
+			}
+
+			&:nth-of-type(11) {
+				padding-right: 0;
+			}
+
+			&:nth-of-type(6) {
+				margin-top: 2.4em;
+			}
+		}
+
+		&.full {
+			width: 100%;
+			float: left;
+		}
+
+		input[type="text"], input[type="email"], input[type="password"], textarea {
+			@extend %default-text-style;
+
+			width: 100%;
+			background-color: $_gray;
+			border: 1px solid shade($_gray, 10%);
+			padding: .5em;
+		}
+
+		input, textarea {
+			&:focus {
+				box-shadow: none;
+				appearance: none;
+				border: 1px solid shade($_gray, 10%);
+				outline: none;
+			}
+		}
+
+		input[type="submit"] {
+			font-family: "franklin-gothic-urw", verdana, sans-serif;
+			font-size: 1em;
+			border: none;
+			outline: none;
+			color: $_white;
+			background-color: $_red;
+			padding: .7em;
+			margin-top: 1.4em;
+			float: right;
+		}
+	}
 }
 
 

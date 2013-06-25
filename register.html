@@ -29,36 +29,59 @@
         <section class="register-user">
             <h2>Register</h2>
 
-            <form>
-                <label for="first-name">First Name</label>
-                <input type="text" id="first-name" />
+            <form id="registration">
+                <fieldset class="half">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" />
+                </fieldset>
 
-                <label for="last-name">Last Name</label>
-                <input type="text" id="last-name" />
+                <fieldset class="half">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" />
+                </fieldset>
 
-                <label for="email">Email</label>
-                <input type="email" id="email" />
+                <fieldset class="half">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" />
+                </fieldset>
 
-                <label for="url">URL</label>
-                <input type="text" id="url" />
+                <fieldset class="half">
+                    <label for="url">URL</label>
+                    <input type="text" id="url" />
+                </fieldset>
 
-                <label for="password">Password (twice)</label>
-                <input type="password" id="password" />
-                <input type="password" id="password-conf" />
+                <fieldset class="half">
+                    <label for="password">Password (twice)</label>
+                    <input type="password" id="password" />
+                </fieldset>
 
-                <label for="media">Media</label>
-                <input type="text" id="media" />
+                <fieldset class="half">
+                    <input type="password" id="password-conf" />
+                </fieldset>
 
-                <label for="description">Description</label>
-                <textarea id="description"></textarea>
+                <fieldset class="full">
+                    <label for="description">Description</label>
+                    <textarea id="description"></textarea>
+                </fieldset>
 
-                <label for="zip">Zip/Postal Code</label>
-                <input type="text" id="zip" />
+                <fieldset class="full">
+                    <label for="media">Media</label>
+                    <input type="text" id="media" />
+                </fieldset>
 
-                <label for="tags">Tags</label>
-                <input type="text" id="tags" />
+                <fieldset class="full">
+                    <label for="tags">Tags</label>
+                    <input type="text" id="tags" />
+                </fieldset>
 
-                <input type="submit" id="submit" value="Submit" />
+                <fieldset class="half">
+                    <label for="zip">Zip/Postal Code</label>
+                    <input type="text" id="zip" />
+                </fieldset>
+
+                <fieldset class="half">
+                    <input type="submit" id="submit" value="Submit" />
+                </fieldset>
             </form>
         </section>
 
