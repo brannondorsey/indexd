@@ -17,7 +17,7 @@ class API {
 	
 	public function __construct(){
 		$this->columns_to_provide = 
-			"id, first_name, last_name, url, email, city, state, country, zip, lat_lon, datetime_joined, description, media, tags, likes";
+			"id, first_name, last_name, url, email, city, state, country, zip, lat, lon, datetime_joined, description, media, tags, likes";
 		$this->full_text_columns = "first_name, last_name, email, url, description, media, tags, city, state, country";
 		$this->public_columns_to_provide = $this->columns_to_provide;
 	}

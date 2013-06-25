@@ -1,7 +1,7 @@
 <?php
 
 class DistanceCalculator{
-
+	
 	//returns assoc array of min lat, max lat, min lon, max lon
 	//taken from http://blog.fedecarg.com/2009/02/08/geo-proximity-search-the-haversine-equation/
 	public static function get_distance_range($lat, $lon, $radius_in_miles){
@@ -13,6 +13,8 @@ class DistanceCalculator{
 		$lng_max = $longitude + $radius / abs(cos(deg2rad($latitude)) * 69);
 		$lat_min = $latitude - ($radius / 69);
 		$lat_max = $latitude + ($radius / 69);
+		echo 'lng (min/max): ' . $lng_min . '/' . $lng_max . PHP_EOL;
+		echo 'lat (min/max): ' . $lat_min . '/' . $lat_max;
 		return array(
 				"min lat" => $lat_min,
 				"max lat" => $lat_max,
@@ -20,9 +22,6 @@ class DistanceCalculator{
 				"max lon" => $lng_max,
 			);
 	}
-
-	// echo 'lng (min/max): ' . $lng_min . '/' . $lng_max . PHP_EOL;
-	// echo 'lat (min/max): ' . $lat_min . '/' . $lat_max;
 
 		/**
 	 * Calculates the great-circle distance between two points, with
