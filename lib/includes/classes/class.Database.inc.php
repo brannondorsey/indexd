@@ -2,39 +2,42 @@
 
 class Database {
 
-	public $table    = "users";
+	public static $table    = "users";
 
-	protected $user     = "root";
-	protected $password = "root";
-	protected $db       = "AWU";
-	protected $host     = "localhost";
-	protected $result;
-	protected $tmp_result;
+	protected static $user     = "root";
+	protected static $password = "root";
+	protected static $db       = "AWU";
+	protected static $host     = "localhost";
+	protected static $mysqli;
+
+	public static function init_connection(){
+		self::$mysqli = new mysqli(self::$host, self::$user, self::$password, self::$db);
+	}
+
+	public static function close_connection(){
+		self::$mysqli->close();
+	}
 	
 	//execute sql query statement. Used for INSERT and UPDATE mostly
-	public function execute_sql($query) {
-	
-		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
-		$query = $this->clean($query);
-		$mysqli->query($query);
-		$mysqli->close();
+	public static function execute_sql($query) {
+		$query = self::clean($query);
+		self::$mysqli->query($query);
 	}
 	
 	//returns array of one result row if one result was found or 2D array of all returned rows if multiple were found
-	public function get_all_results($query) {
-		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
-		if ($result = $mysqli->query($query)) {
+	public static function get_all_results($query) {
+		$result_to_return = array(); //maybe this shouldnt be like this...
+		if ($result = self::$mysqli->query($query)) {
 				$i=0;
 				while ($row = $result->fetch_assoc()) {
-					$this->result[$i] = $row;
+					$result_to_return[$i] = $row;
 					$i++;	
 				}
-			$mysqli->close();
-			if (count($this->result) > 1) {
-				return $this->result;
+			if (count($result_to_return) > 1) {
+				return $result_to_return;
 			} 
-			else if(count($this->result) == 1) {
-				return $this->result[0];
+			else if(count($result_to_return) == 1) {
+				return $result_to_return[0];
 			} 
 			else return false; //there were no results found
 		}
@@ -42,18 +45,16 @@ class Database {
 	}
 
 	//returns string or assosciative array of strings
-	public function clean($string){
-		$mysqli = new mysqli($this->host, $this->user, $this->password, $this->db);
+	public static function clean($string){
 		$new_string_array;
 		if(is_array($string)){
 			foreach($string as $string_array_key => $string_array_value){
-				$string_array_value = $this->clean_string($string_array_value, $mysqli);
+				$string_array_value = self::clean_string($string_array_value);
 				$new_string_array[$string_array_key] = $string_array_value;
 			}
 			$string = $new_string_array;
 		}
-		else $string = $this->clean_string($string, $mysqli);
-		$mysqli->close();
+		else $string = self::clean_string($string, $mysqli);
 		return $string;
 	}
 
@@ -61,9 +62,9 @@ class Database {
 //HELPERS
 
 	//series of cleans to be perfomed on one string
-	protected function clean_string($string, &$mysqli){
+	protected static function clean_string($string){
 		$string = htmlspecialchars($string);
-		//$string = $mysqli->real_escape_string($string);
+		$string = self::$mysqli->real_escape_string($string);
 		return $string;
 	}
 }

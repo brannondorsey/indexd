@@ -3,3 +3,5 @@ TODO:
 +Implement number of API key call limit per day
 +login and sign up
 +rewrite database class for better efficiency (i.e. keep a connection open. Perhaps pass in a reference to a global DB into classes that use it like API etc so that everything can use it)
++make API not output anything if there are no get params
++add tried var to error statement to name what didn't return result

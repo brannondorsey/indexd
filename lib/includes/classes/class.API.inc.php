@@ -3,7 +3,8 @@ require_once("class.Database.inc.php");
 
 class API {
 
-	public $db;
+	public $public_columns_to_provide;
+
 	protected $columns_to_provide;
 	protected $default_output_limit = 25;
 	protected $max_output_limit = 250;
@@ -15,61 +16,74 @@ class API {
 
 	
 	public function __construct(){
-		$this->db = new Database();
 		$this->columns_to_provide = 
 			"id, first_name, last_name, url, email, city, state, country, zip, lat_lon, datetime_joined, description, media, tags, likes";
 		$this->full_text_columns = "first_name, last_name, email, url, description, media, tags, city, state, country";
+		$this->public_columns_to_provide = $this->columns_to_provide;
 	}
 
 	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
 	public function get_JSON_from_GET(&$get_array){
 		$query = $this->form_query($get_array);
-		echo $query;
-		echo "<br/><br/>";
-		if($this->check_API_key()){
-			//if there were results output them as a JSON data obj
-			if($results_array = $this->db->get_all_results($query)){
-				$this->JSON_string = '{"data":[';
-				$this->output_objects($results_array);
-				$this->JSON_string .= ']}';
-			}
-			//if no results were found return a JSON error obj
-			else $this->JSON_string = $this->get_error("no results found");
-		}
+		// echo $query;
+		// echo "<br/><br/>";
+		if($this->check_API_key()) $this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, "data", true);
 		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
 		return $this->JSON_string;
 	}
 
+	public function query_results_as_array_of_JSON_objs($query, $object_parent_name=NULL, $b_wrap_as_obj=false){
+		$JSON_output_string = "";
+		//if there were results output them as a JSON data obj
+		//echo "the parent name is " . $object_parent_name . " and the boolean is " . $b_wrap_as_obj;
+		if($results_array = Database::get_all_results($query)){
+				//if the objects being output should be wrapped in an object specified by the parameters of this function
+				if($object_parent_name != NULL && $b_wrap_as_obj){
+				 	$JSON_output_string = '{"' . $object_parent_name . '":[';
+				 }
+				$JSON_output_string .= $this->output_objects($results_array);
+				//see above
+				if($object_parent_name != NULL && $b_wrap_as_obj){
+					$JSON_output_string .= ']}';
+				}
+			}
+		//if no results were found return a JSON error obj
+		else $JSON_output_string = $this->get_error("no results found");
+		return $JSON_output_string;
+	}
+
 	//outputs JSON object from 1D or 2D MySQL results array
-	protected function output_objects($results_array){
-		if(isset($results_array[0])){
+	protected function output_objects($mysql_results_array){
+		$JSON_output_string = "";
+		if(isset($mysql_results_array[0])){
 			$i = 0;
-			foreach ($results_array as $user_row) {
-				$this->JSON_string .= "{";
+			foreach ($mysql_results_array as $user_row) {
+				$JSON_output_string .= "{";
 				$j = 0;
 				foreach($user_row as $key => $value){
-					$this->JSON_string .= '"' . $key . '"' . ':';
-					$this->JSON_string .= '"' . $value . '"';
-					if ($j != sizeof($user_row) -1) $this->JSON_string .= ',';
+					$JSON_output_string .= '"' . $key . '"' . ':';
+					$JSON_output_string .= '"' . $value . '"';
+					if ($j != sizeof($user_row) -1) $JSON_output_string .= ',';
 					$j++;
 				}
-				$this->JSON_string .= "}";
-				if ($i != sizeof($results_array) -1) $this->JSON_string .= ',';
+				$JSON_output_string .= "}";
+				if ($i != sizeof($mysql_results_array) -1) $JSON_output_string .= ',';
 				$i++;
 			}
 		}
 		else{
-			$user_row = $results_array;
-			$this->JSON_string .= "{";
+			$user_row = $mysql_results_array;
+			$JSON_output_string .= "{";
 				$j = 0;
 				foreach($user_row as $key => $value){
-					$this->JSON_string .= '"' . $key . '"' . ':';
-					$this->JSON_string .= '"' . $value . '"';
-					if ($j != sizeof($user_row) -1) $this->JSON_string .= ',';
+					$JSON_output_string .= '"' . $key . '"' . ':';
+					$JSON_output_string .= '"' . $value . '"';
+					if ($j != sizeof($user_row) -1) $JSON_output_string .= ',';
 					$j++;
 				}
-				$this->JSON_string .= "}";
+				$JSON_output_string .= "}";
 		}
+		return $JSON_output_string;
 	}
 
 	//outputs JSON error object with error message argument
@@ -109,7 +123,7 @@ class API {
 		$match_against_statement = 'MATCH (' . $this->full_text_columns . ') AGAINST (\'' . $search . '\' IN BOOLEAN MODE) ';
 		$query = "SELECT " . $this->columns_to_provide;
 		if($search != "") $query .= ", " . $match_against_statement . "AS score";
-		$query .= " FROM "  . $this->db->table ." ";
+		$query .= " FROM "  . Database::$table ." ";
 
 		//if search was a parameter overide column paramters and use MATCH...AGAINST
 		if($search != ""){
@@ -180,11 +194,11 @@ class API {
 	}
 
 	protected function check_API_key(){
-		$API_key_query = "SELECT id FROM " . $this->db->table . " WHERE API_key='" . $this->API_key ."' LIMIT 1";
+		$API_key_query = "SELECT id FROM " . Database::$table . " WHERE API_key='" . $this->API_key ."' LIMIT 1";
 		//if the key was provided and it is the right length test it
 		if($this->API_key != "" &&
 			strlen($this->API_key) == 40){
-			$results = $this->db->get_all_results($API_key_query);
+			$results = Database::get_all_results($API_key_query);
 			if($results &&
 				count($results) > 0){
 				//add insert SQL statement here to keep track of api hits 
