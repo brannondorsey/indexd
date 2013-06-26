@@ -17,13 +17,22 @@
         
         <?php require_once("lib/includes/partials/header.inc.php"); ?>
 
-        <section class="login">
-            <form class="login-form">
-                <label for="email">E-mail</label>
-                <input type="email" id="email"/>
+        <section class="login-page">
+            <h2>Sign In</h2>
+            <p>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a></p>
+            <form class="login-form" method="post">
 
-                <label for="password">Password</label>
-                <input type="password" id="password"/>
+                <fieldset class="half">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email"/>
+                </fieldset>
+
+                <fieldset class="half">
+                    <label for="password">Password</label>
+                    <input type="password" id="password"/>
+                </fieldset>
+
+                <input type="submit" id="submit-login" />
             </form>
         </section>
 
