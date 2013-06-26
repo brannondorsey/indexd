@@ -13,8 +13,8 @@ class DistanceCalculator{
 		$lng_max = $longitude + $radius / abs(cos(deg2rad($latitude)) * 69);
 		$lat_min = $latitude - ($radius / 69);
 		$lat_max = $latitude + ($radius / 69);
-		echo 'lng (min/max): ' . $lng_min . '/' . $lng_max . PHP_EOL;
-		echo 'lat (min/max): ' . $lat_min . '/' . $lat_max;
+		// echo 'lng (min/max): ' . $lng_min . '/' . $lng_max . PHP_EOL;
+		// echo 'lat (min/max): ' . $lat_min . '/' . $lat_max;
 		return array(
 				"min lat" => $lat_min,
 				"max lat" => $lat_max,
