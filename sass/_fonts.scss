@@ -51,12 +51,12 @@ you can use the generic selector below, but it's slower:
 }
 
 %icon {
-	font-family: 'icomoon';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
+	font-family: 'icomoon' !important;
+	speak: none !important;
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+	text-transform: none !important;
+	line-height: 1 !important;
+	-webkit-font-smoothing: antialiased !important;
 }
