@@ -23,11 +23,11 @@ class API {
 	}
 
 	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
-	public function get_JSON_from_GET(&$get_array){
+	public function get_JSON_from_GET(&$get_array, $object_parent_name="data"){
 		$query = $this->form_query($get_array);
 		// echo $query;
 		// echo "<br/><br/>";
-		if($this->check_API_key()) $this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, "data", true);
+		if($this->check_API_key()) $this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, $object_parent_name, true);
 		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
 		return $this->JSON_string;
 	}
@@ -49,7 +49,7 @@ class API {
 			}
 		//if no results were found return a JSON error obj
 		else $JSON_output_string = $this->get_error("no results found");
-		return $JSON_output_string;
+		return iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($JSON_output_string));
 	}
 
 	//outputs JSON object from 1D or 2D MySQL results array

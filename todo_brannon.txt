@@ -1,8 +1,14 @@
 TODO:
-+Design and make Algorithm class
 +Implement number of API key call limit per day
 +login and sign up
-+rewrite database class for better efficiency (i.e. keep a connection open. Perhaps pass in a reference to a global DB into classes that use it like API etc so that everything can use it)
 +make API not output anything if there are no get params
 +add tried var to error statement to name what didn't return result
 +algorithm currently treats no field entries as similar fields. This is correct but should not happen.
++add email confirmation column in database
++set session length based on stay logged in
++limit session variables stored to ONLY public api columns. Do this by using both PrivateAPI and API classes in Users class. Do authentication checks like login…etc with PrivateAPI but only pass public API values into $_SESSION/$user->data.
+
+
+COMPLETED:
+-rewrite database class for better efficiency (i.e. keep a connection open. Perhaps pass in a reference to a global DB into classes that use it like API etc so that everything can use it) I DID THIS A FEW COMMITS AGO. I MADE THE DB STATIC.
+-Design and make Algorithm class
