@@ -15,7 +15,7 @@
 %button {
 	@include transition(background-color .2s ease);
 
-	font-size: 18px;
+	font-size: 1em;
 	font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
 	line-height: 1.3888888888;
 
@@ -65,7 +65,7 @@
 	background-color: rgba(255,255,255,0);
 	color: $_red;
 	&:hover {
-		background-color: shade($_gray, 5%);
+		background-color: $_gray;
 		color: $_red;
 	}
 } 
@@ -75,7 +75,7 @@
 }
 
 %default-text-style {
-	font-size: 18px;
+	font-size: 16px;
 	color: $_black;
 	font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
 	line-height: 1.3888888888
@@ -172,6 +172,9 @@ a {
 
 	width: 30%;
 	float: left;
+	position: fixed;
+	top: 0;
+	left: 0;
 
 	img {
 		display: none;
@@ -206,8 +209,10 @@ a {
 		@include transition(width .6s $bezier .3s, padding .6s $bezier .3s);
 		@extend %clear-default-input-style;
 
+		background-color: $_gray;
+
 		width: 0;
-		padding: 16px 0;
+		padding: 15px 0 14px 0;
 	}
 
 	&:hover {
@@ -237,14 +242,14 @@ a {
 		input {
 			@include transition(width .6s $bezier, padding .6s $bezier);
 			width: 280px;
-			padding: 16px;
+			padding: 15px 15px 14px 15px;
 		}
 	}
 
 	input[type="text"]:focus {
 		@include transition(width .6s $bezier, padding .6s $bezier);
 		width: 280px;
-		padding: 16px;
+		padding: 15px 15px 14px 15px;
 	}
 }
 
@@ -255,9 +260,13 @@ a {
 }
 
 .search-button {
+	@extend %button-lightBlue;
 	@extend %icon;
-	@extend %button-darkBlue;
 	color: $_white;
+}
+
+.home-button {
+	@extend %button-plainText;
 }
 
 .login-button {
@@ -268,33 +277,41 @@ a {
 	@extend %button-plainText;
 }
 
+.about-button {
+	@extend %button-plainText;
+}
+
 .header {
 	width: 100%;
-	background-color: $_gray;
+	background-color: $_white;
 	overflow: hidden;
 }
 
 // INDEX PAGE STYLES
 
 .brand {
+	@extend %responsive-block;
+	border-bottom: 1px solid $_lightBlue;
+
+
 	.logo {
-		margin: 6em auto 1em auto;
+		margin: 5em auto .5em auto;
 		text-align: center;
 	}
 
 	h1 {
 		text-align: center;
 		letter-spacing: 1;
-		margin-bottom: 6em;
-
-		.logo-color-1 {
-			color: $_red;
-		}
-
-		.logo-color-2 {
-			color: $_lightBlue;
-		}
+		margin-bottom: 1em;
+		font-weight: bold;
 	}
+
+	p {
+		text-align: center;
+		color: $_lightBlue;
+		margin-bottom: 2em;
+	}
+
 }
 
 .about {
@@ -325,6 +342,10 @@ a {
 		border-bottom: 1px solid $_lightBlue;
 		padding-bottom: 1em;
 		margin-bottom: 1em;
+	}
+
+	p.pre-results {
+		margin-bottom: 2em;
 	}
 
 	.tags {
@@ -366,6 +387,10 @@ a {
 	padding-bottom: 1em;
 	margin-bottom: 1em;
 	border-bottom: 1px solid $_lightBlue;
+
+	&.last-result {
+		border-bottom: none;
+	}
 }
 
 .pagination {
@@ -482,6 +507,18 @@ a {
 			margin-top: 1.4em;
 			float: right;
 		}
+	}
+}
+
+// FOOTER STYLES
+
+footer {
+	background-color: $_red;
+	padding: 3em;
+	margin-top: 3em;
+	img {
+		display: block;
+		margin: auto;
 	}
 }
 

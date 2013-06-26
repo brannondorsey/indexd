@@ -128,14 +128,14 @@ you can use the generic selector below, but it's slower:
 
 /* line 53, ../sass/_fonts.scss */
 .search-button, .pagination .prev, .pagination .next {
-  font-family: 'icomoon';
-  speak: none;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
+  font-family: "icomoon" !important;
+  speak: none !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  line-height: 1 !important;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 /* line 11, ../sass/screen.scss */
@@ -146,12 +146,12 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 15, ../sass/screen.scss */
-.search-button, .login-button, .register-button {
+.search-button, .home-button, .login-button, .register-button, .about-button {
   -webkit-transition: background-color 0.2s ease;
   -moz-transition: background-color 0.2s ease;
   -o-transition: background-color 0.2s ease;
   transition: background-color 0.2s ease;
-  font-size: 18px;
+  font-size: 1em;
   font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
   line-height: 1.3888888888;
   padding: 1em;
@@ -166,34 +166,34 @@ you can use the generic selector below, but it's slower:
   border: none;
 }
 /* line 33, ../sass/screen.scss */
-.search-button:hover, .login-button:hover, .register-button:hover {
+.search-button:hover, .home-button:hover, .login-button:hover, .register-button:hover, .about-button:hover {
   background-color: #a75454;
   color: white;
 }
 
-/* line 47, ../sass/screen.scss */
+/* line 39, ../sass/screen.scss */
 .search-button {
-  background-color: #1d5b89;
+  background-color: #a8cfef;
 }
-/* line 50, ../sass/screen.scss */
+/* line 42, ../sass/screen.scss */
 .search-button:hover {
-  background-color: #143f5f;
+  background-color: #7590a7;
 }
 
 /* line 63, ../sass/screen.scss */
-.login-button, .register-button {
+.home-button, .login-button, .register-button, .about-button {
   background-color: rgba(255, 255, 255, 0);
   color: #ef7878;
 }
 /* line 67, ../sass/screen.scss */
-.login-button:hover, .register-button:hover {
-  background-color: #dfe0e1;
+.home-button:hover, .login-button:hover, .register-button:hover, .about-button:hover {
+  background-color: #ebeced;
   color: #ef7878;
 }
 
 /* line 77, ../sass/screen.scss */
 .search input[type="text"], body, #registration fieldset input[type="text"], #registration fieldset input[type="email"], #registration fieldset input[type="password"], #registration fieldset textarea {
-  font-size: 18px;
+  font-size: 16px;
   color: #1d5b89;
   font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
   line-height: 1.38889;
@@ -233,7 +233,7 @@ you can use the generic selector below, but it's slower:
 
 @media all and (min-width: 900px) {
   /* line 115, ../sass/screen.scss */
-  .query, .result, .pagination .pagination-container, .register-user {
+  .query, .result, .brand, .pagination .pagination-container, .register-user {
     width: 40%;
     margin: auto;
   }
@@ -292,13 +292,16 @@ a:hover {
 .search {
   width: 30%;
   float: left;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
-/* line 176, ../sass/screen.scss */
+/* line 179, ../sass/screen.scss */
 .search img {
   display: none;
   width: 45px;
 }
-/* line 181, ../sass/screen.scss */
+/* line 184, ../sass/screen.scss */
 .search ::-webkit-input-placeholder {
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -webkit-transition-delay: 0.2s;
@@ -308,7 +311,7 @@ a:hover {
   color: white;
   opacity: 0;
 }
-/* line 187, ../sass/screen.scss */
+/* line 190, ../sass/screen.scss */
 .search :-moz-placeholder {
   /* Firefox 18- */
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
@@ -319,7 +322,7 @@ a:hover {
   color: white;
   opacity: 0;
 }
-/* line 193, ../sass/screen.scss */
+/* line 196, ../sass/screen.scss */
 .search ::-moz-placeholder {
   /* Firefox 19+ */
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
@@ -330,7 +333,7 @@ a:hover {
   color: white;
   opacity: 0;
 }
-/* line 199, ../sass/screen.scss */
+/* line 202, ../sass/screen.scss */
 .search :-ms-input-placeholder {
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -webkit-transition-delay: 0.2s;
@@ -340,24 +343,25 @@ a:hover {
   color: white;
   opacity: 0;
 }
-/* line 205, ../sass/screen.scss */
+/* line 208, ../sass/screen.scss */
 .search input[type="text"] {
   -webkit-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -webkit-transition-delay: 0.3s, 0.3s;
   -moz-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s, padding 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s;
   -o-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s, padding 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s;
   transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s, padding 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.3s;
+  background-color: #ebeced;
   width: 0;
-  padding: 16px 0;
+  padding: 15px 0 14px 0;
 }
-/* line 213, ../sass/screen.scss */
+/* line 218, ../sass/screen.scss */
 .search:hover {
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -moz-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -o-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
 }
-/* line 217, ../sass/screen.scss */
+/* line 222, ../sass/screen.scss */
 .search:hover ::-webkit-input-placeholder {
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -webkit-transition-delay: 0.2s;
@@ -366,7 +370,7 @@ a:hover {
   transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
   opacity: 1;
 }
-/* line 222, ../sass/screen.scss */
+/* line 227, ../sass/screen.scss */
 .search:hover :-moz-placeholder {
   /* Firefox 18- */
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
@@ -376,7 +380,7 @@ a:hover {
   transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
   opacity: 1;
 }
-/* line 227, ../sass/screen.scss */
+/* line 232, ../sass/screen.scss */
 .search:hover ::-moz-placeholder {
   /* Firefox 19+ */
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
@@ -386,7 +390,7 @@ a:hover {
   transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
   opacity: 1;
 }
-/* line 232, ../sass/screen.scss */
+/* line 237, ../sass/screen.scss */
 .search:hover :-ms-input-placeholder {
   -webkit-transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -webkit-transition-delay: 0.2s;
@@ -395,138 +399,149 @@ a:hover {
   transition: opacity 0.6s cubic-bezier(0.75, 0, 0.2, 1) 0.2s;
   opacity: 1;
 }
-/* line 237, ../sass/screen.scss */
+/* line 242, ../sass/screen.scss */
 .search:hover input {
   -webkit-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -moz-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -o-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   width: 280px;
-  padding: 16px;
+  padding: 15px 15px 14px 15px;
 }
-/* line 244, ../sass/screen.scss */
+/* line 249, ../sass/screen.scss */
 .search input[type="text"]:focus {
   -webkit-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -moz-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   -o-transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   transition: width 0.6s cubic-bezier(0.75, 0, 0.2, 1), padding 0.6s cubic-bezier(0.75, 0, 0.2, 1);
   width: 280px;
-  padding: 16px;
+  padding: 15px 15px 14px 15px;
 }
 
-/* line 251, ../sass/screen.scss */
+/* line 256, ../sass/screen.scss */
 .login {
   width: 50%;
   float: right;
   text-align: right;
 }
 
-/* line 257, ../sass/screen.scss */
+/* line 262, ../sass/screen.scss */
 .search-button {
   color: white;
 }
 
-/* line 271, ../sass/screen.scss */
+/* line 284, ../sass/screen.scss */
 .header {
   width: 100%;
-  background-color: #ebeced;
+  background-color: white;
   overflow: hidden;
 }
 
-/* line 280, ../sass/screen.scss */
+/* line 292, ../sass/screen.scss */
+.brand {
+  border-bottom: 1px solid #a8cfef;
+}
+/* line 297, ../sass/screen.scss */
 .brand .logo {
-  margin: 6em auto 1em auto;
+  margin: 5em auto 0.5em auto;
   text-align: center;
 }
-/* line 285, ../sass/screen.scss */
+/* line 302, ../sass/screen.scss */
 .brand h1 {
   text-align: center;
   letter-spacing: 1;
-  margin-bottom: 6em;
+  margin-bottom: 1em;
+  font-weight: bold;
 }
-/* line 290, ../sass/screen.scss */
-.brand h1 .logo-color-1 {
-  color: #ef7878;
-}
-/* line 294, ../sass/screen.scss */
-.brand h1 .logo-color-2 {
+/* line 309, ../sass/screen.scss */
+.brand p {
+  text-align: center;
   color: #a8cfef;
+  margin-bottom: 2em;
 }
 
-/* line 300, ../sass/screen.scss */
+/* line 317, ../sass/screen.scss */
 .about {
   background-color: #ef7878;
   padding: 1em 0;
 }
 
-/* line 309, ../sass/screen.scss */
+/* line 326, ../sass/screen.scss */
 .query {
   margin-bottom: 1em;
 }
-/* line 315, ../sass/screen.scss */
+/* line 332, ../sass/screen.scss */
 .query .profile {
   margin-bottom: 4em;
 }
-/* line 319, ../sass/screen.scss */
+/* line 336, ../sass/screen.scss */
 .query .search-term {
   color: #ef7878;
 }
-/* line 323, ../sass/screen.scss */
+/* line 340, ../sass/screen.scss */
 .query .media {
   display: block;
   border-bottom: 1px solid #a8cfef;
   padding-bottom: 1em;
   margin-bottom: 1em;
 }
-/* line 330, ../sass/screen.scss */
+/* line 347, ../sass/screen.scss */
+.query p.pre-results {
+  margin-bottom: 2em;
+}
+/* line 351, ../sass/screen.scss */
 .query .tags {
   border-bottom: 1px solid #a8cfef;
   padding-bottom: 1em;
   margin-bottom: 1em;
 }
-/* line 336, ../sass/screen.scss */
+/* line 357, ../sass/screen.scss */
 .query .tags .tag {
   display: inline-block;
   margin: 0 0.2em 0.4em 0;
   position: relative;
 }
-/* line 340, ../sass/screen.scss */
+/* line 361, ../sass/screen.scss */
 .query .tags .tag a {
   color: #1d5b89;
   padding: 0.2em 0.5em;
   background-color: #a8cfef;
   display: inline-block;
 }
-/* line 345, ../sass/screen.scss */
+/* line 366, ../sass/screen.scss */
 .query .tags .tag a:hover {
   background-color: #97bad7;
 }
 
-/* line 354, ../sass/screen.scss */
+/* line 375, ../sass/screen.scss */
 .result {
   margin-top: 0;
   padding-bottom: 1em;
   margin-bottom: 1em;
   border-bottom: 1px solid #a8cfef;
 }
-/* line 357, ../sass/screen.scss */
+/* line 378, ../sass/screen.scss */
 .result p {
   margin: 0.5em 0;
 }
-/* line 361, ../sass/screen.scss */
+/* line 382, ../sass/screen.scss */
 .result h2 {
   margin-top: 0;
 }
+/* line 391, ../sass/screen.scss */
+.result.last-result {
+  border-bottom: none;
+}
 
-/* line 371, ../sass/screen.scss */
+/* line 396, ../sass/screen.scss */
 .pagination {
   margin-bottom: 4em;
 }
-/* line 375, ../sass/screen.scss */
+/* line 400, ../sass/screen.scss */
 .pagination .pagination-container {
   position: relative;
 }
-/* line 380, ../sass/screen.scss */
+/* line 405, ../sass/screen.scss */
 .pagination .prev {
   text-align: left;
   position: absolute;
@@ -534,13 +549,13 @@ a:hover {
   left: 0;
   cursor: pointer;
 }
-/* line 389, ../sass/screen.scss */
+/* line 414, ../sass/screen.scss */
 .pagination .count {
   text-align: center;
   display: block;
   width: 100%;
 }
-/* line 395, ../sass/screen.scss */
+/* line 420, ../sass/screen.scss */
 .pagination .next {
   text-align: right;
   position: absolute;
@@ -549,74 +564,74 @@ a:hover {
   cursor: pointer;
 }
 
-/* line 407, ../sass/screen.scss */
+/* line 432, ../sass/screen.scss */
 .register-user {
   margin-top: 3em;
 }
-/* line 411, ../sass/screen.scss */
+/* line 436, ../sass/screen.scss */
 .register-user h2 {
   font-weight: bold;
 }
 
-/* line 416, ../sass/screen.scss */
+/* line 441, ../sass/screen.scss */
 #registration {
   margin-bottom: 2em;
   overflow: hidden;
 }
-/* line 420, ../sass/screen.scss */
+/* line 445, ../sass/screen.scss */
 #registration label {
   color: #ef7878;
 }
-/* line 424, ../sass/screen.scss */
+/* line 449, ../sass/screen.scss */
 #registration fieldset {
   float: left;
   margin-top: 1em;
 }
-/* line 427, ../sass/screen.scss */
+/* line 452, ../sass/screen.scss */
 #registration fieldset.half {
   width: 50%;
 }
-/* line 429, ../sass/screen.scss */
+/* line 454, ../sass/screen.scss */
 #registration fieldset.half:nth-of-type(even) {
   padding-left: 1em;
 }
-/* line 433, ../sass/screen.scss */
+/* line 458, ../sass/screen.scss */
 #registration fieldset.half:nth-of-type(odd) {
   padding-right: 1em;
 }
-/* line 437, ../sass/screen.scss */
+/* line 462, ../sass/screen.scss */
 #registration fieldset.half:nth-of-type(10) {
   padding-right: 1em;
   padding-left: 0;
 }
-/* line 442, ../sass/screen.scss */
+/* line 467, ../sass/screen.scss */
 #registration fieldset.half:nth-of-type(11) {
   padding-right: 0;
 }
-/* line 446, ../sass/screen.scss */
+/* line 471, ../sass/screen.scss */
 #registration fieldset.half:nth-of-type(6) {
   margin-top: 2.4em;
 }
-/* line 451, ../sass/screen.scss */
+/* line 476, ../sass/screen.scss */
 #registration fieldset.full {
   width: 100%;
   float: left;
 }
-/* line 456, ../sass/screen.scss */
+/* line 481, ../sass/screen.scss */
 #registration fieldset input[type="text"], #registration fieldset input[type="email"], #registration fieldset input[type="password"], #registration fieldset textarea {
   width: 100%;
   background-color: #ebeced;
   border: 1px solid #d3d4d5;
   padding: .5em;
 }
-/* line 466, ../sass/screen.scss */
+/* line 491, ../sass/screen.scss */
 #registration fieldset input:focus, #registration fieldset textarea:focus {
   box-shadow: none;
   appearance: none;
   border: 1px solid #d3d4d5;
   outline: none;
 }
-/* line 474, ../sass/screen.scss */
+/* line 499, ../sass/screen.scss */
 #registration fieldset input[type="submit"] {
   font-family: "franklin-gothic-urw", verdana, sans-serif;
   font-size: 1em;
@@ -627,4 +642,16 @@ a:hover {
   padding: .7em;
   margin-top: 1.4em;
   float: right;
+}
+
+/* line 515, ../sass/screen.scss */
+footer {
+  background-color: #ef7878;
+  padding: 3em;
+  margin-top: 3em;
+}
+/* line 519, ../sass/screen.scss */
+footer img {
+  display: block;
+  margin: auto;
 }
