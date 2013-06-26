@@ -27,18 +27,52 @@ class RelationalAlgorithm{
 	public function get_related_users($user_id){
 		//$input = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($this->get_related_users_raw_JSON($user_id)));
 		$all_related_users_obj = json_decode($this->get_related_users_raw_JSON($user_id));
-		if(is_object($all_related_users_obj)) echo $all_related_users_obj->tags[0]->first_name;
-		else echo "NOT AN OBJECT";
-		echo "<br/><br/>";
-		//echo $this->get_related_users_raw_JSON($user_id);
-		//var_dump($all_related_users_obj->media[0]);
-		$this->get_most_occuring($all_related_users_obj->media, $this->numb_of_each_column_for_algorithm);
-		$this->get_most_occuring($all_related_users_obj->tags, $this->numb_of_each_column_for_algorithm);
-		$this->get_most_occuring($all_related_users_obj->location, $this->numb_of_each_column_for_algorithm);
-		//echo $most_repeated_array[60];
+		if(!is_object($all_related_users_obj)) echo "NOT AN OBJECT"; 
+		$most_media_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->media, $this->numb_of_each_column_for_algorithm);
+		$most_tags_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->tags, $this->numb_of_each_column_for_algorithm);
+		$most_location_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->location, $this->numb_of_each_column_for_algorithm);
+		echo $this->get_related_users_using_arrays_of_ids($most_media_ids, $most_tags_ids, $most_location_ids);
 	}
 
-	protected function get_most_occuring($all_related_users_objs_array, $numb_to_return){
+	protected function get_related_users_using_arrays_of_ids($array_1, $array_2, $array_3){
+		$max_array_size = max(sizeof($array_1), sizeof($array_2), sizeof($array_3));
+		$numb_users_chosen = 0;
+		$numb_users_needed = $this->numb_related_users_per_page;
+		$most_related_users_ids = array(); //holds user ids of the most related users
+		$ids_already_added = array(); //keeps track of the ids of users that have already been added to $most_related_users_ids
+		$i = 0;
+		while($numb_users_chosen < $numb_users_needed){
+			//only keep searching if there are going to be any more possible results, else break
+			if($i < $max_array_size){
+				if($i < sizeof($array_1) && array_search($array_1[$i], $ids_already_added) == false){
+					$most_related_users_ids[] = $array_1[$i];
+					$numb_users_chosen++;
+				}
+				if($i < sizeof($array_2) && !array_search($array_2[$i], $ids_already_added) == false){
+					$most_related_users_ids[] = $array_2[$i];
+					$numb_users_chosen++;
+				} 
+				if($i < sizeof($array_3) && !array_search($array_3[$i], $ids_already_added) == false){
+				 $most_related_users_ids[] = $array_3[$i];
+				 $numb_users_chosen++;
+				}
+			}
+			else break;
+			$i++;	
+		}
+		//query to get the MOST related users
+		$query = "SELECT " . $this->api->public_columns_to_provide . " FROM " . Database::$table . " WHERE ";
+		$j = 0;
+		foreach($most_related_users_ids as $id){
+			$query .= "id = '" . $id . "' ";
+			if($j != sizeof($most_related_users_ids) -1) $query .= "OR ";
+			$j++;
+		}
+		$query .= "ORDER BY likes DESC " . "LIMIT " . sizeof($most_related_users_ids);
+		return $this->api->query_results_as_array_of_JSON_objs($query, "related_users", true);
+	}
+
+	protected function get_most_occuring_by_array_of_ids($all_related_users_objs_array, $numb_to_return){
 		$id_array = array();
 		foreach ($all_related_users_objs_array as $raw_related_user) {
 			if(!isset($raw_related_user->error)) $id_array[] = $raw_related_user->id;
@@ -46,14 +80,9 @@ class RelationalAlgorithm{
 		$most_repeated_array = array_count_values($id_array);
 		arsort($most_repeated_array, SORT_REGULAR);
 		$most_repeated_array = array_keys($most_repeated_array);
-		//$most_repeated_array = array_flip($most_repeated_array);
-		//array_walk($most_repeated_array, array($this, 'array_walk_callback'));
-		var_dump($most_repeated_array);
-		echo "<br/><br/>";
-	}
-
-	protected function array_walk_callback($value){
-		echo "the value is " . $value;
+		// var_dump($most_repeated_array);
+		// echo "<br/><br/>";
+		return $most_repeated_array;
 	}
 
 	protected function init_user_column_vars($user_id){

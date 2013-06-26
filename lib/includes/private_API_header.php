@@ -3,8 +3,8 @@
 	 require_once("classes/class.RelationalAlgorithm.inc.php");
 	 Database::init_connection();
 	 $algorithm = new RelationalAlgorithm();
-	 $algorithm->get_related_users((int) $_GET['id']);
-	 //$algorithm_obj = json_decode($data);
+	 $get_array = Database::clean($_GET);
+	 $algorithm->get_related_users((int) $get_array['id']);
 	 Database::close_connection();
 	 //echo $data;
 ?>
