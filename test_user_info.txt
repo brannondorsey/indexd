@@ -1,5 +1,5 @@
 test user info
 
-USER ID: 22
-USER EMAIL: nec@Donec.net
+USER ID: 5
+USER EMAIL: odio@eu.ca
 USER PASSWORD: indexd 

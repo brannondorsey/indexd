@@ -27,4 +27,4 @@
 		}
 	}
 	Database::close_connection();
-?> 
+?> 	

@@ -18,10 +18,10 @@ class Database {
 		self::$mysqli->close();
 	}
 	
-	//execute sql query statement. Used for INSERT and UPDATE mostly
+	//execute sql query statement. Used for INSERT and UPDATE mostly. Returns false if query fails
 	public static function execute_sql($query) {
-		$query = self::clean($query);
-		self::$mysqli->query($query);
+		if(self::$mysqli->query($query)) echo "QUERY SUCCEEDED!";
+		else echo self::$mysqli->error;
 	}
 	
 	//returns array of one result row if one result was found or 2D array of all returned rows if multiple were found
@@ -54,7 +54,7 @@ class Database {
 			}
 			$string = $new_string_array;
 		}
-		else $string = self::clean_string($string, $mysqli);
+		else $string = self::clean_string($string, self::$mysqli);
 		return $string;
 	}
 
