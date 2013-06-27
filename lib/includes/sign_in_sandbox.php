@@ -21,10 +21,11 @@
 		$user->sign_out();
 	}
 	if($user->is_signed_in()){
-		$object_vars = get_object_vars($user->data);
-		foreach($object_vars as $property_name => $property_value){
-			echo "the user's " . $property_name . " is " . $property_value . "<br/>";
-		}
+		
+		// $object_vars = get_object_vars($user->data);
+		// foreach($object_vars as $property_name => $property_value){
+		// 	echo "the user's " . $property_name . " is " . $property_value . "<br/>";
+		// }
 	}
 	Database::close_connection();
 ?> 	

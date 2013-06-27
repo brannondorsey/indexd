@@ -16,23 +16,24 @@
     <body>
         
         <?php require_once("lib/includes/partials/header.inc.php"); ?>
+        <?php require_once("lib/includes/sign_in.inc.php"); ?>
 
         <section class="login-page">
             <h2>Sign In</h2>
             <p>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a></p>
-            <form class="login-form" method="post">
+            <form class="login-form" method="post" name="login-page-form" id="login-page-form" action="">
 
                 <fieldset class="half">
                     <label for="email">E-mail</label>
-                    <input type="email" id="email"/>
+                    <input type="email" id="email" name="email"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="password">Password</label>
-                    <input type="password" id="password"/>
+                    <input type="password" id="password" name="password"/>
                 </fieldset>
 
-                <input type="submit" id="submit-login" />
+                <input type="submit" id="submit-login" name="submit"/>
             </form>
         </section>
 

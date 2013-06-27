@@ -1,8 +1,8 @@
 <?php
 require_once("class.Database.inc.php");
 require_once("class.PrivateAPI.inc.php");
-require_once("classes/class.Session.inc.php");
-require_once("classes/class.InsertUpdate.inc.php");
+require_once("class.Session.inc.php");
+require_once("class.InsertUpdate.inc.php");
 
 class User{
 	protected $api;

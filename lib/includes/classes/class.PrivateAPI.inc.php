@@ -14,12 +14,12 @@ class PrivateAPI extends API {
 		return true;
 	}
 
-	public function get_logged_in_user_obj($user_id){
-		$query_array = array('id' => $user_id, 
-							  'limit' => 1);
-		$JSON_obj = json_decode($this->get_JSON_from_get($query_array));
-		if(is_object($JSON_obj)) return $JSON_obj;
-		else return false;
-	}
+	// public function get_logged_in_user_obj($user_id){
+	// 	$query_array = array('id' => $user_id, 
+	// 						  'limit' => 1);
+	// 	$JSON_obj = json_decode($this->get_JSON_from_get($query_array));
+	// 	if(is_object($JSON_obj)) return $JSON_obj;
+	// 	else return false;
+	// }
 }
 ?>
