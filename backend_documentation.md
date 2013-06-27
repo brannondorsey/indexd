@@ -38,6 +38,19 @@ While `get_JSON_from_GET()` usually accepts a cleaned`$_GET` array filled with A
       $obj = json_decode($this->api->get_JSON_from_GET);
 
 It is important to remember to `json_decode()` output before using it in a function. 
+####Catching the results
+The results from `get_JSON_from_GET` once `json_decoded`ed can be accessed like this  
+     
+   
+	  $obj = $api->get_JSON_from_GET($cleaned_get_array);
+	  $obj->data[0]->first_name
+	  $obj->error //catches the error if there is one
+
+	  //check for error like this
+	  $b_error = (isset($data->error) ? true : false);
+	  
+Currently error values include things like invalid API keys and no results found.
+    
 
 ####More on the API
 This class also contains all the fancy dynamic query building from $_GET in the legendary `API::form_query()` protected method. 

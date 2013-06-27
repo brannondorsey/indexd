@@ -19,8 +19,11 @@
     );
     $total_numb_results = $content_obj->total_numb_results($search_array); //gives total number of pages
     $total_pages = ceil($total_numb_results/$numb_results); //calculates total number of pages
+    if ($page > $total_pages) $page = $total_pages; //sets page to max page if page it exceeds it
     $data = new stdClass();
     $data = $content_obj->output_search_results($search_array);
+    $b_results_exist = (!isset($data->error) ? true : false); //set results according to if error exists
+    //use ^ boolean to check if "NO RESULTS FOUND" content needs to be shown
 ?>
 
     <head>
@@ -44,15 +47,15 @@
 
             <section class="results">
 
-                <?php
-                foreach($data->data as $result) { ?>
-                <div class="result">
-                    <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
-                    <p class="descrip"><?php echo $result->description; ?></p>
-                    <a class="url" href="<?php echo $result->url ?>"><?php echo "www." . $result->url . ".com" ?></a> 
-                </div>
-
-                <?php } ?>
+            <?php if($b_results_exist){
+                    foreach($data->data as $result) { ?>
+                    <div class="result">
+                        <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
+                        <p class="descrip"><?php echo $result->description; ?></p>
+                        <a class="url" href="<?php echo $result->url ?>"><?php echo "www." . $result->url . ".com" ?></a> 
+                    </div>
+            <?php }
+                } ?>
 
             <section class="pagination">
                 <div class="pagination-container">
@@ -60,7 +63,9 @@
                     <a class="prev" href="results.php?search=<?php echo $search_string; ?>&amp;page=<?php echo ($page - 1); ?>">&lt;</a>
                     <?php } ?>
                     <span class="count"><?php echo min($page, $total_pages) . " of " . $total_pages ?> <e</span>
+                    <?php if ($page < $total_pages) { ?>
                     <a class="next" href="results.php?search=<?php echo $search_string; ?>&amp;page=<?php echo ($page + 1); ?>">&gt;</a>
+                    <?php } ?>
                 </div>
             </section>
         </section>
