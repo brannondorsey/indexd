@@ -4,11 +4,13 @@ TODO:
 +make API not output anything if there are no get params
 +add tried var to error statement to name what didn't return result
 +algorithm currently treats no field entries as similar fields. This is correct but should not happen.
-+add email confirmation column in database
 +set session length based on stay logged in
-+limit session variables stored to ONLY public api columns. Do this by using both PrivateAPI and API classes in Users class. Do authentication checks like login…etc with PrivateAPI but only pass public API values into $_SESSION/$user->data.
-+handle search returning no results
++search by relevancy is not working because Match()… Against()… is IN BOOLEAN MODE. The problem is that search returns no results too often in NATURAL mode. Perhaps make natural mode set to true automatically in the API class and if that yields no results set it to false (i.e. search in boolean mode) and then recurse the appropriate function and sort the boolean results by likes.
++maker sure that api and private api only output UTF-8 JSON
 
 COMPLETED:
 -rewrite database class for better efficiency (i.e. keep a connection open. Perhaps pass in a reference to a global DB into classes that use it like API etc so that everything can use it) I DID THIS A FEW COMMITS AGO. I MADE THE DB STATIC.
 -Design and make Algorithm class
+-handle search returning no results COMPLETED FROM THE BACKEND PROSPECTIVE. Still needs to handle the display on the front end but the backend now checks for an error obj in the JSON
+-add email confirmation column in database
+-limit session variables stored to ONLY public api columns. Do this by using both PrivateAPI and API classes in Users class. Do authentication checks like login…etc with PrivateAPI but only pass public API values into $_SESSION/$user->data. DID THIS USING OPTIONAL BOOL PARAMETER IN PrivateAPI::get_signed_in_user_obj that returns private obj

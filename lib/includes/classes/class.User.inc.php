@@ -7,7 +7,7 @@ require_once("class.InsertUpdate.inc.php");
 class User{
 	protected $api;
 	protected $id;
-	public $data; //holds all of the users info
+	public $data; //holds all of the users info (PUBLIC ONLY)
 	protected $b_signed_in = false;
 	protected $IU; //InsertUpdate class
 
@@ -18,11 +18,10 @@ class User{
 	//checks if user is signed in using $_SESSION and returns what it finds
 	public function is_signed_in(){
 		if(isset($_SESSION['id'])){
-		 $this->get_user_data_from_SESSION(); //load the data object
+		 $this->fill_data_var_from_SESSION(); //load the data object
 		 $b_signed_in = true; //if there is a session id
 		}
 		else $b_signed_in = false;
-		//return true; //for now
 		return $b_signed_in; 
 	}
 
@@ -39,15 +38,14 @@ class User{
 		$user_properties = get_object_vars($user_data_obj);
 		Session::add_session_vars($user_properties);
 		//fill $this->data object with all of the variables from the $_SESSION
-		$this->get_user_data_from_SESSION();
-		echo $this->data->first_name;
+		$this->fill_data_var_from_SESSION();
 	}
 
-	public function get_user_data_from_SESSION(){
+	//fills $this->data with all of the public user info that was saved in the user's session
+	public function fill_data_var_from_SESSION(){
 		$this->data = new stdClass();
 		foreach($_SESSION as $key => $value){
 			$this->data->{$key} = $value;
-			//echo "the value I just set was " . $this->data->{$key} . "<br/>";
 		}
 	}
 
@@ -70,7 +68,7 @@ class User{
 	}
 
 	public function delete_account(){
-
+		//drop user row using id from $this->data obj
 	}
 
 	//returns $user_id on success and false on falure. Used on sign in page.

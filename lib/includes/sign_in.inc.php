@@ -2,8 +2,8 @@
 	 require_once("classes/class.RelationalAlgorithm.inc.php");
 	 require_once("classes/class.User.inc.php");
 	 require_once("classes/class.Session.inc.php");
+	 //Session::start();
 	 Database::init_connection();
-	 Session::start();
 	 $user = new User();
 	 if(!empty($_POST) && isset($_POST)){ 
 	 	$post_array = Database::clean($_POST);
@@ -14,7 +14,10 @@
 		 else echo "the user is signed in <br/>";
 	}
 	if($user->is_signed_in()){
-		echo $user->data->email;
+		// foreach ($user->data as $property => $value) {
+		// 	echo "the logged in user's " . $property . " is " . $value . "<br/>";
+		// }
+		
 	}
 	Database::close_connection();
 ?> 	

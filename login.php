@@ -1,3 +1,5 @@
+<?php require_once("lib/includes/sign_in.inc.php"); //this has to come first because it sends the session HEADER?> 
+<?php require_once("lib/includes/partials/header.inc.php"); ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -14,10 +16,6 @@
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     </head>
     <body>
-        
-        <?php require_once("lib/includes/partials/header.inc.php"); ?>
-        <?php require_once("lib/includes/sign_in.inc.php"); ?>
-
         <section class="login-page">
             <h2>Sign In</h2>
             <p>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a></p>
