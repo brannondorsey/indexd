@@ -7,7 +7,7 @@ class RelationalAlgorithm{
 	
 	protected $numb_related_users_per_page = 10;
 	protected $numb_of_each_column_for_algorithm;
-	protected $nearby_users_radius_in_miles = 00;
+	protected $nearby_users_radius_in_miles = 1000;
 	protected $columns_for_algorithm = "tags, media, lat, lon";
 	protected $columns_for_algorithm_array;
 
@@ -24,9 +24,13 @@ class RelationalAlgorithm{
 	}
 
 	//implements our sites algorithm to return related user JSON objs
+	//algorithm displays related users by providing a more or less equivalent number of the most related users
+	//in the media, tags, and location columns. If certain related users are present in more than one of these three
+	//columns they are prioritized and have a greater chance of being included in the final 10 users returned
+
+	//returns a string of 10 most related users as an array of JSON objects wrapped in a related_users obj
 	public function get_related_users($user_id){
-		//$input = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($this->get_related_users_raw_JSON($user_id)));
-		$all_related_users_obj = json_decode($this->get_related_users_raw_JSON($user_id));
+		$all_related_users_obj = json_decode($this->get_related_users_raw_JSON($user_id)); 
 		if(!is_object($all_related_users_obj)) echo "NOT AN OBJECT"; 
 		$most_media_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->media, $this->numb_of_each_column_for_algorithm);
 		$most_tags_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->tags, $this->numb_of_each_column_for_algorithm);
@@ -34,6 +38,7 @@ class RelationalAlgorithm{
 		echo $this->get_related_users_using_arrays_of_ids($most_media_ids, $most_tags_ids, $most_location_ids);
 	}
 
+	//returns 
 	protected function get_related_users_using_arrays_of_ids($array_1, $array_2, $array_3){
 		$max_array_size = max(sizeof($array_1), sizeof($array_2), sizeof($array_3));
 		$numb_users_chosen = 0;

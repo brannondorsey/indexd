@@ -22,7 +22,7 @@ class API {
 		$this->public_columns_to_provide = $this->columns_to_provide;
 	}
 
-	//Returns valid JSON from $_GET values. Array must be sanitized before using this function.
+	//Returns a valid JSON string from $_GET values. Array must be sanitized before using this function.
 	public function get_JSON_from_GET(&$get_array, $object_parent_name="data"){
 		$query = $this->form_query($get_array);
 		// echo $query;
@@ -31,6 +31,7 @@ class API {
 		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
 		return $this->JSON_string;
 	}
+
 
 	public function query_results_as_array_of_JSON_objs($query, $object_parent_name=NULL, $b_wrap_as_obj=false){
 		$JSON_output_string = "";
@@ -129,6 +130,7 @@ class API {
 		if($search != ""){
 			$this->append_prepend($search, "'");
 			$query .= "WHERE $match_against_statement ORDER BY score DESC ";
+			echo $query;
 		}
 		//if search was not used use LIKE
 		else{
@@ -137,7 +139,8 @@ class API {
 				$i = 0;
 				$query .= "WHERE ";
 				foreach ($column_parameters as $parameter => $value) {
-					//if column parameter is id search by = not LIKE
+					//if exact parameter was specified as TRUE 
+					//or column parameter is id search by = not LIKE
 					if($parameter == 'id' || $exact){
 						$this->append_prepend($value, "'");
 					 	$query .= "$parameter = $value ";

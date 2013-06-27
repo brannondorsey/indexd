@@ -10,10 +10,12 @@ class Database {
 	protected static $host     = "localhost";
 	protected static $mysqli;
 
+	//initialize the database connection
 	public static function init_connection(){
 		self::$mysqli = new mysqli(self::$host, self::$user, self::$password, self::$db);
 	}
 
+	//close the database connection
 	public static function close_connection(){
 		self::$mysqli->close();
 	}

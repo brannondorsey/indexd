@@ -7,7 +7,7 @@ TODO:
 +add email confirmation column in database
 +set session length based on stay logged in
 +limit session variables stored to ONLY public api columns. Do this by using both PrivateAPI and API classes in Users class. Do authentication checks like login…etc with PrivateAPI but only pass public API values into $_SESSION/$user->data.
-
++handle search returning no results
 
 COMPLETED:
 -rewrite database class for better efficiency (i.e. keep a connection open. Perhaps pass in a reference to a global DB into classes that use it like API etc so that everything can use it) I DID THIS A FEW COMMITS AGO. I MADE THE DB STATIC.
