@@ -82,7 +82,7 @@ class RelationalAlgorithm{
 		}
 		$query .= "ORDER BY likes DESC LIMIT " . sizeof($most_related_users_ids);
 		//return a string of JSON using that wraps an array of user objects in a related_users object
-		return $this->api->query_results_as_array_of_JSON_objs($query, "related_users", true);
+		return $this->api->query_results_as_array_of_JSON_objs($query, "data", true);
 	}
 
 	//returns an array of user ids of the most repeated most relevant users in the column
