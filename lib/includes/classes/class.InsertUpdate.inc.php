@@ -8,7 +8,7 @@ class InsertUpdate {
 	public function __construct(){
 		
 	}
-
+	//handles dynamic formation of INSERT and UPDATE queries from $_POST and executes them
 	//post array should be cleaned before using this function
 	public function execute_from_assoc($post_array, $statement_type="INSERT"){
 		$statement_type = strtoupper($statement_type);
