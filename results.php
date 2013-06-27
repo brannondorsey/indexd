@@ -3,6 +3,18 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<?php 
+    error_reporting(E_ALL);
+    require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
+    Database::init_connection();
+    $content_obj = new ContentOutput();
+    $search_string = $_GET['search'];
+    $numb_results = 10;
+    $page = (isset($_GET['page']) ? $_GET['page'] : 1);
+    $data = $content_obj->output_search_results($search_string, 10, $page);
+?>
+
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -15,62 +27,32 @@
     </head>
     <body>
         
-        <?php require_once("lib/includes/partials/header.inc.php"); ?>
+        <?php require_once("lib/includes/partials/header.inc.php");?>
 
         <section class="listings">
             <section class="query">
-                <h2>Showing results for <span class="search-term"><?php echo $_GET['query']; ?></span></h2>
+                <h2>Showing results for <span class="search-term"><?php echo $search_string; ?></span></h2>
             </section>
 
             <section class="results">
+
+                <?php
+                foreach($data->data as $result) { ?>
                 <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
+                    <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
+                    <p class="descrip"><?php echo $result->description; ?></p>
+                    <a class="url" href="<?php echo $result->url ?>"><?php echo "www." . $result->url . ".com" ?></a> 
                 </div>
 
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-            </section>
+                <?php } ?>
 
             <section class="pagination">
                 <div class="pagination-container">
-                    <a class="prev">&lt;</a>
-                    <span class="count">1 of 30</span>
-                    <a class="next">&gt;</a>
+                    <?php if ($page > 1) { ?>
+                    <a class="prev" href="results.php?search=<?php echo $search_string; ?>&amp;page=<?php echo ($page - 1); ?>">&lt;</a>
+                    <?php } ?>
+                    <span class="count"><?php echo $page ?> of 30</span>
+                    <a class="next" href="results.php?search=<?php echo $search_string; ?>&amp;page=<?php echo ($page + 1); ?>">&gt;</a>
                 </div>
             </section>
         </section>
@@ -82,3 +64,4 @@
         <script src="js/main.js"></script>
     </body>
 </html>
+<?php Database::close_connection(); ?>

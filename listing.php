@@ -3,6 +3,18 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<?php 
+    error_reporting(E_ALL);
+    require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
+    Database::init_connection();
+    $content_obj = new ContentOutput();
+    $user_id = $_GET['id'];
+    $numb_results = 10;
+    $profile_data = $content_obj->output_profile($user_id)->data[0];
+    $data = $content_obj->output_related_users($user_id, $numb_results);
+?>
+
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,75 +32,38 @@
         <section class="listings">
             <section class="query">
                 <div class="profile">
-                    <h2>Kevin Zweerink</h2>
-                    <a href="#" class="media">Graphic Design</a>
+                    <h2><?php echo $profile_data->first_name . " " . $profile_data->last_name; ?></h2>
+                    <a href="#" class="media"><?php echo $profile_data->media; ?></a>
 
                     <div class="info">
-                        <a class="url" href="#">www.kevinzweerink.com</a>
-                        <a class="email" href="#">kevinzweerink@gmail.com</a>
+                        <a class="url" href="<?php echo $profile_data->url ?>">www.<?php echo $profile_data->url; ?>.com</a>
+                        <a class="email" href="mailto:<?php echo $profile_data->email ?>"><?php echo $profile_data->email; ?></a>
 
-                        <p class="descrip">Graphic Design student at the Maryland Institute College of Art. Into some things.</p>
+                        <p class="descrip"><?php echo $profile_data->description; ?></p>
 
                         <div class="tags">
-                            <span class="tag"><a href="#">Design</a></span>
-                            <span class="tag"><a href="#">Web</a></span>
-                            <span class="tag"><a href="#">Student</a></span>
-                            <span class="tag"><a href="#">MICA</a></span>
+                            <?php foreach(ContentOutput::commas_to_tags($profile_data->tags) as $tag) { ?>
+                            <span class="tag"><a href="results.php?search=<?php echo $tag ?>"><?php echo $tag ?></a></span>
+                            <?php } ?>
                         </div>
                     </div> <!-- /.info -->
 
-                    <a class="location" href="#">Richmond, VA, United States</a>
+                    <a class="location" href="#"><?php echo ucfirst($profile_data->city) . ", " . ucfirst($profile_data->state) . ", " . ucfirst($profile_data->country);?></a>
                 </div>
             </section>
 
             <section class="results">
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
+                <?php
+                $data_array = $data->data;
+                $data_array_keys = array_keys($data_array);
+                $last_key = end($data_array_keys);
+                foreach($data_array as $key => $result) { ?>
+                <div class="result <?php if($key === $last_key) { echo "last-result"; }?>">
+                    <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
+                    <p class="descrip"><?php echo $result->description ?></p>
+                    <a class="url" href="<?php echo $result->url ?>">www.<?php echo $result->url ?>.com</a>
                 </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result last-result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
+                <?php } ?>
             </section>
         </section>
 

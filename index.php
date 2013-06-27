@@ -3,6 +3,16 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<?php 
+    //error_reporting(E_ALL);
+    require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
+    Database::init_connection();
+    $liked_users = new ContentOutput();
+    $numb_results = 10;
+    $data = $liked_users->output_highest_liked_users($numb_results);
+?>
+
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -15,7 +25,7 @@
     </head>
     <body>
         
-        <?php require_once("lib/includes/partials/header.inc.php"); ?>
+        <?php require_once("lib/includes/partials/header.inc.php");?>
 
         <section class="brand">
             <div class="logo">
@@ -58,47 +68,18 @@
             </section>
 
             <section class="results">
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
 
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
+                <?php
+                $data_array = $data->data;
+                $data_array_keys = array_keys($data_array);
+                $last_key = end($data_array_keys);
+                foreach($data_array as $key => $result) { ?>
+                <div class="result <?php if($key === $last_key) { echo "last-result"; }?>">
+                    <h2><a href="<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
+                    <p class="descrip"><?php echo $result->description ?></p>
+                    <a class="url" href="<?php echo $result->url ?>">www.<?php echo $result->url ?>.com</a>
                 </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
-
-                <div class="result last-result">
-                    <h2><a href="#">Brammom Dorsey</a></h2>
-                    <p class="descrip">Just a cool guy trying to do cool things in the Windy City. Originally from Richmond, VA</p>
-                    <a class="url" href="#">www.brannondorsey.com</a>
-                </div>
+                <?php } ?>
             </section>
         </section>
 
