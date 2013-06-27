@@ -26,10 +26,8 @@ class ContentOutput{
 		return $search_obj;
 	}
 
-	public function output_search_results($search_string, $numb_results, $page=1){
-		$search_array = array('search' => $search_string,
-							  'limit' => $numb_results,
-							  'page' => $page);
+	//NOW TAKES API PARAMETERS ARRAY
+	public function output_search_results($search_array){
 		$search_obj = json_decode($this->api->get_JSON_from_GET($search_array));
 		return $search_obj;
 	}
@@ -44,6 +42,16 @@ class ContentOutput{
 
 	public function output_related_users($user_id, $numb_results){
 		return $this->output_highest_liked_users(10);
+	}
+
+	//returns total number of results from an assoc array of api parameters
+	//note: pass in search array unaltered from how it will be searched
+	public function total_numb_results($search_array){
+		$search_array['count_only'] = true;
+		if(array_key_exists('limit', $search_array)) unset($search_array['limit']);
+		if(array_key_exists('page', $search_array)) unset($search_array['page']);
+		$obj = json_decode($this->api->get_JSON_from_GET($search_array));
+		return $obj->data[0]->count;
 	}
 
 	#etc...

@@ -122,7 +122,10 @@ class API {
 			else if($parameter == 'exact' &&
 				    strtolower($value) == "true") $exact = true;
 			else if($parameter == 'count_only' &&
-				    strtolower($value) == "true") $count_only = true;
+				    strtolower($value) == "true" ||
+				    $value = true){
+				$count_only = true;
+			} 
 			else if($parameter == 'key') $this->API_key = $value; 
 		}
 
@@ -136,7 +139,7 @@ class API {
 		if($search != ""){
 			$this->append_prepend($search, "'");
 			$query .= "WHERE $match_against_statement ORDER BY score DESC ";
-			echo $query;
+			// echo $query;
 		}
 		//if search was not used use LIKE
 		else{
@@ -200,7 +203,7 @@ class API {
 			$query .= " OFFSET " . $limit * ($page -1);
 		}
 
-		echo $query . "<br/>";
+		//echo $query . "<br/>";
 		return $query;
 	}
 

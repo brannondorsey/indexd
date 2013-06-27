@@ -9,10 +9,18 @@
     require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
     Database::init_connection();
     $content_obj = new ContentOutput();
-    $search_string = $_GET['search'];
+    $search_string = Database::clean($_GET['search']);
     $numb_results = 10;
     $page = (isset($_GET['page']) ? $_GET['page'] : 1);
-    $data = $content_obj->output_search_results($search_string, 10, $page);
+    $search_array = array(
+       'search' => $search_string,
+       'limit' => $numb_results,
+       'page' => $page
+    );
+    $total_numb_results = $content_obj->total_numb_results($search_array); //gives total number of pages
+    $total_pages = ceil($total_numb_results/$numb_results); //calculates total number of pages
+    $data = new stdClass();
+    $data = $content_obj->output_search_results($search_array);
 ?>
 
     <head>
@@ -51,7 +59,7 @@
                     <?php if ($page > 1) { ?>
                     <a class="prev" href="results.php?search=<?php echo $search_string; ?>&amp;page=<?php echo ($page - 1); ?>">&lt;</a>
                     <?php } ?>
-                    <span class="count"><?php echo $page ?> of 30</span>
+                    <span class="count"><?php echo min($page, $total_pages) . " of " . $total_pages ?> <e</span>
                     <a class="next" href="results.php?search=<?php echo $search_string; ?>&amp;page=<?php echo ($page + 1); ?>">&gt;</a>
                 </div>
             </section>
