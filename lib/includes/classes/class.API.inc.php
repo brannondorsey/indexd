@@ -56,12 +56,14 @@ class API {
 	//outputs JSON object from 1D or 2D MySQL results array
 	protected function output_objects($mysql_results_array){
 		$JSON_output_string = "";
+		$count_only_key = "count"; //change default COUNT(*) key name
 		if(isset($mysql_results_array[0])){
 			$i = 0;
 			foreach ($mysql_results_array as $user_row) {
 				$JSON_output_string .= "{";
 				$j = 0;
 				foreach($user_row as $key => $value){
+					if($key == "COUNT(*)") $key = $count_only_key;
 					$JSON_output_string .= '"' . $key . '"' . ':';
 					$JSON_output_string .= '"' . $value . '"';
 					if ($j != sizeof($user_row) -1) $JSON_output_string .= ',';
@@ -77,6 +79,7 @@ class API {
 			$JSON_output_string .= "{";
 				$j = 0;
 				foreach($user_row as $key => $value){
+					if($key == "COUNT(*)") $key = $count_only_key;
 					$JSON_output_string .= '"' . $key . '"' . ':';
 					$JSON_output_string .= '"' . $value . '"';
 					if ($j != sizeof($user_row) -1) $JSON_output_string .= ',';
@@ -103,6 +106,7 @@ class API {
 		$limit = "";
 		$page = 1;
 		$exact = false;
+		$count_only = false;
 		$this->API_key = "";
 
 		//distribute $_GETs to their appropriate arrays/vars
@@ -115,14 +119,16 @@ class API {
 			else if($parameter == 'flow') $flow = $value;
 			else if($parameter == 'limit') $limit = $value;
 			else if($parameter == 'page') $page = (int) $value;
-			else if($parameter == 'exact'){
-				if(strtolower($value) == "true") $exact = true;
-			}
+			else if($parameter == 'exact' &&
+				    strtolower($value) == "true") $exact = true;
+			else if($parameter == 'count_only' &&
+				    strtolower($value) == "true") $count_only = true;
 			else if($parameter == 'key') $this->API_key = $value; 
 		}
 
 		$match_against_statement = 'MATCH (' . $this->full_text_columns . ') AGAINST (\'' . $search . '\' IN BOOLEAN MODE) ';
-		$query = "SELECT " . $this->columns_to_provide;
+		if($count_only) $query = "SELECT COUNT(*)";
+		else $query = "SELECT " . $this->columns_to_provide;
 		if($search != "") $query .= ", " . $match_against_statement . "AS score";
 		$query .= " FROM "  . Database::$table ." ";
 
@@ -171,20 +177,22 @@ class API {
 			else $flow_string = $this->default_flow;
 			$query .= $flow_string;
 		}
-
-		//add LIMIT statement
-		$limit_string;
-		if($limit != ""){
-			$limit = (int) $limit;
-			if((int) $limit > $this->max_output_limit) $limit = $this->max_output_limit;
-			if((int) $limit < 1) $limit = 1;
-			$limit_string = "LIMIT $limit";
-		} 
-		else{
-			$limit = $this->default_output_limit;
-			$limit_string = "LIMIT $limit";	
-		} 
-		$query .= $limit_string;
+		//only add LIMIT of it is not a COUNT query
+		if(!$count_only){
+			//add LIMIT statement
+			$limit_string;
+			if($limit != ""){
+				$limit = (int) $limit;
+				if((int) $limit > $this->max_output_limit) $limit = $this->max_output_limit;
+				if((int) $limit < 1) $limit = 1;
+				$limit_string = "LIMIT $limit";
+			} 
+			else{
+				$limit = $this->default_output_limit;
+				$limit_string = "LIMIT $limit";	
+			} 
+			$query .= $limit_string;
+		}
 
 		//add PAGE statement
 		if($page != "" &&
@@ -192,7 +200,7 @@ class API {
 			$query .= " OFFSET " . $limit * ($page -1);
 		}
 
-
+		echo $query . "<br/>";
 		return $query;
 	}
 
