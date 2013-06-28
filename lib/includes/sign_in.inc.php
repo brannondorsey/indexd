@@ -9,8 +9,12 @@
 	 if(!empty($_POST) && isset($_POST)){ 
 	 	$post_array = Database::clean($_POST);
 		if(!$user->is_signed_in()){
-		 	$user->sign_in($post_array['email'], $post_array['password']);
-		 }
+		 	if($success = $user->sign_in($post_array['email'], $post_array['password'])){
+		 		if($success == -1) echo "email not confirmed";
+		 		else echo "just signed in";
+		 	}
+		 	else echo "user authentication failed"; //code for failed login
+		}
 		else echo "the user is signed in <br/>";
 	}
 	// if($user->is_signed_in()){
