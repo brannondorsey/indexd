@@ -1,4 +1,6 @@
-<?php require_once("lib/includes/sign_in.inc.php"); //this has to come first because it sends the session HEADER?> 
+<?php 
+require_once("lib/includes/sign_in.inc.php"); //this has to come first because it sends the session HEADER
+?> 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->

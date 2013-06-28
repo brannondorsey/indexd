@@ -146,7 +146,7 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 15, ../sass/screen.scss */
-.search-button, .home-button, .login-button, .register-button, .about-button {
+.search-button, .header-button {
   -webkit-transition: background-color 0.2s ease;
   -moz-transition: background-color 0.2s ease;
   -o-transition: background-color 0.2s ease;
@@ -166,7 +166,7 @@ you can use the generic selector below, but it's slower:
   border: none;
 }
 /* line 33, ../sass/screen.scss */
-.search-button:hover, .home-button:hover, .login-button:hover, .register-button:hover, .about-button:hover {
+.search-button:hover, .header-button:hover {
   background-color: #a75454;
   color: white;
 }
@@ -181,12 +181,12 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 63, ../sass/screen.scss */
-.home-button, .login-button, .register-button, .about-button {
+.header-button {
   background-color: rgba(255, 255, 255, 0);
   color: #ef7878;
 }
 /* line 67, ../sass/screen.scss */
-.home-button:hover, .login-button:hover, .register-button:hover, .about-button:hover {
+.header-button:hover {
   background-color: #ebeced;
   color: #ef7878;
 }
@@ -433,70 +433,70 @@ a:hover {
   color: white;
 }
 
-/* line 285, ../sass/screen.scss */
+/* line 273, ../sass/screen.scss */
 .header {
   width: 100%;
   background-color: white;
   overflow: hidden;
 }
 
-/* line 293, ../sass/screen.scss */
+/* line 281, ../sass/screen.scss */
 fieldset {
   float: left;
   margin-top: 1em;
 }
-/* line 296, ../sass/screen.scss */
+/* line 284, ../sass/screen.scss */
 fieldset.half {
   width: 50%;
 }
-/* line 298, ../sass/screen.scss */
+/* line 286, ../sass/screen.scss */
 fieldset.half:nth-of-type(even) {
   padding-left: 1em;
 }
-/* line 302, ../sass/screen.scss */
+/* line 290, ../sass/screen.scss */
 fieldset.half:nth-of-type(odd) {
   padding-right: 1em;
 }
-/* line 306, ../sass/screen.scss */
+/* line 294, ../sass/screen.scss */
 fieldset.half:nth-of-type(10) {
   padding-right: 1em;
   padding-left: 0;
 }
-/* line 311, ../sass/screen.scss */
+/* line 299, ../sass/screen.scss */
 fieldset.half:nth-of-type(11) {
   padding-right: 0;
 }
-/* line 315, ../sass/screen.scss */
+/* line 303, ../sass/screen.scss */
 fieldset.half:nth-of-type(6) {
   margin-top: 2.4em;
 }
-/* line 320, ../sass/screen.scss */
+/* line 308, ../sass/screen.scss */
 fieldset #char-count {
   color: #a8cfef;
   float: right;
   display: inline-block;
 }
-/* line 325, ../sass/screen.scss */
+/* line 313, ../sass/screen.scss */
 fieldset #char-count.under10 {
   color: #1d5b89;
 }
-/* line 329, ../sass/screen.scss */
+/* line 317, ../sass/screen.scss */
 fieldset #char-count.negative {
   color: #ef7878;
 }
-/* line 334, ../sass/screen.scss */
+/* line 322, ../sass/screen.scss */
 fieldset.full {
   width: 100%;
   float: left;
 }
-/* line 339, ../sass/screen.scss */
+/* line 327, ../sass/screen.scss */
 fieldset input[type="text"], fieldset input[type="email"], fieldset input[type="password"], fieldset textarea {
   width: 100%;
   background-color: #ebeced;
   border: 1px solid #d3d4d5;
   padding: .5em;
 }
-/* line 349, ../sass/screen.scss */
+/* line 337, ../sass/screen.scss */
 fieldset input:focus, fieldset textarea:focus {
   box-shadow: none;
   appearance: none;
@@ -504,7 +504,7 @@ fieldset input:focus, fieldset textarea:focus {
   outline: none;
 }
 
-/* line 358, ../sass/screen.scss */
+/* line 346, ../sass/screen.scss */
 input[type="submit"] {
   font-family: "franklin-gothic-urw", verdana, sans-serif;
   font-size: 1em;
@@ -517,111 +517,111 @@ input[type="submit"] {
   float: right;
 }
 
-/* line 372, ../sass/screen.scss */
+/* line 360, ../sass/screen.scss */
 .brand {
   border-bottom: 1px solid #a8cfef;
 }
-/* line 377, ../sass/screen.scss */
+/* line 365, ../sass/screen.scss */
 .brand .logo {
   margin: 5em auto 0.5em auto;
   text-align: center;
 }
-/* line 382, ../sass/screen.scss */
+/* line 370, ../sass/screen.scss */
 .brand h1 {
   text-align: center;
   letter-spacing: 1;
   margin-bottom: 1em;
   font-weight: bold;
 }
-/* line 389, ../sass/screen.scss */
+/* line 377, ../sass/screen.scss */
 .brand p {
   text-align: center;
   color: #a8cfef;
   margin-bottom: 2em;
 }
 
-/* line 397, ../sass/screen.scss */
+/* line 385, ../sass/screen.scss */
 .about {
   background-color: #ef7878;
   padding: 1em 0;
 }
 
-/* line 406, ../sass/screen.scss */
+/* line 394, ../sass/screen.scss */
 .query {
   margin-bottom: 1em;
 }
-/* line 412, ../sass/screen.scss */
+/* line 400, ../sass/screen.scss */
 .query .profile {
   margin-bottom: 4em;
 }
-/* line 416, ../sass/screen.scss */
+/* line 404, ../sass/screen.scss */
 .query .search-term {
   color: #ef7878;
 }
-/* line 420, ../sass/screen.scss */
+/* line 408, ../sass/screen.scss */
 .query .media {
   display: block;
   border-bottom: 1px solid #a8cfef;
   padding-bottom: 1em;
   margin-bottom: 1em;
 }
-/* line 427, ../sass/screen.scss */
+/* line 415, ../sass/screen.scss */
 .query p.pre-results {
   margin-bottom: 2em;
 }
-/* line 431, ../sass/screen.scss */
+/* line 419, ../sass/screen.scss */
 .query .tags {
   border-bottom: 1px solid #a8cfef;
   padding-bottom: 1em;
   margin-bottom: 1em;
 }
-/* line 437, ../sass/screen.scss */
+/* line 425, ../sass/screen.scss */
 .query .tags .tag {
   display: inline-block;
   margin: 0 0.2em 0.4em 0;
   position: relative;
 }
-/* line 441, ../sass/screen.scss */
+/* line 429, ../sass/screen.scss */
 .query .tags .tag a {
   color: #1d5b89;
   padding: 0.2em 0.5em;
   background-color: #a8cfef;
   display: inline-block;
 }
-/* line 446, ../sass/screen.scss */
+/* line 434, ../sass/screen.scss */
 .query .tags .tag a:hover {
   background-color: #97bad7;
 }
 
-/* line 455, ../sass/screen.scss */
+/* line 443, ../sass/screen.scss */
 .result {
   margin-top: 0;
   padding-bottom: 1em;
   margin-bottom: 1em;
   border-bottom: 1px solid #a8cfef;
 }
-/* line 458, ../sass/screen.scss */
+/* line 446, ../sass/screen.scss */
 .result p {
   margin: 0.5em 0;
 }
-/* line 462, ../sass/screen.scss */
+/* line 450, ../sass/screen.scss */
 .result h2 {
   margin-top: 0;
 }
-/* line 471, ../sass/screen.scss */
+/* line 459, ../sass/screen.scss */
 .result.last-result {
   border-bottom: none;
 }
 
-/* line 476, ../sass/screen.scss */
+/* line 464, ../sass/screen.scss */
 .pagination {
   margin-bottom: 4em;
 }
-/* line 480, ../sass/screen.scss */
+/* line 468, ../sass/screen.scss */
 .pagination .pagination-container {
   position: relative;
 }
-/* line 485, ../sass/screen.scss */
+/* line 473, ../sass/screen.scss */
 .pagination .prev {
   text-align: left;
   position: absolute;
@@ -629,13 +629,13 @@ input[type="submit"] {
   left: 0;
   cursor: pointer;
 }
-/* line 494, ../sass/screen.scss */
+/* line 482, ../sass/screen.scss */
 .pagination .count {
   text-align: center;
   display: block;
   width: 100%;
 }
-/* line 500, ../sass/screen.scss */
+/* line 488, ../sass/screen.scss */
 .pagination .next {
   text-align: right;
   position: absolute;
@@ -644,37 +644,37 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-/* line 512, ../sass/screen.scss */
+/* line 500, ../sass/screen.scss */
 .register-user {
   margin-top: 3em;
 }
 
-/* line 517, ../sass/screen.scss */
+/* line 505, ../sass/screen.scss */
 #registration {
   margin-bottom: 2em;
   overflow: hidden;
 }
-/* line 521, ../sass/screen.scss */
+/* line 509, ../sass/screen.scss */
 #registration label {
   color: #ef7878;
 }
 
-/* line 529, ../sass/screen.scss */
+/* line 517, ../sass/screen.scss */
 .login-page h2 {
   margin-bottom: 1em;
 }
-/* line 533, ../sass/screen.scss */
+/* line 521, ../sass/screen.scss */
 .login-page input[type="submit"] {
   float: left;
 }
 
-/* line 542, ../sass/screen.scss */
+/* line 530, ../sass/screen.scss */
 footer {
   background-color: #ef7878;
   padding: 3em;
   margin-top: 3em;
 }
-/* line 546, ../sass/screen.scss */
+/* line 534, ../sass/screen.scss */
 footer img {
   display: block;
   margin: auto;

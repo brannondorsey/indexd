@@ -44,4 +44,15 @@ $(document).ready(function() {
 			$("#char-count").removeClass("negative");
 		}
 	});
+
+	$("#sign_out").on("click", function(e) {
+		e.preventDefault();
+		$.ajax({
+			url : "lib/includes/sign_out.inc.php",
+			success : function() {
+				console.log("signed out");
+				window.location.href = window.location.href;
+			}
+		});
+	});
 });

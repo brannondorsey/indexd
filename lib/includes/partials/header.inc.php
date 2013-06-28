@@ -6,9 +6,15 @@
     </div>
 
     <div class="login">
-    	<a class="home-button" href="index.php">Home</a>
-		<a class="about-button" href="about.php">About</a>
-		<a class="login-button" href="login.php">Sign In</a>
-		<a class="register-button" href="register.php">Join</a>
+    	<a class="header-button" href="index.php">Home</a>
+		<a class="header-button" href="about.php">About</a>
+        <?php if ($user->is_signed_in()) { ?>
+        <a class="header-button" href="#">Settings</a>
+        <a class="header-button" href="lib/includes/sign_out.inc.php" id="sign_out">Sign Out</a>
+        <?php } else { ?>
+		<a class="header-button" href="login.php">Sign In</a>
+		<a class="header-button" href="register.php">Join</a>
+        <?php } ?>
+
     </div>
 </header>

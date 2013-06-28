@@ -266,19 +266,7 @@ a {
 	color: $_white;
 }
 
-.home-button {
-	@extend %button-plainText;
-}
-
-.login-button {
-	@extend %button-plainText;
-}
-
-.register-button {
-	@extend %button-plainText;
-}
-
-.about-button {
+.header-button {
 	@extend %button-plainText;
 }
 

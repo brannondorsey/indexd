@@ -8,6 +8,9 @@ To Do For Indexd
 - Add API page/doc -Kevin Zweerink
 - Tweak listing page -Kevin Zweerink
 - Tweak Header -Kevin Zweerink
+- Responsive Stuff -Kevin Zweerink
+- Add settings page
+- Add logout
 - Change how tags are searched from listing page -Kevin Zweerink
 - Email Confirmation
 - Verified system to easily check for real peeps on our site
@@ -19,9 +22,10 @@ To Do For Indexd
 - Set session length based on "Stay Logged In" DROP
 - Add description to register page (tooltips?)
 - Fill DB w/ meaningful data for testing
-- Dynamically change options for signed in vs. not
 
 Completed
 
 - Search relevancy recursion
 - Make sure API & PrivateAPI ONLY output UTF-8 JSON
+- Dynamically change options for signed in vs. not
+- Sign Out functional
