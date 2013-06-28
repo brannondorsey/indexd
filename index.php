@@ -64,7 +64,7 @@
                 $last_key = end($data_array_keys);
                 foreach($data_array as $key => $result) { ?>
                 <div class="result <?php if($key === $last_key) { echo "last-result"; }?>">
-                    <h2><a href="<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
+                    <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
                     <p class="descrip"><?php echo $result->description ?></p>
                     <a class="url" href="<?php echo $result->url ?>">www.<?php echo $result->url ?>.com</a>
                 </div>
