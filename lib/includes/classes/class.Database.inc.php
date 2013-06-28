@@ -3,7 +3,7 @@
 class Database {
 
 	public static $table    = "users";
-	public static $root_dir_link = "http://localhost:8888/AWU/";
+	public static $root_dir_link = "http://localhost:8888/";
 
 	protected static $user     = "root";
 	protected static $password = "root";

@@ -13,7 +13,7 @@
 }
 
 %button {
-	@include transition(background-color .2s ease, padding .2s ease, border .2s ease);
+	@include transition(background-color .2s ease, padding .2s ease, border .2s ease, margin .2s ease);
 
 	font-size: 1em;
 	font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
@@ -64,12 +64,15 @@
 	@extend %button;
 	background-color: rgba(255,255,255,0);
 	color: $_red;
-	padding: 1em 1em 0 1em;
+	padding: 1em 0 0 0;
+	margin: 0 1em 1em 1em;
 	border-bottom: 2px solid $_redRGBA0;
 	&:hover {
 		background-color: rgba(255,255,255,0);
-		padding: 1em;
+		padding: 1em 0;
 		border-bottom: 2px solid $_redRGBA;
+		color: $_red;
+		margin: 0 1em;
 	}
 } 
 %section {
