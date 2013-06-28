@@ -1,6 +1,6 @@
 <header class="header">
     <div class="search">
-        <a class="home-button"><img src="img/indexd_badge_full_s.png" /></a>
+        <a class="home-button" href="index.php"><img src="img/indexd_badge_full_s.png" /></a>
     	<form name="search-form" id="search-form" method="get" action="results.php">
 	        <input type="text" placeholder="What are you looking for?" id="search" name="search" autocomplete="false"><a class="search-button" href="results.php" id="submit-search">s</a>
 		</form>

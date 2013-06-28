@@ -75,10 +75,6 @@
 		margin: 0 1em .7em 1em;
 	}
 } 
-%section {
-	width: 100%;
-	margin-bottom: 2em
-}
 
 %default-text-style {
 	font-size: 16px;
@@ -187,6 +183,7 @@ a {
 		float: left;
 		background-color: $_black;
 		padding: .35em .4em 0 .4em;
+		display: inline-block;
 	}
 
 	img {
@@ -228,7 +225,11 @@ a {
 		padding: 15px 0 14px 0;
 	}
 
-	&:hover {
+	form {
+		display: inline-block;
+	}
+
+	form:hover {
 
 		@include transition(opacity .6s $bezier);
 
@@ -369,13 +370,15 @@ input[type="submit"] {
 
 // INDEX PAGE STYLES
 
+
 .brand {
 	@extend %responsive-block;
 	border-bottom: 1px solid $_lightBlue;
+	margin-bottom: 2em;
 
 
 	.logo {
-		margin: 5em auto .5em auto;
+		margin: 3em auto .5em auto;
 		text-align: center;
 	}
 
@@ -395,12 +398,8 @@ input[type="submit"] {
 }
 
 .about {
-	background-color: $_red;
-	padding: 1em 0;
-
-	.network, .membercard, .site {
-		@extend %homepage-info-div;
-	}
+	@extend %responsive-block;
+	margin-top: 1em;
 }
 
 .query {
