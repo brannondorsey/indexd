@@ -149,6 +149,12 @@ class User{
 		return false;
 	}
 
+	//returns true if email already exists and false if it does not. 
+	public function email_already_exists($email){
+		$query = "SELECT email FROM " . Database::$table . " WHERE email = '" . $email . "' LIMIT 1";
+		return ($user = Database::get_all_results($query) ? true: false); 
+	}
+
 //-------------------------------------------------------------------------------
 //GEO FUNCTIONS
 
