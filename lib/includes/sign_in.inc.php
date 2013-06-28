@@ -13,10 +13,10 @@
 		 }
 		else echo "the user is signed in <br/>";
 	}
-	if($user->is_signed_in()){
-		foreach ($user->data as $property => $value) {
-			echo "the logged in user's " . $property . " is " . $value . "<br/>";
-		}
-	}
+	// if($user->is_signed_in()){
+	// 	foreach ($user->data as $property => $value) {
+	// 		echo "the logged in user's " . $property . " is " . $value . "<br/>";
+	// 	}
+	// }
 	Database::close_connection();
 ?> 	
