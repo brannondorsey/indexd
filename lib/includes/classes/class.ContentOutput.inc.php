@@ -40,9 +40,9 @@ class ContentOutput{
 		return $search_obj;
 	}
 
-	public function output_related_users($user_id, $numb_results){
+	public function output_related_users($user_id){
 		$rel = new RelationalAlgorithm();
-		return $rel->get_related_users($user_id);
+		return json_decode($rel->get_related_users($user_id));
 	}
 
 	//returns total number of results from an assoc array of api parameters

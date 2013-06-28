@@ -35,7 +35,7 @@ class RelationalAlgorithm{
 		$most_media_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->media, $this->numb_of_each_column_for_algorithm);
 		$most_tags_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->tags, $this->numb_of_each_column_for_algorithm);
 		$most_location_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->location, $this->numb_of_each_column_for_algorithm);
-		echo $this->get_related_users_using_arrays_of_ids($most_media_ids, $most_tags_ids, $most_location_ids);
+		return $this->get_related_users_using_arrays_of_ids($most_media_ids, $most_tags_ids, $most_location_ids);
 	}
 
 	//combines the three arrays of most related users from the three columns included in the algorithm 

@@ -52,6 +52,7 @@
 
                 <fieldset class="full">
                     <label for="description">Description</label>
+                    <span id="char-count">140</span>
                     <textarea id="description"></textarea>
                 </fieldset>
 

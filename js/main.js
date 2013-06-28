@@ -12,7 +12,11 @@ $(document).ready(function() {
 		var newFooter = footer.height() + dif;
 		console.log(dif);
 		console.log(newFooter);
-		footer.css("height", newFooter + "px")
+		footer.css({
+			"position" : "absolute",
+			"bottom" : "0",
+			"width" : $(window).width()
+		})
 	}
 
 	$("#submit-search").on("click", function(e) {
@@ -23,5 +27,21 @@ $(document).ready(function() {
 		$("#search-form").submit();
 
 		//window.location = url;
+	});
+
+	$("#description").on("input", function(e) {
+		var len = $("#description").val().length;
+		$("#char-count").text(140 - len);
+
+		if ((140 - len) <= 10 && (140 - len) > 0) {
+			$("#char-count").removeClass("negative");
+			$("#char-count").addClass("under10");
+		} else if ((140 - len) <= 0) {
+			$("#char-count").removeClass("under10");
+			$("#char-count").addClass("negative");
+		} else {
+			$("#char-count").removeClass("under10");
+			$("#char-count").removeClass("negative");
+		}
 	});
 });

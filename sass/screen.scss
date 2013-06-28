@@ -317,6 +317,20 @@ fieldset {
 		}
 	}
 
+	#char-count {
+		color: $_lightBlue;
+		float: right;
+		display: inline-block;
+
+		&.under10 {
+			color: $_black;
+		}
+
+		&.negative {
+			color: $_red;
+		}
+	}
+
 	&.full {
 		width: 100%;
 		float: left;

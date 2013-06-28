@@ -12,7 +12,8 @@
     $user_id = $_GET['id'];
     $numb_results = 10;
     $profile_data = $content_obj->output_profile($user_id)->data[0];
-    $data = $content_obj->output_related_users($user_id, $numb_results);
+    $data = new stdClass();
+    $data = $content_obj->output_related_users($user_id);
 ?>
 
     <head>
@@ -55,10 +56,8 @@
             <section class="results">
                 <?php
                 $data_array = $data->data;
-                $data_array_keys = array_keys($data_array);
-                $last_key = end($data_array_keys);
                 foreach($data_array as $key => $result) { ?>
-                <div class="result <?php if($key === $last_key) { echo "last-result"; }?>">
+                <div class="result">
                     <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
                     <p class="descrip"><?php echo $result->description ?></p>
                     <a class="url" href="<?php echo $result->url ?>">www.<?php echo $result->url ?>.com</a>
