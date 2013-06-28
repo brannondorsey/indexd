@@ -1,8 +1,8 @@
 <header class="header">
     <div class="search">
-        <a class="home-button" href="index.php"><img src="img/indexd_badge_full_s.png" /></a>
+        <a class="home-button" href="index.php"><img src="img/indexd_badge_full_s.png" tabindex="3"/></a>
     	<form name="search-form" id="search-form" method="get" action="results.php">
-	        <input type="text" placeholder="What are you looking for?" id="search" name="search" autocomplete="false"><a class="search-button" href="results.php" id="submit-search">s</a>
+	        <input type="text" placeholder="What are you looking for?" id="search" name="search" autocomplete="false" tabindex="1"><a class="search-button" href="results.php" id="submit-search" tabindex="2">s</a>
 		</form>
     </div>
 

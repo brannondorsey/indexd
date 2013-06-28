@@ -32,13 +32,44 @@
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     </head>
     <body>
+
+        <div class="red-bg">
         
-        <?php require_once("lib/includes/partials/header.inc.php");?>
+        <header class="header home-page">
+            <div class="search">
+                <a class="home-button" href="index.php"><img src="img/indexd_badge_full_s.png" tabindex="3"/></a>
+                <form name="search-form" id="search-form" method="get" action="results.php">
+                    <input type="text" placeholder="What are you looking for?" id="search" name="search" autocomplete="false" tabindex="1"><a class="search-button" href="results.php" id="submit-search" tabindex="2">s</a>
+                </form>
+            </div>
+
+            <?php
+                if(!isset($user)) {
+                    $user = new User();
+                    if ($user->is_signed_in()){
+                        $user->load_data();
+                    }
+                }
+            ?>
+
+            <div class="login" id="homepage">
+                <a class="header-button" href="index.php">Home</a>
+                <a class="header-button" href="about.php">About</a>
+                <?php if ($user->is_signed_in()) { ?>
+                <a class="header-button" href="#">Settings</a>
+                <a class="header-button" href="<?php Database::$root_dir_link ?>lib/includes/sign_out.inc.php" id="sign_out">Sign Out</a>
+                <?php } else { ?>
+                <a class="header-button" href="login.php">Sign In</a>
+                <a class="header-button" href="register.php">Join</a>
+                <?php } ?>
+
+            </div>
+        </header>
 
         <div class="brand-container">
             <section class="brand">
                 <div class="logo">
-                    <img src="img/logo.png" />
+                    <img src="img/indexd_badge_blue_l.png" />
                 </div>
 
                 <h1>Indexd</h1>
@@ -47,8 +78,11 @@
         </div>
 
         <section class="about">
+            <p>Indexd.io is an open, distributed network of artists, designers, writers, and other creatives. Our goal is the decentralization of the creative networking tool. Super simple profiles and straightforward relational results allow you to quickly explore artists' work on whatever platform they choose to host it.</p>
             <p>Indexd.io is an open, distributed network of artists, designers, writers, and other creatives. Our goal is the decentralization of the creative networking tool. Super simple profiles and straightforward relational results allow you to quickly explore artists' work on whatever platform they choose to host it.</p> 
         </section>
+
+        </div>
 
         <section class="listings">
             <section class="query">

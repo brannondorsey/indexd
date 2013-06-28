@@ -271,11 +271,28 @@ a {
 	width: 50%;
 	float: right;
 	text-align: right;
+
+	&#homepage {
+		.header-button {
+			color: $_black;
+
+			border-bottom: 2px solid $_blackRGBA0;
+			&:hover {
+				background-color: rgba(255,255,255,0);
+				padding: 1em 0 .3em 0;
+				border-bottom: 2px solid $_blackRGBA;
+				color: $_black;
+				margin: 0 1em .7em 1em;
+			}
+
+		}
+	}
 }
 
 .search-button {
-	@extend %button-lightBlue;
+	@extend %button-darkBlue;
 	@extend %icon;
+	background-color: tint($_black, 15%);
 	color: $_white;
 }
 
@@ -285,8 +302,17 @@ a {
 
 .header {
 	width: 100%;
-	background-color: $_white;
 	overflow: hidden;
+
+	&.homepage {
+		background-color: $_red;
+	}
+}
+
+.red-bg {
+	background-color: $_red;
+	overflow: auto;
+	padding-bottom: 2em;
 }
 
 // FORM STYLES 
@@ -373,7 +399,7 @@ input[type="submit"] {
 
 .brand {
 	@extend %responsive-block;
-	border-bottom: 1px solid $_lightBlue;
+	border-bottom: 1px solid $_black;
 	margin-bottom: 2em;
 
 
@@ -400,6 +426,9 @@ input[type="submit"] {
 .about {
 	@extend %responsive-block;
 	margin-top: 1em;
+	p {
+		margin-bottom: 1em;
+	}
 }
 
 .query {
