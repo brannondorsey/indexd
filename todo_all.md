@@ -6,6 +6,9 @@ To Do For Indexd
 - Add about page -Kevin Zweerink
 - Add settings page -Kevin Zweerink
 - Add API page/doc -Kevin Zweerink
+- Tweak listing page -Kevin Zweerink
+- Tweak Header -Kevin Zweerink
+- Change how tags are searched from listing page -Kevin Zweerink
 - Email Confirmation
 - Verified system to easily check for real peeps on our site
 - Test API
