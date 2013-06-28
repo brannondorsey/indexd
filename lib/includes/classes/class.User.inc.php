@@ -25,14 +25,13 @@ class User{
 	}
 
 	//parameters must be PRE CLEANED using Database::clean() before being passed in here
-	//this function sets $_SESSION vars if login credentials pass and returns false if they do not.
-	//Loads $this->data object with user vars on successful login
+	//this function sets $_SESSION vars if login credentials pass, returns -1 if email is not confirmed,
+	//and returns false if they do not.
 	public function sign_in($email, $unhashed_password){
-		if($user_id = $this->check_sign_in_credentials($email, $unhashed_password));
-		else{ 
-			echo "user authentication failed";
-			return false;
+		if($user_id = $this->check_sign_in_credentials($email, $unhashed_password)){
+			if($user_id == -1) return $user_id; //return -1 if email is not confirmed
 		}
+		else return false;
 		$user_data_obj = $this->get_user_data_obj($user_id);
 		$user_properties = get_object_vars($user_data_obj);
 		Session::add_session_vars($user_properties);
@@ -64,18 +63,24 @@ class User{
 		else echo "there was no zip code or no country";
 		$post_array = $this->add_and_encode_register_fields($post_array); //append more fields to the array
 		$this->IU->execute_from_assoc($post_array);
+		//send email confirmation here
+		return $this->send_confirmation_email($post_array['email'], $post_array['first_name']){
+		}
 	}
 
 	public function delete_account(){
 		//drop user row using id from $this->data obj
 	}
 
-	//returns $user_id on success and false on falure. Used on sign in page.
+	//returns $user_id on success, 0 if user exists but email is not confirmed, and false on falure. Used on sign in page.
 	public function check_sign_in_credentials($email, $unhashed_password){
 		$hashed_password = sha1($unhashed_password);
-		$query = "SELECT id FROM " . Database::$table . " WHERE email = '" 
+		$query = "SELECT id, email_confirmed FROM " . Database::$table . " WHERE email = '" 
 		. $email . "' AND password = '" . $hashed_password . "' LIMIT 1";
-		if($user = Database::get_all_results($query)) return $user['id'];
+		if($user = Database::get_all_results($query)){
+			if($user['email_confirmed'] == 1) return $user['id'];
+			else return -1;
+		}
 		else return false; //there were no matching users found
 	}
 
@@ -101,6 +106,18 @@ class User{
 		'email_confirmation_code' => sha1(microtime(true).mt_rand(10000,90000)),
 		'email_confirmed' => 0);
 		return array_merge($post_array, $new_fields);
+	}
+//-------------------------------------------------------------------------------
+//EMAIL CONFIRMATION
+
+	protected function send_confirmation_email($email, $name){
+		$path_to_email_JSON = "/lib/data/email_confirmation_message.json";
+		$file = file_get_contents($path_to_email_JSON);
+		$email_obj = json_decode($file);
+		$verification_link = "";
+		$email_obj->body = str_replace("REPLACE_LINK_HERE", $verification_link, $email_obj->body);
+		$email_obj->body = str_replace("REPLACE_NAME_HERE", $name, $email_obj->body);
+		return mail($email, $email_obj->subject, $email_obj->body);
 	}
 
 //-------------------------------------------------------------------------------
