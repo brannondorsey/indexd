@@ -59,7 +59,7 @@ class API {
 			}
 		//if no results were found return a JSON error obj
 		else $JSON_output_string = $this->get_error($this->no_results_message);
-		return iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($JSON_output_string)); //make sure all database results are UTF-8
+		return iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($JSON_output_string)); //make sure all database results are UTF-
 	}
 
 	//outputs JSON object from 1D or 2D MySQL results array

@@ -3,6 +3,7 @@
 class Database {
 
 	public static $table    = "users";
+	public static $root_dir_link = "localhost:8888/AWU/";
 
 	protected static $user     = "root";
 	protected static $password = "root";
@@ -22,8 +23,9 @@ class Database {
 	
 	//execute sql query statement. Used for INSERT and UPDATE mostly. Returns false if query fails
 	public static function execute_sql($query) {
-		if(self::$mysqli->query($query)) echo "QUERY SUCCEEDED!";
+		if(self::$mysqli->query($query)) return true;
 		else echo self::$mysqli->error;
+		return false;
 	}
 	
 	//returns array of one result row if one result was found or 2D array of all returned rows if multiple were found
@@ -49,21 +51,24 @@ class Database {
 	//returns string or assosciative array of strings
 	//mainly for $_POST and $_GET
 	public static function clean($string){
-		$new_string_array;
-		//if the string is actually an assoc array
-		if(is_array($string)){
-			foreach($string as $string_array_key => $string_array_value){
-				if($string_array_key == 'media' ||
-				   $string_array_key == 'tags') $string_array_value = self::format_list_for_db($string_array_value);
-				if($string_array_key == 'email') $string_array_value = strtolower($string_array_value);
-				$string_array_value = self::clean_string($string_array_value);
-				$new_string_array[$string_array_key] = $string_array_value;
+		if(isset($string) && !empty($string)){
+			$new_string_array;
+			//if the string is actually an assoc array
+			if(is_array($string)){
+				foreach($string as $string_array_key => $string_array_value){
+					if($string_array_key == 'media' ||
+					   $string_array_key == 'tags') $string_array_value = self::format_list_for_db($string_array_value);
+					if($string_array_key == 'email') $string_array_value = strtolower($string_array_value);
+					$string_array_value = self::clean_string($string_array_value);
+					$new_string_array[$string_array_key] = $string_array_value;
+				}
+				$string = $new_string_array;
 			}
-			$string = $new_string_array;
+			//else just clean it
+			else $string = self::clean_string($string, self::$mysqli);
+			return $string;
 		}
-		//else just clean it
-		else $string = self::clean_string($string, self::$mysqli);
-		return $string;
+		else return false; //nothing was passed as an argument
 	}
 
 //------------------------------------------------------------------------------

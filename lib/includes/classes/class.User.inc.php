@@ -64,8 +64,7 @@ class User{
 		$post_array = $this->add_and_encode_register_fields($post_array); //append more fields to the array
 		$this->IU->execute_from_assoc($post_array);
 		//send email confirmation here
-		return $this->send_confirmation_email($post_array['email'], $post_array['first_name']){
-		}
+		return $this->send_confirmation_email($post_array['email'], $post_array['first_name'], $post_array['email_confirmation_code']);
 	}
 
 	public function delete_account(){
@@ -110,14 +109,44 @@ class User{
 //-------------------------------------------------------------------------------
 //EMAIL CONFIRMATION
 
-	protected function send_confirmation_email($email, $name){
-		$path_to_email_JSON = "/lib/data/email_confirmation_message.json";
+	protected function send_confirmation_email($email, $name ,$confirmation_code){
+		$path_to_email_JSON = "lib/data/email_confirmation_message.json";
 		$file = file_get_contents($path_to_email_JSON);
 		$email_obj = json_decode($file);
-		$verification_link = "";
+		$verification_link = Database::$root_dir_link . "email_confirmation.php?email_confirmation_code=" . $confirmation_code . "&email=" . $email;
 		$email_obj->body = str_replace("REPLACE_LINK_HERE", $verification_link, $email_obj->body);
 		$email_obj->body = str_replace("REPLACE_NAME_HERE", $name, $email_obj->body);
-		return mail($email, $email_obj->subject, $email_obj->body);
+
+		//append and prepend html tags
+		$email_obj->body = "<html><head><title>" . $email_obj->subject . "</title></head><body>" . $email_obj->body;
+		$email_obj->body = $email_obj->body . "</body></html>";
+
+		// To send HTML mail, the Content-type header must be set
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+		// // Additional headers
+		// $headers .= 'To: Mary <mary@example.com>' . "\r\n";
+		// $headers .= 'From: Birthday Reminder <birthday@example.com>' . "\r\n";
+
+		return mail($email, $email_obj->subject, $email_obj->body, $headers);
+	}
+
+	//check email and conf code, if they match, set email_confirmed to 1 in the db and return true
+	//if they do not match or something went wrong return false
+	public function confirm_email($email, $confirmation_code){
+		$query = "SELECT id, email, email_confirmation_code FROM " . Database::$table . " WHERE email = '" 
+		. $email . "' LIMIT 1";
+		if($user = Database::get_all_results($query)){
+			//if the email and confirmation code from $_GET match the ones from the db
+			if($user['email_confirmation_code'] == $confirmation_code &&
+				$user['email'] == $email){
+				$assoc_array = array( 'id' => $user['id'],
+									  'email_confirmed' => 1);
+				return $this->IU->execute_from_assoc($assoc_array, "UPDATE", "email_confirmed"); //update the user's email_confirmed to 1
+			} 
+		} else echo "no results found for this user";
+		return false;
 	}
 
 //-------------------------------------------------------------------------------
