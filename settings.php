@@ -81,9 +81,72 @@
             <p>Adding a link to your indexd page from your website is easy. Here are eight copy/pastable options to add a badge to your site.</p>
 
             <div class="badge-demo-container">
+                <div class="badge">
+                    <a href="#"><img src="img/indexd_badge_full_l.png" /></a>
+                </div>
                 <h3>Large, Full Color</h3>
-                <pre><code><a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"><img src="path/to/img" /></a>
-            </div> 
+                <pre><code>&lt;a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"&gt;&lt;img src="path/to/img" /&gt;&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="badge-demo-container">
+                <div class="badge">
+                    <a href="#"><img src="img/indexd_badge_blue_l.png" /></a>
+                </div>
+                <h3>Large, Blue</h3>
+                <pre><code>&lt;a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"&gt;&lt;img src="path/to/img" /&gt;&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="badge-demo-container">
+                <div class="badge dark">
+                    <a href="#"><img src="img/indexd_badge_white_l.png" /></a>
+                </div>
+                <h3>Large, White</h3>
+                <pre><code>&lt;a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"&gt;&lt;img src="path/to/img" /&gt;&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="badge-demo-container">
+                <div class="badge">
+                    <a href="#"><img src="img/indexd_badge_red_l.png" /></a>
+                </div>
+                <h3>Large, Red</h3>
+                <pre><code>&lt;a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"&gt;&lt;img src="path/to/img" /&gt;&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="badge-demo-container">
+                <div class="badge">
+                    <a href="#"><img src="img/indexd_badge_full_s.png" /></a>
+                </div>
+                <h3>Small, Full Color</h3>
+                <pre><code>&lt;a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"&gt;&lt;img src="path/to/img" /&gt;&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="badge-demo-container">
+                <div class="badge">
+                    <a href="#"><img src="img/indexd_badge_blue_s.png" /></a>
+                </div>
+                <h3>Small, Blue</h3>
+                <pre><code>&lt;a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"&gt;&lt;img src="path/to/img" /&gt;&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="badge-demo-container">
+                <div class="badge dark">
+                    <a href="#"><img src="img/indexd_badge_white_s.png" /></a>
+                </div>
+                <h3>Small, White</h3>
+                <pre><code>&lt;a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"&gt;&lt;img src="path/to/img" /&gt;&lt;/a&gt;</code></pre>
+            </div>
+
+            <div class="badge-demo-container">
+                <div class="badge">
+                    <a href="#"><img src="img/indexd_badge_red_s.png" /></a>
+                </div>
+                <h3>Small, Red</h3>
+                <pre><code>&lt;a href="http://www.indexd.io/listing.php?id=<?php echo $id; ?>"&gt;&lt;img src="path/to/img" /&gt;&lt;/a&gt;</code></pre>
+            </div>
+
+            <p>If you want more control over the look of your indexd badge, <a href="#">here's a link to an illustrator document with our brand materials in it.</a> We don't have any rules about what you can and can't do to the logo. Go wild.</p>
+
+
         </section>
 
         <?php require_once("lib/includes/partials/footer.inc.php"); ?>
