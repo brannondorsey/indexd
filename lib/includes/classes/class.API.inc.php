@@ -28,18 +28,15 @@ class API {
 	//Returns a valid JSON string from $_GET values. Array must be sanitized before using this function.
 	public function get_JSON_from_GET(&$get_array, $object_parent_name="data"){
 		$query = $this->form_query($get_array);
-		// echo $query;
-		// echo "<br/><br/>";
 		if($this->check_API_key()) $this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, $object_parent_name, true);
 		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
 		//if there was a search and it returned no results
 		if($this->search != "" &&
+			!$this->search_has_been_repeated &&
 			strstr($this->JSON_string, $this->no_results_message) != false){
-				$search_in_boolean_mode = true; //set search in boolean mode to true
-				$search_has_been_repeated = true; //note that the search will now have been repeated
+				$this->search_in_boolean_mode = true; //set search in boolean mode to true
+				$this->search_has_been_repeated = true; //note that the search will now have been repeated
 			 	$this->JSON_string = $this->get_JSON_from_GET($get_array, $object_parent_name); //recurse the function (thus re-searching)
-			 	$search_in_boolean_mode = false; 
-				$search_has_been_repeated = false;
 			}
 		return $this->JSON_string;
 	}
@@ -144,16 +141,21 @@ class API {
 		$match_against_statement = 'MATCH (' . $this->full_text_columns . ') AGAINST (\'' . $this->search . '\' IN BOOLEAN MODE) ';
 		if($count_only) $query = "SELECT COUNT(*)";
 		else $query = "SELECT " . $this->columns_to_provide;
-		if($this->search != "") $query .= ", " . $match_against_statement . "AS score";
+		if($this->search != ""){
+			//if the search is not supposed to be in boolean mode remove IN BOOLEAN MODE from $match_against_statment
+			if(!$this->search_in_boolean_mode) $match_against_statement = str_replace("IN BOOLEAN MODE", "", $match_against_statement);
+		 	$query .= ", " . $match_against_statement . "AS score";
+		}
 		$query .= " FROM "  . Database::$table ." ";
 
 		//if search was a parameter overide column paramters and use MATCH...AGAINST
 		if($this->search != ""){
 			$this->append_prepend($this->search, "'");
-			$query .= "WHERE $match_against_statement ORDER BY score DESC ";
-			// echo $query;
+			$query .= "WHERE $match_against_statement ORDER BY ";
+			//order by score if it is the first FULLTEXT (natural mode) search and order by likes if it is the fallback boolean mode search
+			$query .= ( $this->search_has_been_repeated ? "likes DESC " : "score DESC ");  
 		}
-		//if search was not used use LIKE
+		//if search was not specified as a parameter used use LIKE
 		else{
 			//add WHERE statements
 			if(sizeof($column_parameters) > 0){

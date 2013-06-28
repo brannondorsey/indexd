@@ -17,8 +17,11 @@ To Do For Indexd
 - Make API not output anything if no params
 - Fix algorithm so that no fields == null
 - Set session length based on "Stay Logged In" DROP
-- Search relevancy recursion
-- Make sure API & PrivateAPI ONLY output UTF-8 JSON
 - Add description to register page (tooltips?)
 - Fill DB w/ meaningful data for testing
 - Dynamically change options for signed in vs. not
+
+Completed
+
+- Search relevancy recursion
+- Make sure API & PrivateAPI ONLY output UTF-8 JSON

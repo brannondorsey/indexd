@@ -18,7 +18,6 @@ class User{
 	//checks if user is signed in by their PHPSESSID cookie and returns what it finds
 	public function is_signed_in(){
 		if(isset($_SESSION['id'])){
-		 $this->fill_data_var_from_SESSION(); //load the data object
 		 $b_signed_in = true; //if there is a session id
 		}
 		else $b_signed_in = false;
@@ -38,11 +37,11 @@ class User{
 		$user_properties = get_object_vars($user_data_obj);
 		Session::add_session_vars($user_properties);
 		//fill $this->data object with all of the variables from the $_SESSION
-		$this->fill_data_var_from_SESSION();
+		$this->load_data(); 
 	}
 
 	//fills $this->data with all of the public user info that was saved in the user's session
-	public function fill_data_var_from_SESSION(){
+	public function load_data(){
 		$this->data = new stdClass();
 		foreach($_SESSION as $key => $value){
 			$this->data->{$key} = $value;

@@ -6,7 +6,8 @@
 
 	 Database::init_connection();
 	 Session::start();
-	 $c_out = new ContentOutput();
-	 $c_out->output_search_results($_GET['search'], 10, $_GET['page']);
+	 $api = new PrivateAPI();
+	 $get_array = Database::clean($_GET);
+	 echo $api->get_JSON_from_GET($get_array);
 	 Database::close_connection();
 ?> 

@@ -1,17 +1,25 @@
+<?php 
+    //error_reporting(E_ALL);
+    require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
+    require_once("lib/includes/classes/class.User.inc.php");
+    require_once("lib/includes/classes/class.Session.inc.php");
+    Database::init_connection();
+    Session::start();
+    $user = new User();
+
+    //use this bool to test if a user is signed in and do inline things
+    if($user->is_signed_in()){
+        $user->load_data(); //load the data object DO NOT FORGET TO DO THIS
+    }
+    $liked_users = new ContentOutput();
+    $numb_results = 10;
+    $data = $liked_users->output_highest_liked_users($numb_results);
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-
-<?php 
-    //error_reporting(E_ALL);
-    require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
-    Database::init_connection();
-    $liked_users = new ContentOutput();
-    $numb_results = 10;
-    $data = $liked_users->output_highest_liked_users($numb_results);
-?>
 
     <head>
         <meta charset="utf-8">
