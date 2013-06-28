@@ -18,6 +18,29 @@
     <?php require_once("lib/includes/partials/header.inc.php"); ?>
     
     <body>
+    <?php require_once 'lib/includes/classes/class.Validator.inc.php'; 
+
+        $rules_array = array(
+            'email'=>array('display'=>'Email', 'type'=>'email',  'required'=>true, 'min'=>5, 'max'=>50, 'trim'=>true),
+            'password'=>array('display'=>'Password', 'type'=>'string',  'required'=>true, 'min'=>6, 'max'=>50, 'trim'=>true)
+        );
+
+        if(isset($_POST['email'])) {
+
+            $validator = new Validation();
+            $validator->addSource($_POST);
+            $validator->addRules($rules_array);
+            $validator->run();
+
+            if(sizeof($validator->errors) > 0) {
+                var_dump($validator->errors);
+            } else {
+                // PUT ALL THE THINGS IN HERE RAISIN
+            }
+
+        }
+        
+    ?>
         <section class="login-page">
             <h2>Sign In</h2>
             <p>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a></p>
@@ -25,7 +48,9 @@
 
                 <fieldset class="half">
                     <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email"/>
+                    <input type="email" id="email" name="email" value="<?php 
+                        echo (isset($_POST['email']) ? $_POST['email'] : '');
+                    ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
