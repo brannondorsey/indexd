@@ -28,8 +28,12 @@ class User{
 	//this function sets $_SESSION vars if login credentials pass, returns -1 if email is not confirmed,
 	//and returns false if they do not.
 	public function sign_in($email, $unhashed_password){
-		if($user_id = $this->check_sign_in_credentials($email, $unhashed_password)){
-			if($user_id == -1) return $user_id; //return -1 if email is not confirmed
+		$user_id = $this->check_sign_in_credentials($email, $unhashed_password);
+		if($user_id != false){
+			//echo "Logic makes since at least ";
+			if($user_id == "EMAIL_NOT_CONFIRMED"){
+			 return $user_id; //return "EMAIL_NOT_CONFIRMED" if email is not confirmed
+			}
 		}
 		else return false;
 		$user_data_obj = $this->get_user_data_obj($user_id);
@@ -37,6 +41,8 @@ class User{
 		Session::add_session_vars($user_properties);
 		//fill $this->data object with all of the variables from the $_SESSION
 		$this->load_data(); 
+		//echo " User::sign_in() is returning true ";
+		return true;
 	}
 
 	//fills $this->data with all of the public user info that was saved in the user's session
@@ -78,7 +84,10 @@ class User{
 		. $email . "' AND password = '" . $hashed_password . "' LIMIT 1";
 		if($user = Database::get_all_results($query)){
 			if($user['email_confirmed'] == 1) return $user['id'];
-			else return -1;
+			else{
+			 //echo "for some reason check sign in credentials things that the user's email was not confirmed";
+			 return "EMAIL_NOT_CONFIRMED";
+			}
 		}
 		else return false; //there were no matching users found
 	}
