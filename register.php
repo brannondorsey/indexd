@@ -1,3 +1,4 @@
+<?php require_once 'lib/includes/register_sandbox.php'?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -20,55 +21,55 @@
         <section class="register-user">
             <h2>Register</h2>
 
-            <form id="registration">
+            <form id="registration" method="post" action="">
                 <fieldset class="half">
                     <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" />
+                    <input type="text" id="first-name" name="first_name"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" />
+                    <input type="text" id="last-name" name="last_name"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="email">Email</label>
-                    <input type="email" id="email" />
+                    <input type="email" id="email" name="email"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="url">URL</label>
-                    <input type="text" id="url" />
+                    <input type="text" id="url" name="url"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="password">Password (twice)</label>
-                    <input type="password" id="password" />
+                    <input type="password" id="password" name="password"/>
                 </fieldset>
 
                 <fieldset class="half">
-                    <input type="password" id="password-conf" />
+                    <input type="password" id="password-conf"/>
                 </fieldset>
 
                 <fieldset class="full">
                     <label for="description">Description</label>
                     <span id="char-count">140</span>
-                    <textarea id="description"></textarea>
+                    <textarea id="description" name="description"></textarea>
                 </fieldset>
 
                 <fieldset class="full">
                     <label for="media">Media</label>
-                    <input type="text" id="media" />
+                    <input type="text" id="media" name="media"/>
                 </fieldset>
 
                 <fieldset class="full">
                     <label for="tags">Tags</label>
-                    <input type="text" id="tags" />
+                    <input type="text" id="tags" name="tags"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="zip">Zip/Postal Code</label>
-                    <input type="text" id="zip" />
+                    <input type="text" id="zip" name="zip"/>
                 </fieldset>
 
                 <fieldset class="half">
