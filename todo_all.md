@@ -12,7 +12,6 @@ To Do For Indexd
 - Add settings page
 - Add logout
 - Change how tags are searched from listing page -Kevin Zweerink
-- Email Confirmation
 - Verified system to easily check for real peeps on our site
 - Test API
 - Make sure no echo statements will ever show up topside
@@ -21,8 +20,9 @@ To Do For Indexd
 - Fix algorithm so that no fields == null
 - Set session length based on "Stay Logged In" DROP
 - Add description to register page (tooltips?)
+- add front end form validation on sign in page and "email already exists" message
+- dont allow users to sign up with an email that already exists in the db -Brannon
 - Fill DB w/ meaningful data for testing
-- Check emails on registration for duplicates
 - Reset Password
 
 Completed
@@ -31,3 +31,5 @@ Completed
 - Make sure API & PrivateAPI ONLY output UTF-8 JSON
 - Dynamically change options for signed in vs. not
 - Sign Out functional
+- Check emails on registration for duplicates
+- Email Confirmation

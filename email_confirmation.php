@@ -8,8 +8,8 @@
 	   isset($get_array['email_confirmation_code'])){
 		//if confirmation is correct and `email_verified` is changed to 1 in the db 
 		if($user->confirm_email($get_array['email'], $get_array['email_confirmation_code'])){
-			echo "I tried to redirect the page to " . Database::$root_dir_link . 'login.php';
-			//header( 'Location: ' . Database::$root_dir_link . 'login.php');
+			//echo "I tried to redirect the page to " . Database::$root_dir_link . 'login.php';
+			header( 'Location: ' . Database::$root_dir_link . 'login.php');
 		}
 	}
 	else echo "Error: email and confirmation code are invalid or were not supplied";

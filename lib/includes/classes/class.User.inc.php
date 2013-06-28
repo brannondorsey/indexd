@@ -145,7 +145,7 @@ class User{
 									  'email_confirmed' => 1);
 				return $this->IU->execute_from_assoc($assoc_array, "UPDATE", "email_confirmed"); //update the user's email_confirmed to 1
 			} 
-		} else echo "no results found for this user";
+		} else echo "Error: no results found for this user";
 		return false;
 	}
 
