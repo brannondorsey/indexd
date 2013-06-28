@@ -24,7 +24,6 @@ class PrivateAPI extends API {
 		$query_array = array('id' => $user_id, 
 							  'limit' => 1);
 		//set the columns to provide to public so as not to store private data in session unless otherwise specified
-		var_dump($get_private_data);
 		if(!$get_private_data) $this->columns_to_provide = $this->public_columns_to_provide; 
 		$JSON_obj = json_decode($this->get_JSON_from_get($query_array));
 		//reset columns to provide to private for the rest of the PrivateAPI class
