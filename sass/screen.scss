@@ -13,7 +13,7 @@
 }
 
 %button {
-	@include transition(background-color .2s ease);
+	@include transition(background-color .2s ease, padding .2s ease, border .2s ease);
 
 	font-size: 1em;
 	font-family: "franklin-gothic-urw", "franklin gothic", verdana, sans-serif;
@@ -64,9 +64,12 @@
 	@extend %button;
 	background-color: rgba(255,255,255,0);
 	color: $_red;
+	padding: 1em 1em 0 1em;
+	border-bottom: 2px solid $_redRGBA0;
 	&:hover {
-		background-color: $_gray;
-		color: $_red;
+		background-color: rgba(255,255,255,0);
+		padding: 1em;
+		border-bottom: 2px solid $_redRGBA;
 	}
 } 
 %section {
@@ -171,15 +174,21 @@ a {
 
 .search {
 
-	width: 30%;
+	width: 45%;
 	float: left;
 	position: fixed;
 	top: 0;
 	left: 0;
 
+	a.home-button {
+		float: left;
+		background-color: $_black;
+		padding: .35em .4em 0 .4em;
+	}
+
 	img {
-		display: none;
-		width: 45px;
+		//display: none;
+		width: 37px;
 	}
 
 	::-webkit-input-placeholder {
@@ -523,6 +532,30 @@ input[type="submit"] {
 	}
 
 
+}
+
+.badge-info {
+	pre {
+		font-family: Monaco, Courier Prime, courier new, courier, monospace;
+		background-color: $_gray;
+		font-size: .8em;
+		padding: .1em;
+		border-radius: 2px;
+		display: inline;
+		code {
+			display: inline;
+		}
+	}
+
+	.badge-demo-container {
+		.badge {
+			display: inline-block;
+			width: 100px;
+			&.dark {
+				background-color: $_black;
+			}
+		}
+	}
 }
 
 // FOOTER STYLES
