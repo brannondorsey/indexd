@@ -15,7 +15,7 @@ class User{
 		$this->api = new PrivateAPI();
 		$this->IU = new InsertUpdate();
 	}
-	//checks if user is signed in using $_SESSION and returns what it finds
+	//checks if user is signed in by their PHPSESSID cookie and returns what it finds
 	public function is_signed_in(){
 		if(isset($_SESSION['id'])){
 		 $this->fill_data_var_from_SESSION(); //load the data object
