@@ -47,15 +47,21 @@ class Database {
 	}
 
 	//returns string or assosciative array of strings
+	//mainly for $_POST and $_GET
 	public static function clean($string){
 		$new_string_array;
+		//if the string is actually an assoc array
 		if(is_array($string)){
 			foreach($string as $string_array_key => $string_array_value){
+				if($string_array_key == 'media' ||
+				   $string_array_key == 'tags') $string_array_value = self::format_list_for_db($string_array_value);
+				if($string_array_key == 'email') $string_array_value = strtolower($string_array_value);
 				$string_array_value = self::clean_string($string_array_value);
 				$new_string_array[$string_array_key] = $string_array_value;
 			}
 			$string = $new_string_array;
 		}
+		//else just clean it
 		else $string = self::clean_string($string, self::$mysqli);
 		return $string;
 	}
@@ -67,6 +73,18 @@ class Database {
 	protected static function clean_string($string){
 		$string = htmlspecialchars($string);
 		$string = self::$mysqli->real_escape_string($string);
+		return $string;
+	}
+
+	//formats lists like media and tags from POST to be comma-space delimited per our sites standard 
+	//called inside clean()
+	protected static function format_list_for_db($string){
+		$string = strtolower($string);
+		$array = explode(",", $string);
+		foreach($array as $value){
+			$value = trim($value);
+		}
+		$string = implode(", ", $array);
 		return $string;
 	}
 }
