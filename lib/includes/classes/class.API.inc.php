@@ -10,10 +10,13 @@ class API {
 	protected $max_output_limit = 250;
 	protected $default_order_by = "ORDER BY last_name ";
 	protected $default_flow = "ASC ";
+	protected $search_in_boolean_mode = false; //used inside of form query for FULLTEXT searches
+	protected $search_has_been_repeated = false; //used to keep track if search has been repeated
+	protected $search = "";
+	protected $no_results_message = "no results found";
 	protected $JSON_string;
 	protected $full_text_columns;
 	protected $API_key;
-
 	
 	public function __construct(){
 		$this->columns_to_provide = 
@@ -29,6 +32,15 @@ class API {
 		// echo "<br/><br/>";
 		if($this->check_API_key()) $this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, $object_parent_name, true);
 		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
+		//if there was a search and it returned no results
+		if($this->search != "" &&
+			strstr($this->JSON_string, $this->no_results_message) != false){
+				$search_in_boolean_mode = true; //set search in boolean mode to true
+				$search_has_been_repeated = true; //note that the search will now have been repeated
+			 	$this->JSON_string = $this->get_JSON_from_GET($get_array, $object_parent_name); //recurse the function (thus re-searching)
+			 	$search_in_boolean_mode = false; 
+				$search_has_been_repeated = false;
+			}
 		return $this->JSON_string;
 	}
 
@@ -49,7 +61,7 @@ class API {
 				}
 			}
 		//if no results were found return a JSON error obj
-		else $JSON_output_string = $this->get_error("no results found");
+		else $JSON_output_string = $this->get_error($this->no_results_message);
 		return iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($JSON_output_string));
 	}
 
@@ -100,7 +112,7 @@ class API {
 
 		$column_parameters = array();
 		$columns_to_provide_array = explode(', ', $this->columns_to_provide);
-		$search = "";
+		$this->search = "";
 		$order_by = "";
 		$flow = "";
 		$limit = "";
@@ -114,7 +126,7 @@ class API {
 			if($this->is_column_parameter($parameter, $columns_to_provide_array)){ 
 				$column_parameters[$parameter] = $value;
 			}
-			else if($parameter == 'search') $search = $value;
+			else if($parameter == 'search') $this->search = $value;
 			else if($parameter =='order_by') $order_by = $value;
 			else if($parameter == 'flow') $flow = $value;
 			else if($parameter == 'limit') $limit = $value;
@@ -129,15 +141,15 @@ class API {
 			else if($parameter == 'key') $this->API_key = $value; 
 		}
 
-		$match_against_statement = 'MATCH (' . $this->full_text_columns . ') AGAINST (\'' . $search . '\' IN BOOLEAN MODE) ';
+		$match_against_statement = 'MATCH (' . $this->full_text_columns . ') AGAINST (\'' . $this->search . '\' IN BOOLEAN MODE) ';
 		if($count_only) $query = "SELECT COUNT(*)";
 		else $query = "SELECT " . $this->columns_to_provide;
-		if($search != "") $query .= ", " . $match_against_statement . "AS score";
+		if($this->search != "") $query .= ", " . $match_against_statement . "AS score";
 		$query .= " FROM "  . Database::$table ." ";
 
 		//if search was a parameter overide column paramters and use MATCH...AGAINST
-		if($search != ""){
-			$this->append_prepend($search, "'");
+		if($this->search != ""){
+			$this->append_prepend($this->search, "'");
 			$query .= "WHERE $match_against_statement ORDER BY score DESC ";
 			// echo $query;
 		}
