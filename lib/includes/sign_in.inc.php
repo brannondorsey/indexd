@@ -13,9 +13,9 @@
 		 		if($success == -1) echo "email not confirmed";
 		 		else echo "just signed in";
 		 	}
-		 	else echo "user authentication failed"; //code for failed login
+		 	// else echo "user authentication failed"; //code for failed login
 		}
-		else echo "the user is signed in <br/>";
+		// else echo "the user is signed in <br/>";
 	}
 	// if($user->is_signed_in()){
 	// 	foreach ($user->data as $property => $value) {
