@@ -45,7 +45,8 @@ class ContentOutput{
 	}
 
 	public function output_related_users($user_id, $numb_results){
-		return $this->output_highest_liked_users(10);
+		$rel = new RelationalAlgorithm();
+		return $rel->get_related_users($user_id);
 	}
 
 	//returns total number of results from an assoc array of api parameters
