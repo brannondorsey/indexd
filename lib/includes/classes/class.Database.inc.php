@@ -81,11 +81,11 @@ class Database {
 	protected static function format_list_for_db($string){
 		$string = strtolower($string);
 		$array = explode(",", $string);
+		$new_array = array();
 		foreach($array as $value){
-			$value = trim($value);
-			$value = preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $value);
+			$new_array[] = trim($value);
 		}
-		$string = implode(", ", $array);
+		$string = implode(", ", $new_array);
 		return $string;
 	}
 }
