@@ -36,7 +36,7 @@
                 'description'=>array('display'=>'description', 'type'=>'string',  'required'=>true, 'min'=>10, 'max'=>140, 'trim'=>true),
                 'media'=>array('display'=>'media', 'type'=>'string',  'required'=>true, 'min'=>3, 'max'=>70, 'trim'=>true),
                 'tags'=>array('display'=>'tags', 'type'=>'string',  'required'=>true, 'min'=>5, 'max'=>70, 'trim'=>true),
-                'zip'=>array('display'=>'zip Code', 'type'=>'numeric', 'required'=>true, 'min'=>1, 'max'=>99999999, 'trim'=>true)
+                'zip'=>array('display'=>'zip code', 'type'=>'numeric', 'required'=>true, 'min'=>1, 'max'=>99999999, 'trim'=>true)
             );
 
             if(isset($_POST['first_name'])) {

@@ -23,6 +23,7 @@ To Do For Indexd
 - Add description to register page (tooltips?)
 - Fill DB w/ meaningful data for testing
 - Check emails on registration for duplicates
+- Reset Password
 
 Completed
 
