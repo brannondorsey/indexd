@@ -83,6 +83,7 @@ class Database {
 		$array = explode(",", $string);
 		foreach($array as $value){
 			$value = trim($value);
+			$value = preg_replace('/^\p{Z}+|\p{Z}+$/u', '', $value);
 		}
 		$string = implode(", ", $array);
 		return $string;

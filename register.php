@@ -1,4 +1,12 @@
-<?php // require_once 'lib/includes/register_include.php'; ?>
+<?php 
+    require_once("lib/includes/classes/class.PrivateAPI.inc.php");
+    require_once("lib/includes/classes/class.User.inc.php");
+    require_once("lib/includes/classes/class.Session.inc.php");
+
+    Session::start();
+    $api = new PrivateAPI();
+    $user = new User(); 
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -42,7 +50,13 @@
                 if(sizeof($validator->errors) > 0) {
                     var_dump($validator->errors);
                 } else {
-                    // PUT ALL THE THINGS IN HERE RAISIN
+                    //register the user
+                    Database::init_connection();
+                    $post_array = Database::clean($_POST);
+                    $post_array['country'] = "us"; //add country manually for now
+                    unset($post_array['password_conf']); //unset the password confirmation because we don't need it
+                    $user->register($post_array);
+                    Database::close_connection();
                 }
 
             }
