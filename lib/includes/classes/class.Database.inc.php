@@ -59,13 +59,13 @@ class Database {
 					if($string_array_key == 'media' ||
 					   $string_array_key == 'tags') $string_array_value = self::format_list_for_db($string_array_value);
 					if($string_array_key == 'email') $string_array_value = strtolower($string_array_value);
-					$string_array_value = self::clean_string($string_array_value);
+					//$string_array_value = self::clean_string($string_array_value);
 					$new_string_array[$string_array_key] = $string_array_value;
 				}
 				$string = $new_string_array;
 			}
 			//else just clean it
-			else $string = self::clean_string($string, self::$mysqli);
+			//else $string = self::clean_string($string, self::$mysqli);
 			return $string;
 		}
 		else return false; //nothing was passed as an argument

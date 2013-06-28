@@ -52,6 +52,7 @@
                 } else {
                     //register the user
                     Database::init_connection();
+                    $_POST['url'] = $validator->processURLString($_POST['url']);
                     $post_array = Database::clean($_POST);
                     $post_array['country'] = "us"; //add country manually for now
                     unset($post_array['password_conf']); //unset the password confirmation because we don't need it

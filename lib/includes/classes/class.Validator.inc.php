@@ -352,12 +352,12 @@ class Validation{
      */
     private function validateUrl($var, $required=false, $display)
     {
-        $var = $this->processURLString($var);
+        $clean_url = $this->processURLString($this->source[$var]);
         if($required==false && strlen($this->source[$var]) == 0)
         {
             return true;
         }
-        if(filter_var($this->source[$var], FILTER_VALIDATE_URL) === FALSE)
+        if(filter_var($clean_url, FILTER_VALIDATE_URL) === FALSE)
         {
             $this->errors[$var] = $display . ' was filled out incorrectly';
         }
@@ -365,7 +365,7 @@ class Validation{
 
     // this function processes a URL that 'should' be a full url (http://something.com/dfsdfs/)
     // and makes sure it contains the correct format to be included into a href attribute
-    protected function processURLString($urlString) {
+    public function processURLString($urlString) {
         $urlString = trim($urlString);
         
         if($urlString) {

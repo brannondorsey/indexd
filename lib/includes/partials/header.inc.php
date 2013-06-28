@@ -6,6 +6,15 @@
 		</form>
     </div>
 
+    <?php
+        if(!isset($user)) {
+            $user = new User();
+            if ($user->is_signed_in()){
+                $user->load_data();
+            }
+        }
+    ?>
+
     <div class="login">
     	<a class="header-button" href="index.php">Home</a>
 		<a class="header-button" href="about.php">About</a>
