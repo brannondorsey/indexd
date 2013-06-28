@@ -32,6 +32,10 @@ class ContentOutput{
 		return $search_obj;
 	}
 
+	public function stay_logged_in(){
+		#code...
+	}
+
 	public function output_highest_liked_users($numb_results) {
 		$search_array = array('order_by' => 'likes',
 							  'limit' => $numb_results,

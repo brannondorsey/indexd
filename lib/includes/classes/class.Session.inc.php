@@ -3,7 +3,11 @@
 class Session {
 
 	public static function start(){
-		session_start();
+		$session_cookie_lifetime = 72; //in hours
+		$lifetime_in_seconds = 60 * 60 * $session_cookie_lifetime;
+		session_set_cookie_params($lifetime_in_seconds);
+	    session_start();
+	    session_regenerate_id(true);
 	}
 
 	public static function destroy(){
