@@ -22,6 +22,7 @@ To Do For Indexd
 - Set session length based on "Stay Logged In" DROP
 - Add description to register page (tooltips?)
 - Fill DB w/ meaningful data for testing
+- Check emails on registration for duplicates
 
 Completed
 
