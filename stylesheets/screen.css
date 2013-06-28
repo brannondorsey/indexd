@@ -191,10 +191,10 @@ you can use the generic selector below, but it's slower:
 /* line 70, ../sass/screen.scss */
 .header-button:hover {
   background-color: rgba(255, 255, 255, 0);
-  padding: 1em 0;
+  padding: 1em 0 0.3em 0;
   border-bottom: 2px solid #ef7878;
   color: #ef7878;
-  margin: 0 1em;
+  margin: 0 1em 0.7em 1em;
 }
 
 /* line 83, ../sass/screen.scss */
