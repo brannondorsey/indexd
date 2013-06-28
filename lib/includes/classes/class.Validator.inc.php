@@ -48,7 +48,7 @@ class Validation{
 
     public function matchPasswords() {
     	if($this->source['password'] != $this->source['password_conf']) {
-    		$this->errors['pword_match'] = 'Passwords did not match';
+    		$this->errors['pword_match'] = 'passwords did not match';
     	}
     }
 
