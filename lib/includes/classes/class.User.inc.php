@@ -110,9 +110,13 @@ class User{
 		'datetime_joined' => $timestamp, //save joined to now
 		'API_key' => sha1(microtime(true).mt_rand(10000,90000)), //generate random key
 		'verified' => 0,
-		'likes' => 0,
-		'email_confirmation_code' => sha1(microtime(true).mt_rand(10000,90000)),
-		'email_confirmed' => 0);
+		'email_confirmation_code' => sha1(microtime(true).mt_rand(10000,90000))
+		);
+		//these two fields below just check for if the likes or email_confirmation was added by the generator. 
+		//these should be automatcally added to the new_fields array above before launch like they used
+		//to be. 
+		if(!isset($post_array['likes'])) $new_fields['likes'] = 0; 
+		if(!isset($post_array['email_confirmed'])) $new_fields['email_confirmed'] = 0;
 		return array_merge($post_array, $new_fields);
 	}
 //-------------------------------------------------------------------------------

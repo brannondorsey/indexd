@@ -29,6 +29,7 @@
 - Account page w/ editable profile page and badge stuff
 - capitalize both words in multi word tags and media?
 - add logo favicon
+- handle zipcode lookup failures by not allowing users to register
 
 ##Notes
 - perhaps change "media" to something else. Art media is more like paint, charchoal, graphite, etc and could be confusing. Perhaps the word practice.
