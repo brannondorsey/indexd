@@ -9,14 +9,29 @@
     require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
     Database::init_connection();
     $content_obj = new ContentOutput();
-    $search_string = Database::clean($_GET['search']);
     $numb_results = 10;
     $page = (isset($_GET['page']) ? $_GET['page'] : 1);
-    $search_array = array(
-       'search' => $search_string,
-       'limit' => $numb_results,
-       'page' => $page
-    );
+    $get_array = Database::clean($_GET);
+    $search_array = array();
+    if (isset($_GET['search']) {
+        $search_string = $get_array['search'];
+        $search_array['search'] = $search_string;
+    } else {
+        $switcher = $get_array;
+        switch($switcher) {
+            case isset($switcher['tags']):
+                $search_array['tags'] = $switcher['tags'];
+            case isset($switcher['city']):
+                $search_array['city'] = $switcher['city'];
+            case isset($switcher['state']):
+                $search_array['state'] = $switcher['state'];
+            case isset($switcher['media']):
+                $search_array['media'] = $switcher['media'];
+                break;
+        }
+        $search_array['limit'] = $numb_results;
+        $search_array['page'] = $page
+    }
     $total_numb_results = $content_obj->total_numb_results($search_array); //gives total number of pages
     $total_pages = ceil($total_numb_results/$numb_results); //calculates total number of pages
     if ($page > $total_pages) $page = $total_pages; //sets page to max page if page it exceeds it
