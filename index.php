@@ -78,8 +78,8 @@
         </div>
 
         <section class="about">
-            <p>Indexd.io is an open, distributed network of artists, designers, writers, and other creatives. Our goal is the decentralization of the creative networking tool. Super simple profiles and straightforward relational results allow you to quickly explore artists' work on whatever platform they choose to host it.</p>
-            <p>Indexd.io is an open, distributed network of artists, designers, writers, and other creatives. Our goal is the decentralization of the creative networking tool. Super simple profiles and straightforward relational results allow you to quickly explore artists' work on whatever platform they choose to host it.</p> 
+            <p>Indexd.io is an open project that aims to document and connect an extensive collection of contemporary independent artists, designers, authors, and other creatives. When a user joins their website and information are added to our database allowing the public to visit their profile, view their work, and explore similar users. They are also encouraged to participate in the living archive by and saving some of there favorite links.</p>
+            <p>Minimal profiles and straightforward relational results allow visitors to quickly explore new artists and works. Its like a big interactive address book for the creative field. Have a look around the site. Its simple.</p>
         </section>
 
         </div>
