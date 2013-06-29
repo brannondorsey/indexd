@@ -33,8 +33,7 @@
                  echo "the email is not confirmed"; //email not confirmed code goes here
                 }
                 else{ 
-                    header('Location:' . Database::$root_dir_link . "index.php");
-                    echo "I just sent the header to " . str_replace("http://", "", Database::$root_dir_link) . "index.php";
+                    header('Location:' . Database::$root_dir_link . "listing.php?id=" . $user->data->id);
                 }
             }
             // else echo "user authentication failed"; //code for failed login here...

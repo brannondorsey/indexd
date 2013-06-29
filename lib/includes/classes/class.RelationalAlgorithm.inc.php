@@ -7,7 +7,7 @@ class RelationalAlgorithm{
 	
 	protected $numb_related_users_per_page = 10;
 	protected $numb_of_each_column_for_algorithm;
-	protected $nearby_users_radius_in_miles = 1000;
+	protected $nearby_users_radius_in_miles = 100;
 	protected $columns_for_algorithm = "tags, media, lat, lon"; //columns that the algorithm uses
 	// protected $columns_for_algorithm_array;
 

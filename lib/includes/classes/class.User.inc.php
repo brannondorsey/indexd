@@ -119,6 +119,7 @@ class User{
 //EMAIL CONFIRMATION
 
 	protected function send_confirmation_email($email, $name ,$confirmation_code){
+		return true; //EDIT THIS! THIS IS SO THAT WE DON'T SPAM PEOPLE DURING DEVELOPMENT
 		$path_to_email_JSON = "lib/data/email_confirmation_message.json";
 		$file = file_get_contents($path_to_email_JSON);
 		$email_obj = json_decode($file);
