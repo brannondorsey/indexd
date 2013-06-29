@@ -1,4 +1,4 @@
-To Do For Indexd
+##Todo
 
 - Implement Info page following registration with badge info -Kevin Zweerink
 - Tweak home page -Kevin Zweerink
@@ -7,6 +7,7 @@ To Do For Indexd
 - Add API page/doc -Kevin Zweerink
 - Tweak listing page -Kevin Zweerink
 - Responsive Stuff -Kevin Zweerink
+- no results page handling
 - Add settings page
 - Change how tags are searched from listing page -Kevin Zweerink
 - Verified system to easily check for real peeps on our site
@@ -24,8 +25,17 @@ To Do For Indexd
 - Implement and entire like system
 - add API documentation
 - Make login page bring you to your profile
+- change "url" in register page to "website"
+- Account page w/ editable profile page and badge stuff
+- capitalize both words in multi word tags and media?
+- add logo favicon
 
-Completed
+##Notes
+- perhaps change "media" to something else. Art media is more like paint, charchoal, graphite, etc and could be confusing. Perhaps the word practice.
+- Maybe on the forthcoming tags "more info" button on the register page we could give a suggestion to pick tags that describe their work, or the movements they would describe their work being assosciated with. I think that we want to make it as clear as possible how media and tags are different. Tags examples: installation, abstract, color field, dslr film making, large format, etc…
+
+
+##Completed
 
 - Search relevancy recursion
 - Make sure API & PrivateAPI ONLY output UTF-8 JSON
