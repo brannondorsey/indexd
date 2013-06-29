@@ -142,6 +142,8 @@ h2 {
 body {
 	@extend %default-text-style;
 	margin: 0;
+	background-color: $_white;
+	//border: 10px solid $_red;
 }
 
 img {
