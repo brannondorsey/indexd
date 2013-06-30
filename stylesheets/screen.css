@@ -610,7 +610,7 @@ input[type="submit"] {
 }
 /* line 471, ../sass/screen.scss */
 .query .tags .tag a {
-  color: #1d5b89;
+  color: white;
   padding: 0.2em 0.5em;
   background-color: #1d5b89;
   display: inline-block;

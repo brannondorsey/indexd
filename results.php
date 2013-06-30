@@ -67,7 +67,7 @@
                     <div class="result">
                         <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
                         <p class="descrip"><?php echo $result->description; ?></p>
-                        <a class="url" href="<?php echo $result->url ?>"><?php echo "www." . $result->url . ".com" ?></a> 
+                        <a class="url" href="<?php echo $result->url ?>"><?php echo $result->url; ?></a> 
                     </div>
             <?php }
                 } ?>
