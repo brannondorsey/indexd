@@ -2,13 +2,6 @@
     require_once '../lib/includes/classes/class.User.inc.php';
     require_once '../lib/includes/classes/class.Validator.inc.php';
 
-	/*NOTE: 
-	  IF USERS WITH CONFIRMED EMAILS ARE DESIRED, TEMPORARILY EDIT THE 
-	  User::add_and_encode_register_fields() PROTECTED METHOD TO AUTOMATICALLY
-	  OUTPUT USERS WITH VERIFIED EMAILS. DO NOT FORGET TO CHANGE IT BACK ONCE
-	  FINISHED AUTO GENERATING USERS.
-	*/
-
 	$user = new User();
 	$validator = new Validation();
 

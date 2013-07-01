@@ -33,7 +33,8 @@ emotional
 free art
 nonprofit
 lighthearted
-logos movies
+logos
+movies
 open-source
 photoshop
 adobe creative suite
