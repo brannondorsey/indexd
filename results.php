@@ -41,8 +41,7 @@
                 break;
         }
         $search_string = rtrim($search_string, ", ");
-        // if(!isset($search_string))$search_string = reset($get_array); //move array's internal index to first element and return its value
-        // end($get_array); //put the internal index at the end again
+        $search_array['order_by'] = "likes";
     }
     //asign limit and page
     $search_array['limit'] = $numb_results;
