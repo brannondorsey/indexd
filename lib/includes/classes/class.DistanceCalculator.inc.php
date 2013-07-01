@@ -5,16 +5,19 @@ class DistanceCalculator{
 	//returns assoc array of min lat, max lat, min lon, max lon
 	//taken from http://blog.fedecarg.com/2009/02/08/geo-proximity-search-the-haversine-equation/
 	public static function get_distance_range($lat, $lon, $radius_in_miles){
-		$longitude = (float) $lat;//-2.708077;
-		$latitude = (float) $lon;//53.754842;
+		$longitude = $lat;//-2.708077;
+		$latitude = $lon;//53.754842;
 		$radius = $radius_in_miles; // in miles
+		// echo "the latitude is " . $latitude . "<br/>";
+		// echo "the longitude is " . $longitude . "<br/>";
+		// echo "the radius in miles is " . $radius . "<br/>";
 
 		$lng_min = $longitude - $radius / abs(cos(deg2rad($latitude)) * 69);
 		$lng_max = $longitude + $radius / abs(cos(deg2rad($latitude)) * 69);
 		$lat_min = $latitude - ($radius / 69);
 		$lat_max = $latitude + ($radius / 69);
-		// echo 'lng (min/max): ' . $lng_min . '/' . $lng_max . PHP_EOL;
-		// echo 'lat (min/max): ' . $lat_min . '/' . $lat_max;
+		 //echo 'lng (min/max): ' . $lng_min . '/' . $lng_max . PHP_EOL;
+		 // echo 'lat (min/max): ' . $lat_min . '/' . $lat_max;
 		return array(
 				"min lat" => $lat_min,
 				"max lat" => $lat_max,

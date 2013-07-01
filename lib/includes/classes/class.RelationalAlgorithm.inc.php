@@ -7,7 +7,7 @@ class RelationalAlgorithm{
 	
 	protected $numb_related_users_per_page = 10;
 	protected $numb_of_each_column_for_algorithm;
-	protected $nearby_users_radius_in_miles = 100;
+	protected $nearby_users_radius_in_miles = 200;
 	protected $columns_for_algorithm = "tags, media, lat, lon"; //columns that the algorithm uses
 	// protected $columns_for_algorithm_array;
 
@@ -35,6 +35,8 @@ class RelationalAlgorithm{
 		$most_media_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->media, $this->numb_of_each_column_for_algorithm);
 		$most_tags_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->tags, $this->numb_of_each_column_for_algorithm);
 		$most_location_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->location, $this->numb_of_each_column_for_algorithm);
+		//echo "The locations search returned " . sizeof($most_location_ids) . " results <br/>";
+		//var_dump($all_related_users_obj->location) . "<br/>";
 		return $this->get_related_users_using_arrays_of_ids($most_media_ids, $most_tags_ids, $most_location_ids);
 	}
 
@@ -56,16 +58,19 @@ class RelationalAlgorithm{
 				//looped through hasnt already been added
 				if($i < sizeof($array_1) && array_search($array_1[$i], $ids_already_added) == false){
 					$most_related_users_ids[] = $array_1[$i];
+					//echo "got in the media array <br/>";
 					$numb_users_chosen++;
 				}
 				//dido
-				if($i < sizeof($array_2) && !array_search($array_2[$i], $ids_already_added) == false){
+				if($i < sizeof($array_2) && array_search($array_2[$i], $ids_already_added) == false){
 					$most_related_users_ids[] = $array_2[$i];
+					//echo "got in the tags array <br/>";
 					$numb_users_chosen++;
 				} 
 				//ibid
-				if($i < sizeof($array_3) && !array_search($array_3[$i], $ids_already_added) == false){
+				if($i < sizeof($array_3) && array_search($array_3[$i], $ids_already_added) == false){
 				 $most_related_users_ids[] = $array_3[$i];
+				 //echo "got in the location array <br/>";
 				 $numb_users_chosen++;
 				}
 			}
@@ -136,6 +141,7 @@ class RelationalAlgorithm{
 				$location_range = DistanceCalculator::get_distance_range($this->users_lat_lon[0], $this->users_lat_lon[1], $this->nearby_users_radius_in_miles);
 				$query .= "lat >= " . $location_range['min lat'] . " AND lat <= " . $location_range['max lat']
 				 . " AND lon >= " . $location_range['min lon'] . " AND lon <= " . $location_range['max lon'];
+				 //echo $query . "<br/>";
 			}
 			else{
 				$query .= $column_name . " LIKE '%" . $new_query_value . "%'";
@@ -143,7 +149,7 @@ class RelationalAlgorithm{
 			$query .= " AND id != '" . $user_id . "' ORDER BY likes LIMIT " . $this->numb_related_users_per_page;
 			$JSON_output_string .= $this->api->query_results_as_array_of_JSON_objs($query); //notice: the string of json objs are not wrapped
 			$JSON_output_string .= ",";
-			if($column_name == "location") break; //do not loop again because location always returns the same results
+			if($column_name == 'location') break; //do not loop again because location always returns the same results
 		}
 		$JSON_output_string = rtrim($JSON_output_string, ","); //remove last comma 
 		$JSON_output_string .= '],';

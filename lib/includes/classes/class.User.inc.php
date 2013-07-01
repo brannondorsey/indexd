@@ -98,7 +98,8 @@ class User{
 
 	#etc...
 
-	protected function get_user_data_obj($id){
+	//change back to protected after algorithm testing
+	public function get_user_data_obj($id){
 		if($obj = $this->api->get_logged_in_user_obj($id));
 		else echo "PROBLEM DECODING JSON OBJECT ";
 		return $obj->data[0]; //asign all of the JSON obj key value pairs to the user's $data object
