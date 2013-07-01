@@ -116,6 +116,7 @@ class API {
 		$page = 1;
 		$exact = false;
 		$count_only = false;
+		$exclude = "";
 		$this->API_key = "";
 
 		//distribute $_GETs to their appropriate arrays/vars
@@ -135,6 +136,7 @@ class API {
 				    $value = true){
 				$count_only = true;
 			} 
+			else if($parameter == 'exclude') $exclude = $value;
 			else if($parameter == 'key') $this->API_key = $value; 
 		}
 
@@ -172,6 +174,9 @@ class API {
 					if($i != sizeof($column_parameters) -1) $query .= "AND ";
 					$i++;
 				}
+				//if there was an exclude parameter append it to the query
+				//exclude cannot be used in a FULLTEXT search as of now
+				if($exclude != "") $query .= "AND id !='" . $exclude . "' ";
 			}
 		
 			//add ORDER BY statement

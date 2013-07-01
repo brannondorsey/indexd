@@ -31,7 +31,8 @@
 - capitalize both words in multi word tags and media?
 - add logo favicon
 - handle zipcode lookup failures by not allowing users to register
-- make media list links individually clickable as well. like tags. 
+- make media list links individually clickable as well. like tags.
+- make a distinct visited color or something to notify users which links they have already seen.
 
 ##Notes
 - perhaps change "media" to something else. Art media is more like paint, charchoal, graphite, etc and could be confusing. Perhaps the word practice.

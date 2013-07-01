@@ -12,25 +12,45 @@
     $page = (isset($_GET['page']) ? $_GET['page'] : 1);
     $get_array = Database::clean($_GET);
     $search_array = array();
+
+    //if the api param specifies a search...
     if (isset($_GET['search'])) {
         $search_string = $get_array['search'];
         $search_array['search'] = $search_string;
     } else {
         $switcher = $get_array;
+        $search_string = "";
         switch($switcher) {
             case isset($switcher['tags']):
                 $search_array['tags'] = $switcher['tags'];
+                $search_string = $search_array['tags'];
+                break;
             case isset($switcher['city']):
                 $search_array['city'] = $switcher['city'];
+                $search_string .= $search_array['city'] . ", ";
             case isset($switcher['state']):
                 $search_array['state'] = $switcher['state'];
+                $search_string .= $search_array['state'] . ", ";
+            case isset($switcher['country']):
+                $search_array['country'] = $switcher['country'];
+                $search_string .= strtoupper($search_array['country']) . ", ";
+                break;
             case isset($switcher['media']):
                 $search_array['media'] = $switcher['media'];
+                $search_string = $search_array['media'];
                 break;
         }
-        $search_array['limit'] = $numb_results;
-        $search_array['page'] = $page;
+        $search_string = rtrim($search_string, ", ");
+        // if(!isset($search_string))$search_string = reset($get_array); //move array's internal index to first element and return its value
+        // end($get_array); //put the internal index at the end again
     }
+    //asign limit and page
+    $search_array['limit'] = $numb_results;
+    $search_array['page'] = $page;
+
+    //if an exclude parameter was specified, add it
+    if(isset($get_array['exclude'])) $search_array['exclude'] = (int) $get_array['exclude'];
+
     $total_numb_results = $content_obj->total_numb_results($search_array); //gives total number of pages
     $total_pages = ceil($total_numb_results/$numb_results); //calculates total number of pages
     if ($page > $total_pages) $page = $total_pages; //sets page to max page if page it exceeds it

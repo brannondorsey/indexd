@@ -44,12 +44,12 @@
 
                         <div class="tags">
                             <?php foreach(ContentOutput::commas_to_tags($profile_data->tags) as $tag) { ?>
-                            <span class="tag"><a href="results.php?search=<?php echo $tag ?>"><?php echo $tag ?></a></span>
+                            <span class="tag"><a href="results.php?tags=<?php echo $tag ?>"><?php echo $tag ?></a></span>
                             <?php } ?>
                         </div>
                     </div> <!-- /.info -->
 
-                    <a class="location" href="#"><?php echo ucfirst($profile_data->city) . ", " . ucfirst($profile_data->state) . ", " . ucfirst($profile_data->country);?></a>
+                    <a class="location" href="results.php?city=<?php echo $profile_data->city ?>&state=<?php echo $profile_data->state ?>&country=<?php echo $profile_data->country ?>"><?php echo ucfirst($profile_data->city) . ", " . ucfirst($profile_data->state) . ", " . ucfirst($profile_data->country);?></a>
                 </div>
             </section>
 
