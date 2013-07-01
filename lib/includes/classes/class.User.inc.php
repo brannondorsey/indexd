@@ -61,14 +61,18 @@ class User{
 
 	}
 
+	//returns true on success, false on failure, and "ZIP_LOOKUP_FAILED" if zipcode lookup failed
 	public function register($post_array){
 		//if zip code is included look up assosciated values (i.e. city, state, country, lat, lon)
 		//and append them to the end of the $post_array here:
 		if(isset($post_array['zip']) &&
-		   isset($post_array['country'])) $post_array = $this->append_geo_info($post_array, $post_array['country'], $post_array['zip']);
+		   isset($post_array['country'])){ 
+			if($post_array = $this->append_geo_info($post_array, $post_array['country'], $post_array['zip']));
+			else return "ZIP_LOOKUP_FAILED";
+		}
 		else echo "there was no zip code or no country";
 		$post_array = $this->add_and_encode_register_fields($post_array); //append more fields to the array
-		$this->IU->execute_from_assoc($post_array);
+		$success = $this->IU->execute_from_assoc($post_array);
 		//send email confirmation here
 		return $this->send_confirmation_email($post_array['email'], $post_array['first_name'], $post_array['email_confirmation_code']);
 	}
@@ -183,7 +187,7 @@ class User{
 			 $geo_info_array['city'] = $geo_obj->places[0]->place_name;
 			if(isset($geo_obj->places[0]->state)) $geo_info_array['state'] = $geo_obj->places[0]->state;
 		}
-		else echo "geo json object failed to load"; //return false <---- later
+		else return false; //geo json object failed to load
 		return array_merge($array_to_append, $geo_info_array);
 	}
 
@@ -191,6 +195,7 @@ class User{
 	protected function get_geo_info_obj($country, $zip){
 		$api_url = "http://api.zippopotam.us/" . $country . "/" . $zip;
 		$json = file_get_contents($api_url);
+		if($json === FALSE) return false;
 		$json = str_replace("place name", "place_name", $json); //replace space in place name
 		$geo_data_obj = json_decode($json);
 		if($geo_data_obj != NULL) return $geo_data_obj;

@@ -56,7 +56,9 @@
                     $post_array = Database::clean($_POST);
                     $post_array['country'] = "us"; //add country manually for now
                     unset($post_array['password_conf']); //unset the password confirmation because we don't need it
-                    $user->register($post_array);
+                    if($user->register($post_array) === "ZIP_LOOKUP_FAILED"){
+                        //handle zip lookup fail here...
+                    }
                     Database::close_connection();
                 }
 

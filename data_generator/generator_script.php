@@ -15,7 +15,7 @@
 	Database::init_connection();
 
 	//number of users to add to the db
-	$numb_users_to_generate = 450;
+	$numb_users_to_generate = 500;
 
 	//settings
 	$max_description_chars = 140;
@@ -86,8 +86,9 @@
 								 'country' => "us");
 		$new_user_array = Database::clean($new_user_array);
 		$new_user_array['url'] = $validator->processURLString($new_user_array['url']);
-		$user->register($new_user_array);
-		echo "Added " . ucfirst($first_name) . " " . ucfirst($last_name) . " to the database <br/>";
+		if($user->register($new_user_array) !== "ZIP_LOOKUP_FAILED"){
+			echo "Added " . ucfirst($first_name) . " " . ucfirst($last_name) . " to the database <br/>";
+		}else echo "Zip lookup failed I did not add " . ucfirst($first_name) . " " . ucfirst($last_name) . " to the database <br/>";
 	}
 	Database::close_connection();
 
