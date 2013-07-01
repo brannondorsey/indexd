@@ -133,7 +133,8 @@ class API {
 				    strtolower($value) == "true") $exact = true;
 			else if($parameter == 'count_only' &&
 				    strtolower($value) == "true" ||
-				    $value = true){
+				    $parameter == 'count_only' &&
+				    $value == true){
 				$count_only = true;
 			} 
 			else if($parameter == 'exclude') $exclude = $value;
