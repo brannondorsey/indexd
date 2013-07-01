@@ -34,7 +34,18 @@
             <section class="query">
                 <div class="profile">
                     <h2><?php echo $profile_data->first_name . " " . $profile_data->last_name; ?></h2>
-                    <a href="#" class="media"><?php echo $profile_data->media; ?></a>
+                    <div class="media">
+                    <?php 
+                    $media_array = ContentOutput::commas_to_list($profile_data->media);
+                    $media_array_index = 0;
+                    foreach($media_array as $media){ 
+                        $media_string = $media;
+                        if($media_array_index < sizeof($media_array)-1) $media_string .= ", ";
+                        ?>
+                        <a href="results.php?media=<?php echo $media ?>"><?php echo $media_string; ?></a>
+                    <?php $media_array_index++; } ?>
+                    </div>
+                    <!-- <a href="#" class="media"><?php //echo $profile_data->media; ?></a> -->
 
                     <div class="info">
                         <a class="url" href="<?php echo $profile_data->url ?>" target="blank"><?php echo $content_obj->format_url_for_display($profile_data->url); ?></a>
@@ -43,8 +54,8 @@
                         <p class="descrip"><?php echo $profile_data->description; ?></p>
 
                         <div class="tags">
-                            <?php foreach(ContentOutput::commas_to_tags($profile_data->tags) as $tag) { ?>
-                            <span class="tag"><a href="results.php?tags=<?php echo $tag ?>"><?php echo $tag ?></a></span>
+                            <?php foreach(ContentOutput::commas_to_list($profile_data->tags) as $tag) { ?>
+                            <span class="tag"><a href="results.php?tags=<?php echo $tag; ?>"><?php echo $tag; ?></a></span>
                             <?php } ?>
                         </div>
                     </div> <!-- /.info -->

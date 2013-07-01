@@ -13,7 +13,7 @@ class ContentOutput{
 		$algorithm = new RelationalAlgorithm();
 	}
 
-	public static function commas_to_tags($string) {
+	public static function commas_to_list($string) {
 		$output = explode(", ", $string);
 		return $output;
 	}
