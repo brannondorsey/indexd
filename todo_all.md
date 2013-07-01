@@ -7,6 +7,7 @@
 - Add API page/doc -Kevin Zweerink
 - Tweak listing page -Kevin Zweerink
 - Responsive Stuff -Kevin Zweerink
+- fix search text color (to hard to see)
 - no results page handling
 - Add settings page
 - Change how tags are searched from listing page -Kevin Zweerink
@@ -30,6 +31,7 @@
 - capitalize both words in multi word tags and media?
 - add logo favicon
 - handle zipcode lookup failures by not allowing users to register
+- make media list links individually clickable as well. like tags. 
 
 ##Notes
 - perhaps change "media" to something else. Art media is more like paint, charchoal, graphite, etc and could be confusing. Perhaps the word practice.

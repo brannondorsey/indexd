@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
 <?php 
-    error_reporting(E_ALL);
     require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
     Database::init_connection();
     $content_obj = new ContentOutput();
@@ -13,7 +12,7 @@
     $page = (isset($_GET['page']) ? $_GET['page'] : 1);
     $get_array = Database::clean($_GET);
     $search_array = array();
-    if (isset($_GET['search']) {
+    if (isset($_GET['search'])) {
         $search_string = $get_array['search'];
         $search_array['search'] = $search_string;
     } else {
@@ -30,7 +29,7 @@
                 break;
         }
         $search_array['limit'] = $numb_results;
-        $search_array['page'] = $page
+        $search_array['page'] = $page;
     }
     $total_numb_results = $content_obj->total_numb_results($search_array); //gives total number of pages
     $total_pages = ceil($total_numb_results/$numb_results); //calculates total number of pages
@@ -67,7 +66,7 @@
                     <div class="result">
                         <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
                         <p class="descrip"><?php echo $result->description; ?></p>
-                        <a class="url" href="<?php echo $result->url ?>"><?php echo $result->url; ?></a> 
+                        <a class="url" href="<?php echo $result->url ?>" target="blank"><?php echo $content_obj->format_url_for_display($result->url); ?></a> 
                     </div>
             <?php }
                 } ?>

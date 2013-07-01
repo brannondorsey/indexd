@@ -37,8 +37,8 @@
                     <a href="#" class="media"><?php echo $profile_data->media; ?></a>
 
                     <div class="info">
-                        <a class="url" href="<?php echo $profile_data->url ?>">www.<?php echo $profile_data->url; ?>.com</a>
-                        <a class="email" href="mailto:<?php echo $profile_data->email ?>"><?php echo $profile_data->email; ?></a>
+                        <a class="url" href="<?php echo $profile_data->url ?>" target="blank"><?php echo $content_obj->format_url_for_display($profile_data->url); ?></a>
+                        <a class="email" href="mailto:<?php echo $profile_data->email; ?>" target="blank"><?php echo $profile_data->email; ?></a>
 
                         <p class="descrip"><?php echo $profile_data->description; ?></p>
 
@@ -55,12 +55,13 @@
 
             <section class="results">
                 <?php
+                //display related users
                 $data_array = $data->data;
                 foreach($data_array as $key => $result) { ?>
                 <div class="result">
                     <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
                     <p class="descrip"><?php echo $result->description ?></p>
-                    <a class="url" href="<?php echo $result->url ?>"><?php echo $result->url ?></a>
+                    <a class="url" href="<?php echo $result->url ?>" target="blank"><?php echo $content_obj->format_url_for_display($result->url) ?></a>
                 </div>
                 <?php } ?>
             </section>

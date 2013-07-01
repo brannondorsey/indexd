@@ -78,7 +78,7 @@
         </div>
 
         <section class="about">
-            <p>Indexd.io is an open project that aims to document and connect an extensive collection of contemporary independent artists, designers, authors, and other creatives. When a user joins their website and information are added to our database allowing the public to visit their profile, view their work, and explore similar users. They are also encouraged to participate in the living archive by and saving some of there favorite links.</p>
+            <p>Indexd.io is an open project that aims to document and connect an extensive collection of contemporary independent artists, designers, authors, and other creatives. When a user joins their website and information are added to our database allowing the public to visit their profile, view their work, and explore similar users. They are also encouraged to participate in the living archive by saving some of there favorite links.</p>
             <p>Minimal profiles and straightforward relational results allow visitors to quickly explore new artists and works. Its like a big interactive address book for the creative field. Have a look around the site. Its simple.</p>
         </section>
 
@@ -100,7 +100,7 @@
                 <div class="result <?php if($key === $last_key) { echo "last-result"; }?>">
                     <h2><a href="listing.php?id=<?php echo $result->id ?>"><?php echo $result->first_name . " " . $result->last_name; ?></a></h2>
                     <p class="descrip"><?php echo $result->description ?></p>
-                    <a class="url" href="<?php echo $result->url ?>"><?php echo $result->url ?></a>
+                    <a class="url" href="<?php echo $result->url ?>" target="blank"><?php echo $liked_users->format_url_for_display($result->url) ?></a>
                 </div>
                 <?php } ?>
             </section>

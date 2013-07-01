@@ -32,10 +32,6 @@ class ContentOutput{
 		return $search_obj;
 	}
 
-	public function stay_logged_in(){
-		#code...
-	}
-
 	public function output_highest_liked_users($numb_results) {
 		$search_array = array('order_by' => 'likes',
 							  'limit' => $numb_results,
@@ -57,6 +53,13 @@ class ContentOutput{
 		if(array_key_exists('page', $search_array)) unset($search_array['page']);
 		$obj = json_decode($this->api->get_JSON_from_GET($search_array));
 		return $obj->data[0]->count;
+	}
+
+	//removes http:// and www. from the front of urls. Returns string
+	public function format_url_for_display($url){
+		$url = str_replace("http://", "", $url);
+		$url = str_replace("www.", "", $url);
+		return $url;
 	}
 
 	#etc...
