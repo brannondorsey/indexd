@@ -7,7 +7,7 @@ class RelationalAlgorithm{
 	
 	protected $numb_related_users_per_page = 10;
 	protected $numb_of_each_column_for_algorithm;
-	protected $nearby_users_radius_in_miles = 200;
+	protected $nearby_users_radius_in_miles = 75;
 	protected $columns_for_algorithm = "tags, media, lat, lon"; //columns that the algorithm uses
 	// protected $columns_for_algorithm_array;
 
@@ -139,8 +139,8 @@ class RelationalAlgorithm{
 			//form query statement differently if the obj name will be location
 			if($column_name == "location"){
 				$location_range = DistanceCalculator::get_distance_range($this->users_lat_lon[0], $this->users_lat_lon[1], $this->nearby_users_radius_in_miles);
-				$query .= "lat >= " . $location_range['min lat'] . " AND lat <= " . $location_range['max lat']
-				 . " AND lon >= " . $location_range['min lon'] . " AND lon <= " . $location_range['max lon'];
+				$query .= "lon >= " . $location_range['min lon'] . " AND lon <= " . $location_range['max lon']
+				 . " AND lat >= " . $location_range['min lat'] . " AND lat <= " . $location_range['max lat'];
 				 //echo $query . "<br/>";
 			}
 			else{
