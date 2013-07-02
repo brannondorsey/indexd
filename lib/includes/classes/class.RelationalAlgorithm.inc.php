@@ -6,9 +6,9 @@ require_once("class.DistanceCalculator.inc.php");
 class RelationalAlgorithm{
 	
 	protected $numb_related_users_per_page = 10;
+	protected $nearby_users_radius_in_miles = 70;
 	protected $numb_of_each_column_for_algorithm;
 	protected $columns_for_algorithm = "tags, media, lat, lon"; //columns that the algorithm uses
-	// protected $columns_for_algorithm_array;
 
 	protected $users_tags;
 	protected $users_media;
@@ -18,7 +18,6 @@ class RelationalAlgorithm{
 
 	public function __construct(){
 		$this->api = new PrivateAPI();
-		// $this->columns_for_algorithm_array = explode(", ", $this->columns_for_algorithm);
 		$this->numb_of_each_column_for_algorithm = floor($this->numb_related_users_per_page/3);
 	}
 
@@ -138,7 +137,8 @@ class RelationalAlgorithm{
 			//form query statement differently if the obj name will be location
 			if($column_name == "location"){
 				//$location_range = DistanceCalculator::get_distance_range($this->users_lat_lon[0], $this->users_lat_lon[1], $this->nearby_users_radius_in_miles);
-				$query = $this->get_distance_mysql_query($user_id, $this->users_lat_lon[0], $this->users_lat_lon[1], $this->numb_related_users_per_page);
+				$query = DistanceCalculator::get_distance_mysql_query($user_id, $this->users_lat_lon[0], $this->users_lat_lon[1], 
+											$this->nearby_users_radius_in_miles, $this->numb_related_users_per_page, $this->api->public_columns_to_provide);
 				//echo $query . "<br/>";
 			}
 			else{
@@ -151,18 +151,6 @@ class RelationalAlgorithm{
 		$JSON_output_string = rtrim($JSON_output_string, ","); //remove last comma 
 		$JSON_output_string .= '],';
 		return $JSON_output_string;
-	}
-
-	protected function get_distance_mysql_query($user_id, $lat, $lon, $limit){
-		return "SELECT *, ( 3959 * acos( cos( radians(
-		$lat) ) * cos( radians( 
-		users.lat ) ) * cos( radians( 
-		users.lon ) - radians(
-		$lon) ) + sin( radians(
-		$lat) ) * sin( radians( 
-		users.lat ) ) ) ) AS distance 
-		FROM users WHERE id != '$user_id'
-		ORDER BY distance LIMIT $limit";
 	}
 }
 ?>

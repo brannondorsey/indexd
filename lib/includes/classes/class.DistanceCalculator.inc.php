@@ -1,10 +1,25 @@
 <?php
 
 class DistanceCalculator{
-	
+
+    public static function get_distance_mysql_query($user_id, $lat, $lon, $radius_in_miles, $limit, $columns){
+		$location_range = self::get_distance_range($lat, $lon, $radius_in_miles);
+		$query = "SELECT " . $columns . ", ( 3959 * acos( cos( radians(
+		$lat) ) * cos( radians( 
+		users.lat ) ) * cos( radians( 
+		users.lon ) - radians(
+		$lon) ) + sin( radians(
+		$lat) ) * sin( radians( 
+		users.lat ) ) ) ) AS distance 
+		FROM users WHERE lat >=" . $location_range['min lat'] . " AND lat <=" . $location_range['max lat']
+		. " AND lon >= " . $location_range['min lon'] . " AND lon <= " . $location_range['max lon'] . " AND id != '$user_id'
+		ORDER BY distance LIMIT $limit";
+		return $query;
+	}
+
 	//returns assoc array of min lat, max lat, min lon, max lon
 	//taken from http://blog.fedecarg.com/2009/02/08/geo-proximity-search-the-haversine-equation/
-	public static function get_distance_range($lat, $lon, $radius_in_miles){
+	protected static function get_distance_range($lat, $lon, $radius_in_miles){
 		$longitude = $lon;//-2.708077;
 		$latitude = $lat;//53.754842;
 		$radius = $radius_in_miles; // in miles
@@ -21,21 +36,7 @@ class DistanceCalculator{
 				"max lat" => $lat_max,
 				"min lon" => $lng_min,
 				"max lon" => $lng_max,
-			);
-	}
-
-    //returns assoc array of min lat, max lat, min lon, max lon
-	//taken from http://blog.fedecarg.com/2009/02/08/geo-proximity-search-the-haversine-equation/
-	public static function get_distance_mysql_query($lat, $lon, $limit){
-		return "SELECT *, ( 3959 * acos( cos( radians(
-		$lat) ) * cos( radians( 
-		users.lat ) ) * cos( radians( 
-		users.lon ) - radians(
-		$lon) ) + sin( radians(
-		$lat) ) * sin( radians( 
-		users.lat ) ) ) ) AS distance 
-		FROM users
-		ORDER BY distance LIMIT $limit";
+		);
 	}
 }
 ?>
