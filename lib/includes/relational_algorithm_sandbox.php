@@ -23,4 +23,6 @@
 		echo "Tags: " . $obj->tags . "<br/>";
 		echo "Location: " . $obj->city . ", " . $obj->state . ", " . strtoupper($obj->country) . "<br/>";
 	}
+
+	
 ?>
