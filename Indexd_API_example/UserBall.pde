@@ -1,18 +1,15 @@
 class UserBall extends User{
   
-  float x, y, s;
+  float x, y, s, offsetX, offsetY;
   color userColor = #1d5b89;
   int circlePadding = 20;
+  boolean dragging = false;
+  boolean rollover = false;
   
-  int noiseTime;
-  int noiseScale = 2;
   
   UserBall(JSONObject user){
     super(user);
     randomizeLocation();
-//    x = _x;
-//    y = _y;
-    noiseTime = int(random(10000000));
   }
   
   void randomizeLocation(){
@@ -34,22 +31,37 @@ class UserBall extends User{
     s = _s;
   }
   
-  void display(){
-    fill(userColor);
+  void display(int mx, int my){
+    color fillColor = (rollover || dragging) ? 255 : userColor;
+    fill(fillColor);
     noStroke();
     ellipse(x, y, s, s);
   }
   
-  void wiggle(){
-    noiseTime++;
-    float direction = random(1);
-    float xIncrement = noise(noiseTime)*noiseScale;
-    float yIncrement = noise(noiseTime+1000)*noiseScale;
-    x = ((direction > .5) ? x+xIncrement : x-xIncrement); 
-    y = ((direction > .5) ? y+yIncrement : y-yIncrement);
+  void drag(int mx, int my){
+    if(dragging){
+      x = mx - offsetX;//(offsetX-s/2)+mx;
+      y = my - offsetY;
+    }
+  }
+  
+  void clicked(int mx, int my){
+    if(isOver(mx, my)){
+      dragging = true;
+      offsetX  = ((mx > x) ? dist(mx, y, x, y) : -dist(mx, y, x, y));
+      offsetY  = ((my > y) ? dist(x, my, x, y) : -dist(x, my, x, y));
+    }
+  }
+  
+  void rollover(int mx, int my){
+    rollover = (isOver(mx, my) ? true : false);
   }
   
   boolean isOver(int mx, int my){
     return (dist(mx, my, x, y) <= s/2) ? true : false ;
+  }
+  
+  void stopDragging(){
+    dragging = false;
   }
 }

@@ -1,14 +1,14 @@
 #[Indexd](http://index.io) Public API
 
-The Indexd http API gives developers access to public user data from the Indexd database. Our web API returns all data as valid `json` and is interfaced using `get` parameters in the url of an http request. It is very similar to the [RESTful](COME BACK) APIs or Facebook's [Graph ](http://graph.facebook.com) API. The following documentation will cover the url parameters used to access Indexd's public data and give a few examples illustrating how the data can be used. If you have never used a web API before or are uncomfortable passing data requests through a url using `get` we suggest reading [this](COME BACK).
+The Indexd http API gives developers access to public user data from the Indexd database. Our web API returns all data as valid `json` and is interfaced using `get` parameters in the url of an http request. It is very similar to Facebook's [Graph API](https://developers.facebook.com/docs/reference/api/) and considered a client-server [REST API](http://en.wikipedia.org/wiki/Representational_state_transfer). The following documentation will cover the url parameters used to access Indexd's public data and give a few examples illustrating how the data can be used. If you have never used a web API before or are uncomfortable passing data requests through a url using `get` we suggest reading [this](http://en.wikipedia.org/wiki/Query_string).
 
 ##Getting Started
 
 ###Formatting a request
 
-Our Indexd database runs on [MySQL](COME BACK) and so the http requests used to return user data are very similar to forming a MySQL `SELECT` query statement. If you have used MySQL before, think of using the Indexd `get` parameters as little pieces of a query. For instance, our `limit`, `order_by`, and `flow` (our nickname for MySQL `ORDER BY`'s `DESC` or `ASC`) parameters translate directly into a MySQL statement on our servers.
+Our Indexd database runs on [MySQL](https://en.wikipedia.org/wiki/MySQL) and so the http requests used to return user data are very similar to forming a MySQL `SELECT` query statement. If you have used MySQL before, think of using the Indexd `get` parameters as little pieces of a query. For instance, our `limit`, `order_by`, and `flow` (our nickname for MySQL `ORDER BY`'s `DESC` or `ASC`) parameters translate directly into a MySQL statement on our servers.
 
-####Example Request
+####<a id="example_request"></a>Example Request
      http://api.indexd.io?city=Richmond&limit=2&key=…
      
 The above request would return the ten newest users with information related to "Richmond". This request is very similar to the way that the search bar works on the Indexd website. 
@@ -22,7 +22,7 @@ __Note:__ A valid API key must be provided with each request. Yours can be found
 - `limit` specifies the number of returned results. If not included as a parameter the default value is `25`. Max value is `250`.
 - `page` uses a MySQL `OFFSET` to return the contents of a hypothetical "page" of results in the database. Used most effectively when paired with `limit`.
 
-A full list of the Indexd API parameters are specified in the [Parameter Reference](COME BACK, link to the section below) section of this Documentation.
+A full list of the Indexd API parameters are specified in the [Parameter Reference](#parameter_reference) link to the section below) section of this Documentation.
 
 
 ###Returned JSON
@@ -88,7 +88,7 @@ Example files located in this repository.
 
 ###Error Handling
 
-##Parameter Reference
+##<a id="parameter_reference"></a>Parameter Reference
 
 This section documents in detail all of the Indexd API parameters currently available. 
 
@@ -120,13 +120,13 @@ __Example:__
 
       http://api.indexd.io?city=Richmond&state=Virginia&order_by=datetime_joined&limit=10&key=...
       
-This example pigybacks off of the [example request](COME BACK link to above) used in the [getting started](COME BACK link to above) section of this documentation. This request would yield more accurate results if the developer were looking for users who live in Richmond, Virginia. The previous method would have given results where the user's name, media, tags, etc… included Richmond.
+This example pigybacks off of the [example request](#example_request) used in the getting section of this documentation. This request would yield more accurate results if the developer were looking for users who live in Richmond, Virginia. The previous method would have given results where the user's name, media, tags, etc… included Richmond.
 
 
 __Notes:__ The column parameter's are overridden if a `search` parameter is specified. 
 
 ###Search Parameter
-The `search` parameter uses a  MySQL `FULLTEXT` [Match()… Against()…](COME BACK) search to find the most relevant results to the searched string. This is the exact method that the search bar on the Indexd website uses. 
+The `search` parameter uses a  MySQL `FULLTEXT` [Match()… Against()…](http://dev.mysql.com/doc/refman/5.5/en/fulltext-search.html#function_match) search to find the most relevant results to the searched string. This is the exact method that the search bar on the Indexd website uses. 
 
 Parameter __key:__ `search`
 
@@ -220,7 +220,7 @@ Returns the first five users from Baltimore alphabetically by last name.
 	
 ###Page Parameter
 
-The page parameter is used to keep track of what set (or page) of results are returned. This is similar to the [MySQL OFFSET statement](COME BACK). If not specified the page value will default to `1`.
+The page parameter is used to keep track of what set (or page) of results are returned. This is similar to the [MySQL OFFSET statement](http://dev.mysql.com/doc/refman/5.0/en/select.html). If not specified the page value will default to `1`.
 
 Parameter __key:__ `page`
 
