@@ -31,7 +31,8 @@ All user data returned by the Indexd API is wrapped in a `json` object named `da
 
 Inside the `data` object is an array of user objects that are returned as a result of the url parameters that will be outlined shortely.
 
-      {
+    ```json
+    {
     "data": [
         {
             "id": "840",
@@ -69,8 +70,10 @@ Inside the `data` object is an array of user objects that are returned as a resu
             "tags": "processing, emotional, modern, animation, dslr, 1960s, 3d",
             "likes": "902"
         }
-    ]
-}
+      ]
+    }
+    ```
+
 
 __Note:__ The `data` object always contains an array of `user` objects even if there is only one result.
 
@@ -88,8 +91,7 @@ Because the Indexd API outputs data using `JSON` the results of an API http requ
 
 ###Using the Data
 
-
-
+	```php
 	$city = "Baltimore";
 	$state = "Maryland";
 	$media = "Sculpture";
@@ -109,6 +111,7 @@ Because the Indexd API outputs data using `JSON` the results of an API http requ
 		echo "This user's website is " . $user->url . "<br/>";
 		echo "<br/>";
 	}
+	```
 
 ###Error Handling
 

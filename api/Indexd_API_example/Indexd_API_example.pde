@@ -108,10 +108,10 @@ void mouseReleased() {
   }
 }
 
-// automatically launch the program in fullscreen mode
-//boolean sketchFullScreen() {
-//  return true;
-//}
+//automatically launch the program in fullscreen mode
+boolean sketchFullScreen() {
+  return true;
+}
 
 //draw the connections between each user using media, tags, and location. Called inside draw.
 void drawConnections() {
