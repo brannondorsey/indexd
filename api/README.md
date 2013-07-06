@@ -8,7 +8,7 @@ The Indexd http API gives developers access to public user data from the Indexd 
 
 Our Indexd database runs on [MySQL](https://en.wikipedia.org/wiki/MySQL) and so the http requests used to return user data are very similar to forming a MySQL `SELECT` query statement. If you have used MySQL before, think of using the Indexd `get` parameters as little pieces of a query. For instance, our `limit`, `order_by`, and `flow` (our nickname for MySQL `ORDER BY`'s `DESC` or `ASC`) parameters translate directly into a MySQL statement on our servers.
 
-####<a id="example_request"></a>Example Request
+####<a id="example-request"></a>Example Request
      http://api.indexd.io?city=Richmond&limit=2&key=…
      
 The above request would return the ten newest users with information related to "Richmond". This request is very similar to the way that the search bar works on the Indexd website. 
@@ -22,14 +22,14 @@ __Note:__ A valid API key must be provided with each request. Yours can be found
 - `limit` specifies the number of returned results. If not included as a parameter the default value is `25`. Max value is `250`.
 - `page` uses a MySQL `OFFSET` to return the contents of a hypothetical "page" of results in the database. Used most effectively when paired with `limit`.
 
-A full list of the Indexd API parameters are specified in the [Parameter Reference](#parameter_reference) link to the section below) section of this Documentation.
+A full list of the Indexd API parameters are specified in the [Parameter Reference](#parameter-reference) link to the section below) section of this Documentation.
 
 
 ###Returned JSON
 
 All user data returned by the Indexd API is wrapped in a `json` object named `data`. If there is an error, or no results are found, an `error` object with a corresponding error message will be returned __instead__ of a `data` object. 
 
-Inside the `data` object is an array of user objects that are returned as a result of the url parameters that will be outlined shortely.
+Inside the `data` object is an array of user objects that are returned as a result of the url parameters that will be outlined shortly.
 
 ```json
 {
@@ -82,15 +82,16 @@ The API allows developers access to each user's:
 
 These user object properties correspond to the column names in our MySQL database.
 
-__Note:__ the values of the user's `media` and `tags` properties are returned as a comma-space dilemited list.
+__Note:__ the values of the user's `media` and `tags` properties are returned as a comma-space delimited list.
 
 ##Examples
 
-Because the Indexd API outputs data using `JSON` the results of an API http request can be loaded into a project written in almost any popular language. We have chosen to provide brief code examples using `PHP`, however, these code snippits outline the basics of loading and using user data and easily apply to another language. 
+Because the Indexd API outputs data using `JSON` the results of an API http request can be loaded into a project written in almost any popular language. We have chosen to provide brief code examples using `PHP`, however, these code snippets outline the basics of loading and using user data and easily apply to another language. 
 
 ###Using the Data
 
 ```php
+<?php
 $city = "Baltimore";
 $state = "Maryland";
 $media = "Sculpture";
@@ -103,13 +104,14 @@ $jsonObj = json_decode($json_string);
 	
 //loop through each user object inside of the "data" array
 foreach($jsonObj->data as $user){
-//do something with each result inside of here...
-//for example, print some of their info to the browser
-echo "This user's first name is " . $user->first_name . "<br/>";
-echo "This user's last name is " . $user->last_name . "<br/>";
-echo "This user's website is " . $user->url . "<br/>";
-echo "<br/>";
+   //do something with each result inside of here...
+   //for example, print some of their info to the browser
+   echo "This user's first name is " . $user->first_name . "<br/>";
+   echo "This user's last name is " . $user->last_name . "<br/>";
+   echo "This user's website is " . $user->url . "<br/>";
+   echo "<br/>";
 }
+?>
 ```
 
 ###Error Handling
@@ -118,6 +120,36 @@ Often requests to the Indexd API returns no results because no users were found 
 
 The `JSON` that is returned in these instances are `{"error": "no results found"}` and `{"error": "API key is invalid or was not provided"}`.
 
+Handling `errors` is simple. All that you need to do is check if the `error` property exists in the resulting `JSON` object. If it is execute the code for when an error is present. Otherwise, continue with the program because the request returned at least one user.
+
+```php
+<?php 
+$city = "Baltimore";
+$state = "Maryland";
+$media = "Sculpture";
+
+$http_request = "http://localhost:8888/api/api.php?city=". $city
+ . "&state=" . $state . "&media=" . $media;
+
+$json_string = file_get_contents($http_request);
+$jsonObj = json_decode($json_string);
+	
+//check for an error
+if(isset($jsonObj->error)){
+	//code for handling the error goes in here...
+	//for example, print the error message to the browser
+	echo $jsonObj->error;
+
+}else{
+	//execute the code for when user objects are returned…
+	//for example, list the ids of the resulting users
+	foreach($jsonObj->data as $user){
+		echo "User number " . $user->id . " was selected <br/>";
+	}
+}
+?>
+```
+	
 
 ###Processing Example
 
@@ -127,7 +159,7 @@ We have included an example [Processing](http://processing.org) project in this 
 
 The example source code is included for download. The files are heavily commented and although they uses some advanced OOP techniques, the example is relatively straight forward and was created to help developers understand how to program using the Indexd API. 
 
-##<a id="parameter_reference"></a>Parameter Reference
+##<a id="parameter-reference"></a>Parameter Reference
 
 This section documents in detail all of the Indexd API parameters currently available. 
 
@@ -159,7 +191,7 @@ __Example:__
 
       http://api.indexd.io?city=Richmond&state=Virginia&order_by=datetime_joined&limit=10&key=...
       
-This example pigybacks off of the [example request](#example_request) used in the getting section of this documentation. This request would yield more accurate results if the developer were looking for users who live in Richmond, Virginia. The previous method would have given results where the user's name, media, tags, etc… included Richmond.
+This example piggybacks off of the [example request](#example-request) used in the getting section of this documentation. This request would yield more accurate results if the developer were looking for users who live in Richmond, Virginia. The previous method would have given results where the user's name, media, tags, etc… included Richmond.
 
 
 __Notes:__ The column parameter's are overridden if a `search` parameter is specified. 
@@ -300,7 +332,7 @@ This request returns the number of users who have specified "film" in their medi
 
 __Note:__ The value of `count_only` is case insensitive.
 
-##Credit
+##License and Credit
 
-The Indexd Public API is developed and maintained by [Brannon Dorsey](http://github.com/brannondorsey) and [Kevin Zweerink](http://github.com/kevinzweerink). If you notice any bugs, have any questions, or would like to help us with development, please [contact us](COME BACK).
+The Indexd Public API is developed and maintained by [Brannon Dorsey](http://github.com/brannondorsey) and [Kevin Zweerink](http://github.com/kevinzweerink) and is published under the [MIT License](license.txt). If you notice any bugs, have any questions, or would like to help us with development please submit an issue or pull request, write about it on our wiki, or [contact us](COME BACK).
 
