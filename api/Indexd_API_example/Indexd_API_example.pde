@@ -1,8 +1,8 @@
 import java.util.Arrays;
 //change the APIRequest string to change the data you get. This could easily be dynamically generated.
-String APIRequest = "http://localhost:8888/api/api.php?state=california&order_by=likes&flow=ASC&limit=17";
+String APIRequest = "http://localhost:8888/api/api.php?state=virginia&exact=true&order_by=likes&flow=desc&limit=10";
 
-DataHandler DataHand;
+DataHandler dataHand;
 UserBall[] users; //holds each user
 InfoDisplay infoDisplay;
 
@@ -24,17 +24,19 @@ void setup() {
   noStroke();
   //the DataHand class holds the methods for making the API Request
   //and loading the JSON into the User class
-  DataHand = new DataHandler(APIRequest);
+  dataHand = new DataHandler(APIRequest);
   
-  //load the user data into the array of UserBalls
-  users = DataHand.loadUsers();
+  //load the user data into the array of UserBalls if there is no error
+  if(!dataHand.noUsersFound){
+    users = dataHand.loadUsers();
+     //find out the minum and maximum "likes" count of the data set. 
+     //Then set each UserBall's size according to their number of likes.
+     calcSizes();
+  }
   
   //InfoDisplay class handles the 
   infoDisplay = new InfoDisplay(0, 0, width, 170);
-  
-  //find out the minum and maximum "likes" count of the data set. 
-  //Then set each UserBall's size according to their number of likes.
-  calcSizes();
+ 
 }
 
 void draw() {
@@ -45,56 +47,64 @@ void draw() {
   fill(largeEllipseColor); 
   ellipse(width/2, height/2, height, height); 
   
-  //draw lines between UserBalls if they have a common media, tags, or a location
-  drawConnections();
+  //if no users were found display the error message 
+  if (dataHand.noUsersFound) infoDisplay.displayError(dataHand.errorString);
+  //otherwise run the rest of the program
+  else{
+    //draw lines between UserBalls if they have a common media, tags, or a location
+    drawConnections();
+    
+    //holds wether or not the mouse is over a user.
+    //If it is set to true later we will show the user's data 
+    boolean overUser = false;
   
-  //holds wether or not the mouse is over a user.
-  //If it is set to true later we will show the user's data 
-  boolean overUser = false;
-
-  //loop through each UserBall...
-  for (int i = 0; i < users.length; i++) {
-    
-    //check if the mouse is over this one.
-    //If it is set it's "rollover" property to true
-    users[i].rollover(mouseX, mouseY);
-    
-    //draw this UserBall to the screen
-    users[i].display(mouseX, mouseY);
-    
-    //check if the UserBall needs to be dragged.
-    //If so, drag it.
-    users[i].drag(mouseX, mouseY);
-    
-    //if this UserBall is being hovered over
-    //or being dragged
-    if (users[i].rollover ||
-      users[i].dragging) {
-        
-      overUser = true;
+    //loop through each UserBall...
+    for (int i = 0; i < users.length; i++) {
       
-      //remember the location of this UserBall
-      //to show it's data later
-      overUserIndex = i;  
-    }
-  }//do all of that again for each UserBall...
-  
-  //display the user's info if a mouse was a UserBall
-  if (overUser) infoDisplay.display(users[overUserIndex]); 
+      //check if the mouse is over this one.
+      //If it is set it's "rollover" property to true
+      users[i].rollover(mouseX, mouseY);
+      
+      //draw this UserBall to the screen
+      users[i].display(mouseX, mouseY);
+      
+      //check if the UserBall needs to be dragged.
+      //If so, drag it.
+      users[i].drag(mouseX, mouseY);
+      
+      //if this UserBall is being hovered over
+      //or being dragged
+      if (users[i].rollover ||
+        users[i].dragging) {
+        overUser = true;
+        
+        //remember the location of this UserBall
+        //to show it's data later
+        overUserIndex = i;  
+      }
+    }//do all of that again for each UserBall...
+    
+    //display the user's info if a mouse was a UserBall
+    if (overUser) infoDisplay.display(users[overUserIndex]); 
+  }
 }
 
 void mousePressed() {
   //loop through all UserBall's and check if the mouse is over one. 
-  //if it is set it's offsets
-  for (int i = 0; i < users.length; i++) {
-    users[i].clicked(mouseX, mouseY);
+  //if it is then set it's offsets
+  if(!dataHand.noUsersFound){
+    for (int i = 0; i < users.length; i++) {
+      users[i].clicked(mouseX, mouseY);
+    }
   }
 }
 
 void mouseReleased() {
-  //set all UserBall's dragging properties to false 
-  for (int i = 0; i < users.length; i++) {
-    users[i].stopDragging();
+  //set all UserBall's dragging properties to false
+  if(!dataHand.noUsersFound){
+    for (int i = 0; i < users.length; i++) {
+      users[i].stopDragging();
+    }
   }
 }
 

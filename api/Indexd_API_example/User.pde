@@ -1,5 +1,8 @@
 class User {
-
+  //This class translates a JSON user object from the API
+  //into a class in Processing. In this example it is the
+  //super class for UserBall.
+  
   int id;
   String firstName;
   String lastName;

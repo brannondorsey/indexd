@@ -2,11 +2,17 @@ class DataHandler{
   
  JSONObject data;
  JSONArray users;
- boolean loadedSuccessfully;
+ boolean noUsersFound = false;
+ String errorString = "";
  
  DataHandler(String _APIRequest){
    //make the http request from the Indexd API
    data = loadJSONObject(APIRequest);
+   //check if there is an error. 
+   //If so set the noUsersFound boolean to true
+   try{errorString = data.getString("error");
+   }catch(Exception e){}
+   if(errorString != "") noUsersFound = true;
  }
  
  //creates a new UserBall for each user JSON object and places then in an array.

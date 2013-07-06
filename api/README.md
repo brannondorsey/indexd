@@ -84,9 +84,46 @@ __Note:__ the values of the user's `media` and `tags` properties are returned as
 
 ##Examples
 
-Example files located in this repository.
+Because the Indexd API outputs data using `JSON` the results of an API http request can be loaded into a project written in almost any popular language. We have chosen to provide brief code examples using `PHP`, however, these code snippits outline the basics of loading and using user data and easily apply to another language. 
+
+###Using the Data
+
+
+
+	$city = "Baltimore";
+	$state = "Maryland";
+	$media = "Sculpture";
+
+	$http_request = "http://localhost:8888/api/api.php?city=". $city
+	 . "&state=" . $state . "&media=" . $media;
+	
+	$json_string = file_get_contents($http_request);
+	$jsonObj = json_decode($json_string);
+	
+	//loop through each user object inside of the "data" array
+	foreach($jsonObj->data as $user){
+		//do something with each result inside of here...
+		//for example, print some of their info to the browser
+		echo "This user's first name is " . $user->first_name . "<br/>";
+		echo "This user's last name is " . $user->last_name . "<br/>";
+		echo "This user's website is " . $user->url . "<br/>";
+		echo "<br/>";
+	}
 
 ###Error Handling
+
+Often requests to the Indexd API returns no results because no users were found that met the request's criteria. For this reason it is important to know how to handle our API `errors`. Currently there are only two error messages that our API will ever output.
+
+The `JSON` that is returned in these instances are `{"error": "no results found"}` and `{"error": "API key is invalid or was not provided"}`.
+
+
+###Processing Example
+
+We have included an example [Processing](http://processing.org) project in this repository to illustrate how the API might be used. The sketch represents user data from the Indexd API as small interactive balls. In the example applet, lines are drawn between two users if they share similar media or tags. The more similarities two users share the more opaque the connection lines drawn between them become. This creates an interactive relational "web" by which to explore the data set. When a user is moused over their information appears on screen and all lines connecting to it are highlighted.
+
+![Processing Example Image](images/processing_example.png)
+
+The example source code is included for download. The files are heavily commented and although they uses some advanced OOP techniques, the example is relatively straight forward and was created to help developers understand how to program using the Indexd API. 
 
 ##<a id="parameter_reference"></a>Parameter Reference
 
