@@ -13,6 +13,8 @@
         'password'=>array('display'=>'Password', 'type'=>'string',  'required'=>true, 'min'=>6, 'max'=>50, 'trim'=>true)
     );
 
+    $unconfirmed_email = "";
+
     if(isset($_POST['email'])) {
 
         $validator = new Validation();
@@ -30,7 +32,7 @@
             if($success){
                 //var_dump($success);
                 if($success === "EMAIL_NOT_CONFIRMED"){
-                 echo "the email is not confirmed"; //email not confirmed code goes here
+                 $unconfirmed_email = "Your e-mail hasn't been confirmed yet. If you didn't get an e-mail requesting confirmation, try checking your spam folder. <a href='#'>Click here for another confirmation email.</a>";
                 }
                 else{ 
                     header('Location:' . Database::$root_dir_link . "listing.php?id=" . $user->data->id);
@@ -62,7 +64,7 @@
     <body>
         <section class="login-page">
             <h2>Sign In</h2>
-            <p>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a></p>
+            <p><?php if ($unconfirmed_email != "") { echo $unconfirmed_email; } else { ?>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a> <?php } ?></p>
             <form class="login-form" method="post" name="login-page-form" id="login-page-form" action="">
 
                 <fieldset class="half">

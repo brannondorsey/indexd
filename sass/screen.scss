@@ -114,9 +114,15 @@
 
 %responsive-block {
 	overflow: hidden;
+	min-width: 600px;
 
 	@media all and (min-width: 900px) {
 		width: 40%;
+		margin: 3em auto;
+	}
+
+	@media all and (min-width: 600px) and (max-width: 899px) {
+		width: 60%;
 		margin: 3em auto;
 	}
 }
@@ -305,6 +311,7 @@ a {
 .header {
 	width: 100%;
 	overflow: hidden;
+	min-width: 600px;
 
 	&.homepage {
 		background-color: $_red;
@@ -600,6 +607,21 @@ footer {
 	img {
 		display: block;
 		margin: auto;
+	}
+
+	.footer-button {
+		color: $_black;
+		text-decoration: none;
+		margin: 0 1em;
+
+		&:hover {
+			border-bottom: 1px solid $_black;
+		}
+	}
+
+	.footer-nav {
+		text-align: center;
+		margin-bottom: 2em;
 	}
 }
 
