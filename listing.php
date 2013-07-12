@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-
 <?php 
-    error_reporting(E_ALL);
+    require_once("lib/includes/classes/class.User.inc.php");
     require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
+    require_once("lib/includes/classes/class.Session.inc.php");
     Database::init_connection();
+    Session::start();
     $content_obj = new ContentOutput();
     $user_id = $_GET['id'];
     $numb_results = 10;
@@ -16,6 +12,11 @@
     $data = $content_obj->output_related_users($user_id);
 ?>
 
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">

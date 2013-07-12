@@ -14,6 +14,7 @@
     );
 
     $unconfirmed_email = "";
+    $login_failed = false;
 
     if(isset($_POST['email'])) {
 
@@ -38,7 +39,7 @@
                     header('Location:' . Database::$root_dir_link . "listing.php?id=" . $user->data->id);
                 }
             }
-            // else echo "user authentication failed"; //code for failed login here...
+            $login_failed = true; 
         }
 
     }
@@ -64,7 +65,9 @@
     <body>
         <section class="login-page">
             <h2>Sign In</h2>
-            <p><?php if ($unconfirmed_email != "") { echo $unconfirmed_email; } else { ?>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a> <?php } ?></p>
+            <p><?php if ($unconfirmed_email != "") { echo $unconfirmed_email; } 
+            else if($login_failed){ echo "Invalid e-mail and password combination." ;}
+            else { ?>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a> <?php } ?></p>
             <form class="login-form" method="post" name="login-page-form" id="login-page-form" action="">
 
                 <fieldset class="half">

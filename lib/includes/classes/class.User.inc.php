@@ -25,7 +25,7 @@ class User{
 	}
 
 	//parameters must be PRE CLEANED using Database::clean() before being passed in here
-	//this function sets $_SESSION vars if login credentials pass, returns -1 if email is not confirmed,
+	//this function sets $_SESSION vars if login credentials pass, returns "EMAIL_NOT_CONFIRMED" if email is not confirmed,
 	//and returns false if they do not.
 	public function sign_in($email, $unhashed_password){
 		$user_id = $this->check_sign_in_credentials($email, $unhashed_password);
@@ -128,7 +128,7 @@ class User{
 //EMAIL CONFIRMATION
 
 	protected function send_confirmation_email($email, $name ,$confirmation_code){
-		return true; //EDIT THIS! THIS IS SO THAT WE DON'T SPAM PEOPLE DURING DEVELOPMENT
+		//return true; //EDIT THIS! THIS IS SO THAT WE DON'T SPAM PEOPLE DURING DEVELOPMENT
 		$path_to_email_JSON = "lib/data/email_confirmation_message.json";
 		$file = file_get_contents($path_to_email_JSON);
 		$email_obj = json_decode($file);

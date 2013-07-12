@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-
 <?php 
     require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
     Database::init_connection();
+    Session::start();
     $content_obj = new ContentOutput();
     $numb_results = 10;
     $page = (isset($_GET['page']) ? $_GET['page'] : 1);
@@ -58,6 +53,12 @@
     $b_results_exist = (!isset($data->error) ? true : false); //set results according to if error exists
     //use ^ boolean to check if "NO RESULTS FOUND" content needs to be shown
 ?>
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
     <head>
         <meta charset="utf-8">

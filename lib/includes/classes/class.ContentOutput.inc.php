@@ -1,16 +1,12 @@
 <?php
-require_once("class.User.inc.php");
 require_once("class.PrivateAPI.inc.php");
 require_once("class.RelationalAlgorithm.inc.php");
+require_once("class.User.inc.php");
 
 class ContentOutput{
-	protected $user;
 	protected $api;
-	protected $algorithm;
 	public function __construct(){
-		$user = new User();
 		$this->api = new PrivateAPI();
-		$algorithm = new RelationalAlgorithm();
 	}
 
 	public static function commas_to_list($string) {

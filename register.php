@@ -5,7 +5,8 @@
 
     Session::start();
     $api = new PrivateAPI();
-    $user = new User(); 
+    $user = new User();
+    if($user->is_signed_in()) $user->sign_out(); //don't let a signed in user register
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
