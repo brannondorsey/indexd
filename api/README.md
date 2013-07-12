@@ -2,7 +2,7 @@
 
 The Indexd http API gives developers access to public user data from the Indexd database. Our web API returns all data as valid `json` and is interfaced using `get` parameters in the url of an http request. It is very similar to Facebook's [Graph API](https://developers.facebook.com/docs/reference/api/) and considered a client-server [REST API](http://en.wikipedia.org/wiki/Representational_state_transfer). The following documentation will cover the url parameters used to access Indexd's public data and give a few examples illustrating how the data can be used. If you have never used a web API before or are uncomfortable passing data requests through a url using `get` we suggest reading [this](http://en.wikipedia.org/wiki/Query_string).
 
-##Getting Started
+##<a id="getting-started"></a>Getting Started
 
 ###Formatting a request
 
@@ -116,11 +116,11 @@ foreach($jsonObj->data as $user){
 
 ###Error Handling
 
-Often requests to the Indexd API returns no results because no users were found that met the request's criteria. For this reason it is important to know how to handle our API `errors`. Currently there are only two error messages that our API will ever output.
+Often requests to the Indexd API return no results because no users were found that met the request's criteria. For this reason it is important to know how to handle our API `errors`. Currently there are only two error messages that our API will ever output.
 
 The `JSON` that is returned in these instances are `{"error": "no results found"}` and `{"error": "API key is invalid or was not provided"}`.
 
-Handling `errors` is simple. All that you need to do is check if the `error` property exists in the resulting `JSON` object. If it is execute the code for when an error is present. Otherwise, continue with the program because the request returned at least one user.
+Handling `errors` is simple. All that you need to do is check if the `error` property exists in the resulting `JSON` object. If it does execute the code for when an error is present. Otherwise, continue with the program because the request returned at least one user.
 
 ```php
 <?php 
@@ -153,11 +153,11 @@ if(isset($jsonObj->error)){
 
 ###Processing Example
 
-We have included an example [Processing](http://processing.org) project in this repository to illustrate how the API might be used. The sketch represents user data from the Indexd API as small interactive balls. In the example applet, lines are drawn between two users if they share similar media or tags. The more similarities two users share the more opaque the connection lines drawn between them become. This creates an interactive relational "web" by which to explore the data set. When a user is moused over their information appears on screen and all lines connecting to it are highlighted.
+We have included an example [Processing](http://processing.org) project in this repository to illustrate how the API might be used. The sketch represents user data from the Indexd API as small interactive balls. In the example applet, lines are drawn between two users if they share similar media or tags. The more similarities two users share the more opaque the connection lines drawn between them become. This creates an interactive relational "web" by which to explore the data set. When a user is moused over, their information appears on screen and all lines connecting to it are highlighted.
 
 ![Processing Example Image](images/processing_example.png)
 
-The example source code is included for download. The files are heavily commented and although they uses some advanced OOP techniques, the example is relatively straight forward and was created to help developers understand how to program using the Indexd API. 
+The example source code is included for download. The files are heavily commented and although they uses some advanced OOP techniques, the example is relatively straightforward and was created to help developers understand how to program using the Indexd API. 
 
 ##<a id="parameter-reference"></a>Parameter Reference
 
@@ -165,7 +165,7 @@ This section documents in detail all of the Indexd API parameters currently avai
 
 ###API Key Parameter
 
-Each Indexd API request must include a unique API key identifying the user making the request. To keep our server's running smoothly each user is limited to 1000 requests a day. User's can find their personal key in their "Account" page of the Indexd website.
+Each Indexd API request must include a unique API key identifying the user making the request. To keep our servers running smoothly each user is limited to 1000 requests a day. Users can find their personal key in their "Account" page of the Indexd website.
 
 Parameter __key:__ `key`
 
@@ -191,7 +191,7 @@ __Example:__
 
       http://api.indexd.io?city=Richmond&state=Virginia&order_by=datetime_joined&limit=10&key=...
       
-This example piggybacks off of the [example request](#example-request) used in the getting section of this documentation. This request would yield more accurate results if the developer were looking for users who live in Richmond, Virginia. The previous method would have given results where the user's name, media, tags, etc… included Richmond.
+This example piggybacks off of the [example request](#example-request) used in the [Getting Started](#getting-started) section of this documentation. This request would yield more accurate results if the developer were looking for users who live in Richmond, Virginia. The previous method would have given results where the user's name, media, tags, etc… included Richmond.
 
 
 __Notes:__ The column parameter's are overridden if a `search` parameter is specified. 
@@ -207,13 +207,13 @@ __Example:__
 
 	http://api.indexd.io?search=sculpture&limit=100&key=...
 
-__Notes:__ `search` results are automatically ordered by relevancy, or if relevancy is found to be arbitrary, by `likes`. the `order_by` parameter cannot be used when the `search` parameter is specified. More on why below…
+__Notes:__ `search` results are automatically ordered by relevancy, or if relevancy is found to be arbitrary, by `likes`. The `order_by` parameter cannot be used when the `search` parameter is specified. More on why below…
 
-Default Match()…Against()… MySQL statements search databases using a 50% similarity threshold. This means that if a searched string appears in more than half of the rows in the database the search will ignore it. Because it is possible that many user's will have similar tags, we have built Indexd to automatically re-search `IN BOOLEAN MODE` if no results are found in the first try. If results are found in the second search they are ordered by `likes`.
+Default Match()…Against()… MySQL statements search databases using a 50% similarity threshold. This means that if a searched string appears in more than half of the rows in the database the search will ignore it. Because it is possible that many users will have similar tags, we have built Indexd to automatically re-search `IN BOOLEAN MODE` if no results are found in the first try. If results are found in the second search they are ordered by `likes`.
 
 ###Exact Parameter
 
-The exact parameter is used in conjunction with the column parameters and specifies wether or not their values are queried with relative or exact accuracy. If not included in the url request the `exact` parameter defaults to `false`.
+The exact parameter is used in conjunction with the column parameters and specifies whether or not their values are queried with relative or exact accuracy. If not included in the url request the `exact` parameter defaults to `false`.
 
 Parameter __key:__ `exact`
 
@@ -223,13 +223,13 @@ __Example:__
 
 	http://api.indexd.io?media=design&exact=TRUE&limit=100&key=...
 
-This request will limit the returned results to users whose media includes __only__ design. If the `exact` parameter was not specified, or was set to `FALSE` the same request could also return users whose media were interior design and graphic design, or users who have more media listed in addition to design. Unless you are looking for user's with only one result specific for a column it is suggested to leave `exact` set to `FALSE`.
+This request will limit the returned results to users whose media includes __only__ design. If the `exact` parameter was not specified, or was set to `FALSE`, the same request could also return users whose media were interior design and graphic design, or users who have more media listed in addition to design. Unless you are looking for user's with only one result specific for a column it is suggested to leave `exact` set to `FALSE`.
 	
 __Notes:__ `exact`'s values are case insensitive.
 
 ###Exclude Parameter
 
-The exclude parameter is used in conjunction with the column parameters to exclude one or more user's from a query.
+The exclude parameter is used in conjunction with the column parameters to exclude one or more users from a query.
 
 
 Parameter __key:__ `exclude`
@@ -260,7 +260,7 @@ __Notes:__ If the value of `order_by` is an `int` or a `float` the default `flow
 
 ###Flow Parameter
 
-This parameter specifies the MySQL `ASC` and `DESC` options that follows the `ORDER BY` statement. If `flow` is not specified it defaults to `ASC`.
+This parameter specifies the MySQL `ASC` and `DESC` options that follow the `ORDER BY` statement. If `flow` is not specified it defaults to `ASC`.
 
 Parameter __key:__ `flow`
 
@@ -276,7 +276,7 @@ __Notes:__ `flow`'s values are case insensitive.
 
 ###Limit Parameter
 
-The `limit` parameter works similarly to MySQL `LIMIT`. It specifies the max number of users to be returned. The default value if unspecified is `25`. The max value of results that can be returned in one request is `250`.
+The `limit` parameter works similarly to MySQL `LIMIT`. It specifies the max number of users to be returned. The default value, if unspecified is `25`. The max value of results that can be returned in one request is `250`.
 
 Parameter __key:__ `limit`
 
@@ -303,7 +303,7 @@ __EXAMPLE:__
 	
 This request will return the 3rd "page" of `search` results. 
 
-For instance, if all user's had the tag "ancient architecture", setting `page=1` would return users with id's `1-7`, setting `page=2` would yield `8-14`, etc…
+For instance, if all users had the tag "ancient architecture", setting `page=1` would return users with id's `1-7`, setting `page=2` would yield `8-14`, etc…
 
 __Note:__ The MySQL `OFFSET` is calculated server side by multiplying the value of `limit` by the value of `page` minus one. 
 
