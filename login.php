@@ -31,7 +31,6 @@
             $post_array = Database::clean($_POST);
             $success = $user->sign_in($post_array['email'], $post_array['password']);
             if($success){
-                //var_dump($success);
                 if($success === "EMAIL_NOT_CONFIRMED"){
                  $unconfirmed_email = "Your e-mail hasn't been confirmed yet. If you didn't get an e-mail requesting confirmation, try checking your spam folder. <a href='#'>Click here for another confirmation email.</a>";
                 }

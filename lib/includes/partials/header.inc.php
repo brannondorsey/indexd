@@ -19,7 +19,7 @@
     	<a class="header-button" href="index.php">Home</a>
 		<a class="header-button" href="about.php">About</a>
         <?php if ($user->is_signed_in()) { ?>
-        <a class="header-button" href="#">Settings</a>
+        <a class="header-button" href="#">Account</a>
         <a class="header-button" href="<?php Database::$root_dir_link ?>lib/includes/sign_out.inc.php" id="sign_out">Sign Out</a>
         <?php } else { ?>
 		<a class="header-button" href="login.php">Sign In</a>
