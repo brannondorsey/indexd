@@ -1,34 +1,34 @@
 ##Todo
 
-- Implement Info page following registration with badge info -Kevin Zweerink
-- Add about page -Kevin Zweerink
-- __Add Account page w/ editable profile page and badge stuff -Kevin Zweerink__
-- Add API link (to the github page)  -Kevin Zweerink
-- Tweak listing page -Kevin Zweerink
-- Responsive Stuff -Kevin Zweerink
-- fix search text color (to hard to see)
-- no results page handling
-- Change how tags are searched from listing page -Kevin Zweerink
-- Verified system to easily check for real peeps on our site
-- Make sure no echo statements will ever show up topside
-- Implement API key call limits
-- Make API not output anything if no params
-- Fix algorithm so that no fields == null
-- Set session length based on "Stay Logged In" DROP
-- Add description to register page (tooltips?)
-- add front end form validation on sign in page and "email already exists" message on registration page.
-- handle front end zip lookup fails
-- Reset Password -Brannon Dorsey
-- Implement and entire like system
-- change "url" in register page to "website"
+- Implement Welcome page following registration with badge info -Kevin Zweerink *
+- Add about page -Kevin Zweerink ***
+- __Add Account page w/ editable profile page and badge stuff -Kevin Zweerink__ *****
+- Responsive Stuff -Kevin Zweerink **
+- fix search text color (to hard to see PLACEHOLDER) ****
+- no results page handling ***
+- Verified system to easily check for real peeps on our site *
+- Make sure no echo statements will ever show up topside **
+- Implement API key call limits ***
+- Make API not output anything if no params ****
+- Add API Error Handling *
+- Add description to register page (tooltips?) PLACEHOLDERS **
+- add front end form validation on sign in page and "email already exists" message on registration page. **** see includes/email_exists_test.php
+- handle front end zip lookup fails ***
+- Add International Support ***
+- Reset Password -Brannon Dorsey ****
+- Implement and entire like system ***
+- Implement bookmarks ***
+- change "url" in register page to "website" ****
 - capitalize both words in multi word tags and media?
-- add logo favicon
-- make a distinct visited color or something to notify users which links they have already seen.
-- update contact us on API doc
-- get contact us email… perhaps info@indexd.io
-- give api its own repo
-- update everything on github from AWU to indexd
-- handle no search results
+NO: no caps on tags and caps every word on media ****
+- add logo favicon ***
+- make a distinct visited color or something to notify users which links they have already seen. ***
+- update contact us on API doc ***
+- get contact us email… perhaps info@indexd.io ***
+- give api its own repo **
+- update everything on github from AWU to indexd ***
+- Add relational algorithm opt to API ***
+- Add organizations to db and algorithm and api and register and all that ****
 
 ##Notes
 - perhaps change "media" to something else. Art media is more like paint, charchoal, graphite, etc and could be confusing. Perhaps the word practice.
@@ -55,3 +55,6 @@
 - handle zipcode lookup failures by not allowing users to register
 - Make login page bring you to your profile
 - make exclude API parameter accept comma-delimeted list of ids
+- Add API link (to the github page)  -Kevin Zweerink 
+- Tweak listing page -Kevin Zweerink
+- Change how tags are searched from listing page -Kevin Zweerink
