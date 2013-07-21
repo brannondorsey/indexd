@@ -1,3 +1,16 @@
+<?php
+
+require_once("lib/includes/classes/class.PrivateAPI.inc.php");
+require_once("lib/includes/classes/class.User.inc.php");
+require_once("lib/includes/classes/class.Session.inc.php");
+
+Session::start();
+$api = new PrivateAPI();
+$user = new User();
+if (!$user->is_signed_in()) header('Location: login.php');
+
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
