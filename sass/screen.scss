@@ -201,25 +201,21 @@ a {
 
 	::-webkit-input-placeholder {
 		@include transition(opacity .6s $bezier .2s);
-		color: $_white;
 		opacity: 0;
 	}
 
 	:-moz-placeholder { /* Firefox 18- */
 		@include transition(opacity .6s $bezier .2s);
-		color: $_white;  
 		opacity: 0;
 	}
 
 	::-moz-placeholder {  /* Firefox 19+ */
 		@include transition(opacity .6s $bezier .2s);
-		color: $_white;
 		opacity: 0;
 	}
 
 	:-ms-input-placeholder {  
 		@include transition(opacity .6s $bezier .2s);
-		color: $_white; 
 		opacity: 0; 
 	}
 

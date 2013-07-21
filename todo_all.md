@@ -4,14 +4,12 @@
 - Add about page -Kevin Zweerink ***
 - __Add Account page w/ editable profile page and badge stuff -Kevin Zweerink__ *****
 - Responsive Stuff -Kevin Zweerink **
-- fix search text color (to hard to see PLACEHOLDER) ****
 - no results page handling ***
 - Verified system to easily check for real peeps on our site *
 - Make sure no echo statements will ever show up topside **
 - Implement API key call limits ***
 - Make API not output anything if no params ****
 - Add API Error Handling *
-- Add description to register page (tooltips?) PLACEHOLDERS **
 - add front end form validation on sign in page and "email already exists" message on registration page. **** see includes/email_exists_test.php
 - handle front end zip lookup fails ***
 - Add International Support ***
@@ -58,3 +56,5 @@ NO: no caps on tags and caps every word on media ****
 - Add API link (to the github page)  -Kevin Zweerink 
 - Tweak listing page -Kevin Zweerink
 - Change how tags are searched from listing page -Kevin Zweerink
+- Add description to register page (tooltips?) PLACEHOLDERS **
+- fix search text color (to hard to see PLACEHOLDER) ****
