@@ -594,6 +594,12 @@ input[type="submit"] {
 	}
 }
 
+// ACCOUNT PAGE STYLES
+
+.account-settings {
+	@extend %responsive-block;
+}
+
 // FOOTER STYLES
 
 footer {

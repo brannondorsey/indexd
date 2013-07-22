@@ -218,20 +218,20 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 115, ../sass/screen.scss */
-.query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page {
+.query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings {
   overflow: hidden;
   min-width: 600px;
 }
 @media all and (min-width: 900px) {
   /* line 115, ../sass/screen.scss */
-  .query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page {
+  .query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings {
     width: 40%;
     margin: 3em auto;
   }
 }
 @media all and (min-width: 600px) and (max-width: 899px) {
   /* line 115, ../sass/screen.scss */
-  .query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page {
+  .query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings {
     width: 60%;
     margin: 3em auto;
   }
@@ -723,28 +723,28 @@ input[type="submit"] {
   background-color: #1d5b89;
 }
 
-/* line 599, ../sass/screen.scss */
+/* line 605, ../sass/screen.scss */
 footer {
   background-color: #ef7878;
   padding: 3em;
   margin-top: 3em;
 }
-/* line 603, ../sass/screen.scss */
+/* line 609, ../sass/screen.scss */
 footer img {
   display: block;
   margin: auto;
 }
-/* line 608, ../sass/screen.scss */
+/* line 614, ../sass/screen.scss */
 footer .footer-button {
   color: #1d5b89;
   text-decoration: none;
   margin: 0 1em;
 }
-/* line 613, ../sass/screen.scss */
+/* line 619, ../sass/screen.scss */
 footer .footer-button:hover {
   border-bottom: 1px solid #1d5b89;
 }
-/* line 618, ../sass/screen.scss */
+/* line 624, ../sass/screen.scss */
 footer .footer-nav {
   text-align: center;
   margin-bottom: 2em;
