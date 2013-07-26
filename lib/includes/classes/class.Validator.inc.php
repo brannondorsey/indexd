@@ -383,6 +383,7 @@ class Validation{
         
         if($urlString) {
             $urlString = preg_replace('/https?:\/\//', '', $urlString);
+            $urlString = preg_replace('/^www\./i', '', $urlString);
             $urlString = trim($urlString);
             $urlString  = 'http://'.$urlString;
         }

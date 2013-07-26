@@ -63,7 +63,8 @@ class User{
 
 		//fill the array with each change
     	foreach($post_array as $key => $value){
-        	if($value != $this->data->{$key}) $changed[$key] = $value;
+    		if($key == 'email' && str_replace('http://', '', $this->data->{$key}) == $value) continue;
+        	else if($value != $this->data->{$key}) $changed[$key] = $value;
     	}
     	//if there was a change made
     	if(isset($changed) && !empty($changed)){
@@ -88,6 +89,17 @@ class User{
 		return $this->send_confirmation_email($post_array['email'], $post_array['first_name'], $post_array['email_confirmation_code']);
 	}
 
+	//resets the user's password in the database. Returns false if something went wrong
+	public function reset_password($user_id, $old_password_hashed, $new_password_unhashed){
+		if($old_password_hashed == $this->api->get_logged_in_user_obj((int) $user_id, true)->data[0]->password){
+			$assoc_array = array('id' => $user_id, 
+								'password' => sha1($new_password_unhashed));
+			return $this->IU->execute_from_assoc($assoc_array, 'UPDATE', 'password');
+		}
+		else return false;
+	}
+
+	//should type password before deleting account
 	public function delete_account(){
 		//drop user row using id from $this->data obj
 	}

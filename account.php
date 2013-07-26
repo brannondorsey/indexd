@@ -25,6 +25,7 @@ if(isset($_POST) && !empty($_POST)){
         $errors_exist = true;
     } else {
         $post_array['id'] = $user->data->id; //add the id so that the right user can be updated
+        $post_array['url'] = $validator->processURLString($post_array['url']);
         //if the email wasn't changed...
         if($user->data->email == $post_array['email']){
             $user->update_profile($post_array);
@@ -101,7 +102,7 @@ if(isset($_POST) && !empty($_POST)){
                 <fieldset class="half">
                     <label for="url">URL<?php echo (isset($validator->errors['url']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="url" name="url" value="<?php 
-                        echo (isset($user->data->url) ? $user->data->url : '');
+                        echo (isset($user->data->url) ? str_replace('http://', '', $user->data->url) : '');
                     ?>"/>
                 </fieldset>
 
