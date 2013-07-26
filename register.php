@@ -27,24 +27,11 @@
 
         <?php require_once 'lib/includes/classes/class.Validator.inc.php'; 
     
-            $rules_array = array(
-                'first_name'=>array('display'=>'first name', 'type'=>'string',  'required'=>true, 'min'=>2, 'max'=>50, 'trim'=>true),
-                'last_name'=>array('display'=>'last name', 'type'=>'string',  'required'=>true, 'min'=>2, 'max'=>50, 'trim'=>true),
-                'email'=>array('display'=>'email', 'type'=>'email',  'required'=>true, 'min'=>5, 'max'=>50, 'trim'=>true),
-                'url'=>array('display'=>'URL', 'type'=>'url', 'required'=>true, 'min'=>5, 'max'=>70, 'trim'=>true),
-                'password'=>array('display'=>'password', 'type'=>'string',  'required'=>true, 'min'=>6, 'max'=>50, 'trim'=>true),
-                'password_conf'=>array('display'=>'password confirm', 'type'=>'string',  'required'=>true, 'min'=>6, 'max'=>50, 'trim'=>true),
-                'description'=>array('display'=>'description', 'type'=>'string',  'required'=>true, 'min'=>10, 'max'=>140, 'trim'=>true),
-                'media'=>array('display'=>'media', 'type'=>'string',  'required'=>true, 'min'=>3, 'max'=>70, 'trim'=>true),
-                'tags'=>array('display'=>'tags', 'type'=>'string',  'required'=>true, 'min'=>5, 'max'=>70, 'trim'=>true),
-                'zip'=>array('display'=>'zip code', 'type'=>'numeric', 'required'=>true, 'min'=>1, 'max'=>99999999, 'trim'=>true)
-            );
-
             if(isset($_POST['first_name'])) {
 
                 $validator = new Validation();
                 $validator->addSource($_POST);
-                $validator->addRules($rules_array);
+                $validator->addRules($validator->registration_rules);
                 $validator->matchPasswords();
                 $validator->run();
 

@@ -34,6 +34,19 @@ class InsertUpdate {
 			$query = $statement_type . " " . Database::$table . " SET " . $set_statement . " = '" . $post_array[$set_statement]
 			. "' WHERE id = '" . $post_array['id'] . "' LIMIT 1";
 		}
+		//if the previous wasn't true but it was still and update statement
+		else if($statement_type == "UPDATE" &&
+			    isset($post_array['id'])){
+			$id = $post_array['id'];
+			unset($post_array['id']);
+			$query = $statement_type . " " . Database::$table . " SET ";
+			foreach ($post_array as $column_name => $column_value) {
+				$query .= $column_name . " = '" . $column_value . "', ";
+			}
+			$query = rtrim($query, ", ");
+			$query .= " WHERE id = '" . $id . "' LIMIT 1";
+			//echo $query;
+		}
 		else{
 			echo "incorrect parameters passed to InsertUpdate::execute_from_assoc()";
 		 	return false;

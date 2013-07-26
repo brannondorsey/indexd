@@ -3,12 +3,47 @@
 require_once("lib/includes/classes/class.PrivateAPI.inc.php");
 require_once("lib/includes/classes/class.User.inc.php");
 require_once("lib/includes/classes/class.Session.inc.php");
+require_once("lib/includes/classes/class.Validator.inc.php");
 
 Session::start();
 $api = new PrivateAPI();
 $user = new User();
 if (!$user->is_signed_in()) header('Location: login.php');
+else $user->load_data();
+if(isset($_POST) && !empty($_POST)){
+    Database::init_connection();
+    $post_array = Database::clean($_POST);
+    $validator = new Validation();
+    $rules = $validator->registration_rules;
+    unset($rules['password']);
+    unset($rules['password_conf']);
+    $validator->addSource($post_array);
+    $validator->addRules($rules);
+    $validator->run();
 
+    if(sizeof($validator->errors) > 0) {
+        $errors_exist = true;
+    } else {
+        $post_array['id'] = $user->data->id; //add the id so that the right user can be updated
+        //if the email wasn't changed...
+        if($user->data->email == $post_array['email']){
+            $user->update_profile($post_array);
+        }
+        else{
+            //update the profile if the email is unique
+            if(!$user->email_already_exists($post_array['email'])) $user->update_profile($post_array);
+            else{
+                ##handle an email already exists message right here...
+            }
+        }
+
+        //reloads the session vars because they were updated
+        $user_data_obj = $user->get_user_data_obj($user->data->id);
+        $user_properties = get_object_vars($user_data_obj);
+        Session::add_session_vars($user_properties);
+        $user->load_data();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,77 +69,73 @@ if (!$user->is_signed_in()) header('Location: login.php');
         <section class="account-settings">
             <h2>Account Settings</h2>
 
-            <p>Don't forget to submit any changes!</p>
+            <p><?php echo (isset($errors_exist)) ? "Oops, something isn't allowed to be changed to that" : "Don't forget to save the changes you make!"?></p>
+            <?php if(isset($changed)){
+                // foreach ($changed as $key => $value) {
+                //     echo $key . " was changed <br>";
+                // }
+            }?>
 
             <form id="registration" method="post" action="">
                 <fieldset class="half">
                     <label for="first-name">First Name<?php echo (isset($validator->errors['first_name']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="first-name" name="first_name" value="<?php 
-                       echo (isset($_POST['first_name']) ? $_POST['first_name'] : '');
+                       echo (isset($user->data->first_name) ? $user->data->first_name : '');
                     ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="last-name">Last Name<?php echo (isset($validator->errors['last_name']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="last-name" name="last_name" value="<?php 
-                        echo (isset($_POST['last_name']) ? $_POST['last_name'] : '');
+                        echo (isset($user->data->last_name) ? $user->data->last_name : '');
                     ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="email">Email<?php echo (isset($validator->errors['email']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="email" id="email" name="email" value="<?php 
-                        echo (isset($_POST['email']) ? $_POST['email'] : '');
+                        echo (isset($user->data->email) ? $user->data->email : '');
                     ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="url">URL<?php echo (isset($validator->errors['url']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="url" name="url" value="<?php 
-                        echo (isset($_POST['url']) ? $_POST['url'] : '');
+                        echo (isset($user->data->url) ? $user->data->url : '');
                     ?>"/>
-                </fieldset>
-
-                <fieldset class="half">
-                    <label for="password">Password (twice)<?php echo ((isset($validator->errors['password']) || isset($validator->errors['password_conf'])) ? '<span class="form-error">*</span>' : ''); ?></label>
-                    <input type="password" id="password" name="password"/>
-                </fieldset>
-
-                <fieldset class="half">
-                    <input type="password" id="password_conf" name="password_conf"/>
                 </fieldset>
 
                 <fieldset class="full">
                     <label for="description">Description<?php echo (isset($validator->errors['description']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <span id="char-count">140</span>
                     <textarea id="description" name="description"><?php 
-                        echo (isset($_POST['description']) ? $_POST['description'] : '');
+                        echo (isset($user->data->description) ? $user->data->description : '');
                     ?></textarea>
                 </fieldset>
 
                 <fieldset class="full">
                     <label for="media">Media<?php echo (isset($validator->errors['media']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="media" name="media" value="<?php 
-                        echo (isset($_POST['media']) ? $_POST['media'] : '');
+                        echo (isset($user->data->media) ? $user->data->media : '');
                     ?>"/>
                 </fieldset>
 
                 <fieldset class="full">
                     <label for="tags">Tags<?php echo (isset($validator->errors['tags']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="tags" name="tags" value="<?php 
-                        echo (isset($_POST['tags']) ? $_POST['tags'] : '');
+                        echo (isset($user->data->tags) ? $user->data->tags : '');
                     ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="zip">Zip/Postal Code<?php echo (isset($validator->errors['zip']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="zip" name="zip" value="<?php 
-                        echo (isset($_POST['zip']) ? $_POST['zip'] : '');
+                        echo (isset($user->data->zip) ? $user->data->zip : '');
                     ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
-                    <input type="submit" id="submit" value="Submit" />
+                    <input type="submit" id="submit" value="Save Changes" />
                 </fieldset>
             </form>
         </section>

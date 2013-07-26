@@ -57,8 +57,19 @@ class User{
 		Session::destroy(); //destroy the logged in user session
 	}
 
-	public function update_profile(){
+	//profile must be pre cleaned
+	public function update_profile($post_array){
+		$changed = array();
 
+		//fill the array with each change
+    	foreach($post_array as $key => $value){
+        	if($value != $this->data->{$key}) $changed[$key] = $value;
+    	}
+    	//if there was a change made
+    	if(isset($changed) && !empty($changed)){
+    		$changed['id'] = $post_array['id'];
+    		$this->IU->execute_from_assoc($changed, "UPDATE");
+    	}
 	}
 
 	//returns true on success, false on failure, and "ZIP_LOOKUP_FAILED" if zipcode lookup failed
