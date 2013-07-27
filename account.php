@@ -77,7 +77,7 @@ if(isset($_POST) && !empty($_POST)){
                 // }
             }?>
 
-            <form id="registration" method="post" action="">
+            <form id="registration" method="post" action="" class="account-form">
                 <fieldset class="half">
                     <label for="first-name">First Name<?php echo (isset($validator->errors['first_name']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="first-name" name="first_name" value="<?php 
@@ -139,6 +139,37 @@ if(isset($_POST) && !empty($_POST)){
                     <input type="submit" id="submit" value="Save Changes" />
                 </fieldset>
             </form>
+
+        </section>
+        <section class="change-password">
+
+            <h2>Change Password</h2>
+
+            <form id="password-set" method="post" action="">
+                <fieldset class="half">
+                    <label for="old">New Password (twice)</label>
+                    <input type="password" name="new1" id="new1" />
+                </fieldset>
+
+                <fieldset class="half no-label">
+                    <input type="password" name="new1" id="new1" />
+                </fieldset>
+
+                <fieldset class="half">
+                    <label for="old">Old Password</label>
+                    <input type="password" name="old" id="old" />
+                </fieldset>
+
+                <fieldset class="half">
+                    <input type="submit" id="submit" value="Save Changes" />
+                </fieldset>
+            </form>
+
+        </section>
+
+        <section class="badge">
+            <h2>Badge</h2>
+            <p>The indexd badge will allow you to link your website to your piece of the community. You can download a full 
         </section>
 
         <?php require_once("lib/includes/partials/footer.inc.php"); ?>

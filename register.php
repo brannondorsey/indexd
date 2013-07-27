@@ -103,7 +103,7 @@
                     <input type="password" id="password" name="password"/>
                 </fieldset>
 
-                <fieldset class="half">
+                <fieldset class="half no-label">
                     <input type="password" id="password_conf" name="password_conf"/>
                 </fieldset>
 
