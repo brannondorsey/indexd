@@ -167,10 +167,25 @@ if(isset($_POST) && !empty($_POST)){
 
         </section>
 
-        <section class="badge">
+        <section class="badge-section">
             <h2>Badge</h2>
-            <p>The indexd badge will allow you to link your website to your piece of the community. You can download a full 
-        </section>
+            <p>The indexd badge will allow you to link your website to your piece of the community. You can download a full suite of brand materials, just the file you want, or just copy and paste the link we've built for you.</p>
+
+            <pre>
+<code>&lt;a href="insert_account_url"&gt;&lt;img src="path_to_badge" /&gt;&lt;/a&gt;</code>
+            </pre>
+
+            <input type="text" readonly value="&lt;a href='insert_account_url'&gt;&lt;img src='path_to_badge' /&gt;&lt;/a&gt;">
+
+
+
+            <p>Small</p>
+            <a href="img/indexd_badge_full_s.png" class="download-button">Full Color</a> <a href="img/indexd_badge_blue_s.png" class="download-button">Blue</a> <a href="img/indexd_badge_red_s.png" class="download-button">Red</a> <a href="img/indexd_badge_white_s.png" class="download-button">White</a>
+
+            <p>Large</p>
+            <a href="img/indexd_badge_full_l.png" class="download-button">Full Color</a> <a href="img/indexd_badge_blue_l.png" class="download-button">Blue</a> <a href="img/indexd_badge_red_l.png" class="download-button">Red</a> <a href="img/indexd_badge_white_l.png" class="download-button">White</a>
+
+           </section>
 
         <?php require_once("lib/includes/partials/footer.inc.php"); ?>
 

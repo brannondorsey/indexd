@@ -146,7 +146,7 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 15, ../sass/screen.scss */
-.search-button, .header-button {
+.search-button, .header-button, .badge-section .download-button {
   -webkit-transition: background-color 0.2s ease, padding 0.2s ease, border 0.2s ease, margin 0.2s ease;
   -moz-transition: background-color 0.2s ease, padding 0.2s ease, border 0.2s ease, margin 0.2s ease;
   -o-transition: background-color 0.2s ease, padding 0.2s ease, border 0.2s ease, margin 0.2s ease;
@@ -166,7 +166,7 @@ you can use the generic selector below, but it's slower:
   border: none;
 }
 /* line 33, ../sass/screen.scss */
-.search-button:hover, .header-button:hover {
+.search-button:hover, .header-button:hover, .badge-section .download-button:hover {
   background-color: #a75454;
   color: white;
 }
@@ -218,20 +218,20 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 115, ../sass/screen.scss */
-.query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings, .change-password {
+.query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings, .change-password, .badge-section {
   overflow: hidden;
   min-width: 600px;
 }
 @media all and (min-width: 900px) {
   /* line 115, ../sass/screen.scss */
-  .query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings, .change-password {
+  .query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings, .change-password, .badge-section {
     width: 40%;
     margin: 3em auto;
   }
 }
 @media all and (min-width: 600px) and (max-width: 899px) {
   /* line 115, ../sass/screen.scss */
-  .query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings, .change-password {
+  .query, .result, .brand, .about, .pagination .pagination-container, .register-user, .login-page, .account-settings, .change-password, .badge-section {
     width: 60%;
     margin: 3em auto;
   }
@@ -742,28 +742,37 @@ label {
   background-color: #1d5b89;
 }
 
-/* line 630, ../sass/screen.scss */
+/* line 636, ../sass/screen.scss */
+code {
+  font-family: monaco, monospace;
+  background-color: #ebeced;
+  padding: .5em;
+  color: #1d5b89;
+  font-size: .8em;
+}
+
+/* line 646, ../sass/screen.scss */
 footer {
   background-color: #ef7878;
   padding: 3em;
   margin-top: 3em;
 }
-/* line 634, ../sass/screen.scss */
+/* line 650, ../sass/screen.scss */
 footer img {
   display: block;
   margin: auto;
 }
-/* line 639, ../sass/screen.scss */
+/* line 655, ../sass/screen.scss */
 footer .footer-button {
   color: #1d5b89;
   text-decoration: none;
   margin: 0 1em;
 }
-/* line 644, ../sass/screen.scss */
+/* line 660, ../sass/screen.scss */
 footer .footer-button:hover {
   border-bottom: 1px solid #1d5b89;
 }
-/* line 649, ../sass/screen.scss */
+/* line 665, ../sass/screen.scss */
 footer .footer-nav {
   text-align: center;
   margin-bottom: 2em;

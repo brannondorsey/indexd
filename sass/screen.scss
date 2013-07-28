@@ -625,6 +625,22 @@ label {
 	@extend %responsive-block;
 }
 
+.badge-section {
+	@extend %responsive-block;
+
+	.download-button {
+		@extend %button;
+	}
+}
+
+code {
+	font-family: monaco, monospace;
+	background-color: $_gray;
+	padding: .5em;
+	color: $_black;
+	font-size: .8em;
+}
+
 // FOOTER STYLES
 
 footer {
