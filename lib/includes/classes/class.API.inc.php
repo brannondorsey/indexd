@@ -1,5 +1,6 @@
 <?php
 require_once("class.Database.inc.php");
+require_once("class.InsertUpdate.inc.php");
 
 class API {
 
@@ -17,12 +18,14 @@ class API {
 	protected $JSON_string;
 	protected $full_text_columns;
 	protected $API_key;
+	protected $IU;
 	
 	public function __construct(){
 		$this->columns_to_provide = 
 			"id, first_name, last_name, url, email, city, state, country, zip, lat, lon, datetime_joined, description, media, tags, likes";
 		$this->full_text_columns = "first_name, last_name, email, url, description, media, tags, city, state, country";
 		$this->public_columns_to_provide = $this->columns_to_provide;
+		$this->IU = new InsertUpdate();
 	}
 
 	//Returns a valid JSON string from $_GET values. Array must be sanitized before using this function.
@@ -246,6 +249,24 @@ class API {
 		}
 		//if the api key wasnt provided or isn't the right length return before querying
 		else return false;
+	}
+
+	//boolean that determines if API call limit has been reached
+	protected function call_limit_reached($API_key){
+
+	}
+
+	//handles the incrementing of a
+	protected function update_API_hit($API_key, $API_hit_date){
+		$last_hit_date = DateTime::createFromFormat(DateTime::ISO8601, $API_hit_date);
+
+		//if the api has already been hit today
+		if(date('Ymd') == date('Ymd', strtotime($last_hit_date->getTimestamp()))){
+			$query = "UPDATE " . Database::$table . " SET API_hits=API_hits+1 WHERE API_key='" . $API_key . "'";
+			return Database::execute_sql($query);
+		}else{
+			#reset the hits value to zero and the api hit date ISO8061 to right now
+		}
 	}
 
 //------------------------------------------------------------------------------
