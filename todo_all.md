@@ -13,18 +13,14 @@
 - add front end form validation on sign in page and "email already exists" message on registration page. **** see includes/email_exists_test.php
 - handle front end zip lookup fails ***
 - Add International Support ***
-- Reset Password -Brannon Dorsey ****
+- Add front end reset password email input on sign in page ****
 - Implement and entire like system ***
 - Implement bookmarks ***
-- change "url" in register page to "website" ****
-- capitalize both words in multi word tags and media?
-NO: no caps on tags and caps every word on media ****
 - add logo favicon ***
 - make a distinct visited color or something to notify users which links they have already seen. ***
 - update contact us on API doc ***
 - get contact us email… perhaps info@indexd.io ***
 - give api its own repo **
-- update everything on github from AWU to indexd ***
 - Add relational algorithm opt to API ***
 - Add organizations to db and algorithm and api and register and all that ****
 
@@ -58,3 +54,8 @@ NO: no caps on tags and caps every word on media ****
 - Change how tags are searched from listing page -Kevin Zweerink
 - Add description to register page (tooltips?) PLACEHOLDERS **
 - fix search text color (to hard to see PLACEHOLDER) ****
+- Reset Password -Brannon Dorsey ****
+- change "url" in register page to "website" ****
+- capitalize both words in multi word tags and media?
+NO: no caps on tags and caps every word on media ****
+- update everything on github from AWU to indexd ***

@@ -92,7 +92,7 @@
                 </fieldset>
 
                 <fieldset class="half">
-                    <label for="url">URL<?php echo (isset($validator->errors['url']) ? '<span class="form-error">*</span>' : ''); ?></label>
+                    <label for="url">Website<?php echo (isset($validator->errors['url']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="url" name="url" value="<?php 
                         echo (isset($_POST['url']) ? $_POST['url'] : '');
                     ?>" placeholder="www.johndoe.com"/>

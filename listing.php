@@ -43,7 +43,7 @@
                         $media_string = $media;
                         if($media_array_index < sizeof($media_array)-1) $media_string .= ", ";
                         ?>
-                        <a href="results.php?media=<?php echo $media ?>"><?php echo $media_string; ?></a>
+                        <a href="results.php?media=<?php echo $media ?>"><?php echo ucwords($media_string); ?></a>
                     <?php $media_array_index++; } ?>
                     </div>
                     <!-- <a href="#" class="media"><?php //echo $profile_data->media; ?></a> -->

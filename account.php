@@ -125,7 +125,7 @@ if(isset($_POST) && !empty($_POST)){
                 </fieldset>
 
                 <fieldset class="half">
-                    <label for="url">URL<?php echo (isset($validator->errors['url']) ? '<span class="form-error">*</span>' : ''); ?></label>
+                    <label for="url">Website<?php echo (isset($validator->errors['url']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="url" name="url" value="<?php 
                         echo (isset($user->data->url) ? str_replace('http://', '', $user->data->url) : '');
                     ?>"/>
