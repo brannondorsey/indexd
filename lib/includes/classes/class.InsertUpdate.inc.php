@@ -51,6 +51,7 @@ class InsertUpdate {
 			echo "incorrect parameters passed to InsertUpdate::execute_from_assoc()";
 		 	return false;
 		}
+		//echo $query;
 		return Database::execute_sql($query);
 	}
 }

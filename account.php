@@ -12,38 +12,63 @@ if (!$user->is_signed_in()) header('Location: login.php');
 else $user->load_data();
 if(isset($_POST) && !empty($_POST)){
     Database::init_connection();
-    $post_array = Database::clean($_POST);
     $validator = new Validation();
-    $rules = $validator->registration_rules;
-    unset($rules['password']);
-    unset($rules['password_conf']);
-    $validator->addSource($post_array);
-    $validator->addRules($rules);
-    $validator->run();
-
-    if(sizeof($validator->errors) > 0) {
-        $errors_exist = true;
-    } else {
-        $post_array['id'] = $user->data->id; //add the id so that the right user can be updated
-        $post_array['url'] = $validator->processURLString($post_array['url']);
-        //if the email wasn't changed...
-        if($user->data->email == $post_array['email']){
-            $user->update_profile($post_array);
-        }
-        else{
-            //update the profile if the email is unique
-            if(!$user->email_already_exists($post_array['email'])) $user->update_profile($post_array);
-            else{
-                ##handle an email already exists message right here...
+    $post_array = Database::clean($_POST);
+    //if POST is coming from the change password form
+    if(isset($post_array['new_password'])){
+        $rules = array(
+        'new_password'=>array('display'=>'password', 'type'=>'string',  'required'=>true, 'min'=>6, 'max'=>50, 'trim'=>true),
+        'new_password_conf'=>array('display'=>'password confirm', 'type'=>'string',  'required'=>true, 'min'=>6, 'max'=>50, 'trim'=>true),
+        'old_password'=>array('display'=>'password', 'type'=>'string',  'required'=>true, 'min'=>6, 'max'=>50, 'trim'=>true));
+        $validator->addSource($post_array);
+        $validator->addRules($rules);
+        //match passwords manually
+        if($post_array['new_password'] != $post_array['new_password_conf']) $validator->errors['pword_match'] = 'passwords did not match';
+        $validator->run();
+        if(sizeof($validator->errors) > 0) {
+            $reset_password_errors_exist = true;
+        } else {
+            if($user->reset_password($user->data->id, sha1($post_array['old_password']), $post_array['new_password'])){
+                $password_changed = true;
+                #code to execute when a password is successfully changed
+            }else{
+                $reset_password_errors_exist = true;
+                $validator->errors['pword_incorrect'] = "password was incorrect";
+                #code to execute when password change fails
             }
         }
+    }else{ //if the POST is comming from an edit to the user profile
+        $rules = $validator->registration_rules;
+        unset($rules['password']);
+        unset($rules['password_conf']);
+        $validator->addSource($post_array);
+        $validator->addRules($rules);
+        $validator->run();
 
-        //reloads the session vars because they were updated
-        $user_data_obj = $user->get_user_data_obj($user->data->id);
-        $user_properties = get_object_vars($user_data_obj);
-        Session::add_session_vars($user_properties);
-        $user->load_data();
-    }
+        if(sizeof($validator->errors) > 0) {
+            $account_edit_errors_exist = true;
+        } else {
+            $post_array['id'] = $user->data->id; //add the id so that the right user can be updated
+            $post_array['url'] = $validator->processURLString($post_array['url']);
+            //if the email wasn't changed...
+            if($user->data->email == $post_array['email']){
+                $user->update_profile($post_array);
+            }
+            else{
+                //update the profile if the email is unique
+                if(!$user->email_already_exists($post_array['email'])) $user->update_profile($post_array);
+                else{
+                    ##handle an email already exists message right here...
+                }
+            }
+
+            //reloads the session vars because they were updated
+            $user_data_obj = $user->get_user_data_obj($user->data->id);
+            $user_properties = get_object_vars($user_data_obj);
+            Session::add_session_vars($user_properties);
+            $user->load_data();
+            }
+        }
 }
 ?>
 
@@ -70,14 +95,14 @@ if(isset($_POST) && !empty($_POST)){
         <section class="account-settings">
             <h2>Account Settings</h2>
 
-            <p><?php echo (isset($errors_exist)) ? "Oops, something isn't allowed to be changed to that" : "Don't forget to save the changes you make!"?></p>
+            <p><?php echo (isset($account_edit_errors_exist)) ? "Oops, something isn't allowed to be changed to that" : "Don't forget to save the changes you make!"?></p>
             <?php if(isset($changed)){
                 // foreach ($changed as $key => $value) {
                 //     echo $key . " was changed <br>";
                 // }
             }?>
 
-            <form id="registration" method="post" action="" class="account-form">
+            <form id="registration" method="post" action="account.php" class="account-form">
                 <fieldset class="half">
                     <label for="first-name">First Name<?php echo (isset($validator->errors['first_name']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="first-name" name="first_name" value="<?php 
@@ -141,27 +166,38 @@ if(isset($_POST) && !empty($_POST)){
             </form>
 
         </section>
-        <section class="change-password">
+        <section id="change-password" class="change-password">
 
             <h2>Change Password</h2>
-
-            <form id="password-set" method="post" action="">
+            <?php if(isset($_GET['temp']) &&
+                     !empty($_GET['temp'])){?>
+            <p>Your new password is <?php echo $_GET['temp']?></p>
+            <p>You may want to change that to something more memorable now.</p>
+                     <?php } ?>
+            <?php if(isset($reset_password_errors_exist)){
+                    if(isset($validator->errors['pword_match'])) echo "Your new passwords don't match";
+                    else if(isset($validator->errors['pword_incorrect'])) echo "Your password is incorrect";
+                    else echo "Oops, there was a problem changing your password";
+                  }
+                  else if(isset($password_changed)){ echo "Your password was changed successfully!";
+            }?></p>
+            <form id="password-set" method="post" action="#change-password">
                 <fieldset class="half">
-                    <label for="old">New Password (twice)</label>
-                    <input type="password" name="new1" id="new1" />
+                    <label for="old">New Password (twice)<?php echo ((isset($validator->errors['new_password']) || isset($validator->errors['new_password_conf'])) ? '<span class="form-error">*</span>' : ''); ?></label>
+                    <input type="password" name="new_password" id="new1" />
                 </fieldset>
 
                 <fieldset class="half no-label">
-                    <input type="password" name="new1" id="new1" />
+                    <input type="password" name="new_password_conf" id="new1" />
                 </fieldset>
 
                 <fieldset class="half">
-                    <label for="old">Old Password</label>
-                    <input type="password" name="old" id="old" />
+                    <label for="old">Old Password<?php echo (isset($validator->errors['old_password'])) ? '<span class="form-error">*</span>' : ''; ?></label>
+                    <input type="password" name="old_password" id="old" />
                 </fieldset>
 
                 <fieldset class="half">
-                    <input type="submit" id="submit" value="Save Changes" />
+                    <input type="submit" id="submit" value="Change Password" />
                 </fieldset>
             </form>
 

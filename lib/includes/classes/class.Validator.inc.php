@@ -60,6 +60,8 @@ class Validation{
     }
 
     public function matchPasswords() {
+        //would be better handled with a regex here so that passwords would be automatically matched
+        //based on if they had 'password' and 'password_conf' in their name.
     	if($this->source['password'] != $this->source['password_conf']) {
     		$this->errors['pword_match'] = 'passwords did not match';
     	}

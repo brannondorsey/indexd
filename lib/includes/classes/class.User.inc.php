@@ -174,6 +174,34 @@ class User{
 		return mail($email, $email_obj->subject, $email_obj->body, $headers);
 	}
 
+	//sends an email with a link to reset a user's password.
+	//returns true on success and false on failure
+	public function send_reset_password_email($email){
+		if($this->email_already_exists($email)){
+			$query_array = array('email' => $email,
+								 'exact' => 'true',
+								 'limit' => '1');
+			$user_obj = json_decode($this->api->get_json_from_GET($query_array))->data[0];
+			$password_reset_link = Database::$root_dir_link . "resetpassword.php?id=" . $user_obj->id . "&reset_code=" . substr($user_obj->password, 25);
+			$path_to_email_JSON = Database::$root_dir_link . "lib/data/password_reset_message.json";
+			$file = file_get_contents($path_to_email_JSON);
+			$email_obj = json_decode($file);
+			$email_obj->body = str_replace("REPLACE_LINK_HERE", $password_reset_link, $email_obj->body);
+			$email_obj->body = str_replace("REPLACE_NAME_HERE", $user_obj->first_name, $email_obj->body);
+
+			//append and prepend html tags
+			$email_obj->body = "<html><head><title>" . $email_obj->subject . "</title></head><body>" . $email_obj->body;
+			$email_obj->body = $email_obj->body . "</body></html>";
+
+			// To send HTML mail, the Content-type header must be set
+			$headers  = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+			return mail($user_obj->email, $email_obj->subject, $email_obj->body, $headers);
+		}else return false;
+
+	}
+
 	//check email and conf code, if they match, set email_confirmed to 1 in the db and return true
 	//if they do not match or something went wrong return false
 	public function confirm_email($email, $confirmation_code){

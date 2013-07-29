@@ -43,7 +43,7 @@
 
 	 			//auto sign in the user
 	 			$user->sign_in($user_obj->email, $new_password);
-	 			header("Location: " . Database::$root_dir_link . "/account.php?temp=" . $new_password);
+	 			header("Location: " . Database::$root_dir_link . "/account.php?temp=" . $new_password . "#change-password");
 	 			//reset the header to account.php/#reset_password page with a message saying that the new password is 23l3fs9slm or something
 	 			//and that they should change it now.
 	 		}
