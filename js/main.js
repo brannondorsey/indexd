@@ -1,3 +1,20 @@
+jQuery.fn.animateAuto = function(prop, speed, callback){
+    var elem, height, width;
+    return this.each(function(i, el){
+        el = jQuery(el), elem = el.clone().css({"height":"auto","width":"auto"}).appendTo("body");
+        height = elem.css("height"),
+        width = elem.css("width"),
+        elem.remove();
+        
+        if(prop === "height")
+            el.animate({"height":height}, speed, callback);
+        else if(prop === "width")
+            el.animate({"width":width}, speed, callback);  
+        else if(prop === "both")
+            el.animate({"width":width,"height":height}, speed, callback);
+    });  
+}
+
 $(document).ready(function() {
 	var footer = $("footer");
 	var body = $("body");
@@ -17,6 +34,27 @@ $(document).ready(function() {
 			"bottom" : "0",
 			"width" : $(window).width()
 		})
+	}
+
+	if (window.location.pathname == "/login.php") {
+		$(".password-reset-container").css("height", "0");
+		$(".password-reset-container").css("opacity", "0")
+
+		$(".forgot-password").on("click", function(e) {
+			e.preventDefault();
+			
+			if( $(".password-reset-container").hasClass("expanded") ) {
+				$(".password-reset-container").animate({"opacity" : "0"}, 150, function() {
+					$(".password-reset-container").animate({"height" : "0"}, 150)
+				});
+				$(".password-reset-container").removeClass("expanded");
+			} else {
+				$(".password-reset-container").animateAuto("height", 150, function() {
+					$(".password-reset-container").animate({"opacity" : "1"}, 150);
+				});
+				$(".password-reset-container").addClass("expanded");
+			}
+		});
 	}
 
 	$("#submit-search").on("click", function(e) {

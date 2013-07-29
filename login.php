@@ -83,6 +83,21 @@
 
                 <input type="submit" id="submit-login" name="submit"/>
             </form>
+
+            <a href="#" class="forgot-password">Forgot Password?</a>
+
+            <div class="password-reset-container">
+                <p>Enter your e-mail and we will send you a temporary password so you can log in and reset your password</p>
+                <form id="password-reset" method="post" name="password-reset" action="">
+                    <fieldset class="input-append">
+                        <label for="email-password-reset">E-mail</label>
+                        <input type="email" id="email-password-reset" name="email-password-reset" />
+
+                        <input type="submit" id="submit-reset" name="submit-reset" value="Reset" />
+                    </fieldset>
+
+                </form>
+            </div>
         </section>
 
         <?php require_once("lib/includes/partials/footer.inc.php"); ?>

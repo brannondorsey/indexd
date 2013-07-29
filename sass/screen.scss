@@ -165,17 +165,6 @@ a {
 	}
 }
 
-[draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: move;
-  /* Required to make elements draggable in old WebKit */
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
-}
-
 
 // HEADER STYLES
 
@@ -323,6 +312,8 @@ a {
 // FORM STYLES 
 
 form {
+	overflow: hidden;
+	margin-bottom: 2em;
 	fieldset {
 		float: left;
 		margin-top: 1em;
@@ -375,7 +366,7 @@ form {
 			width: 100%;
 			background-color: $_gray;
 			border: 1px solid shade($_gray, 10%);
-			padding: .5em;
+			padding: .55em;
 		}
 
 		input, textarea {
@@ -385,6 +376,25 @@ form {
 				border: 1px solid shade($_gray, 10%);
 				outline: none;
 			}
+		}
+	}
+}
+
+form {
+	fieldset.input-append {
+		width: 100%;
+
+		label {
+			display: block;
+		}
+
+		input[type="email"], input[type="text"] {
+			width: 35%;
+		}
+		input {
+			display: inline-block;
+			margin: 0;
+			float: left;
 		}
 	}
 }
@@ -588,7 +598,10 @@ label {
 		float: left;
 	}
 
+}
 
+.password-reset-container {
+	overflow: hidden;
 }
 
 .badge-info {
