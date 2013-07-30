@@ -327,14 +327,7 @@ form {
 				padding-right: 1em;
 			}
 
-			&:nth-of-type(10) {
-				padding-right: 1em;
-				padding-left: 0;
-			}
-
-			&:nth-of-type(11) {
-				padding-right: 0;
-			}
+			
 
 			&.no-label {
 				margin-top: 2.4em;
@@ -422,6 +415,7 @@ input[type="submit"] {
 	background-color: $_red;
 	padding: .7em;
 	margin-top: 1.4em;
+	margin-right: 0;
 	float: right;
 	cursor: pointer;
 
@@ -636,6 +630,25 @@ label {
 
 .change-password {
 	@extend %responsive-block;
+}
+
+.orgs {
+	margin-top: .5em;
+}
+
+.org {
+	display: inline-block;
+	padding: .5em;
+	background-color: $_black;
+	color: $_white;
+	a {
+		padding: 0 .5em;
+		color: $_white;
+
+		&:hover {
+			color: $_gray;
+		}
+	}
 }
 
 .badge-section {

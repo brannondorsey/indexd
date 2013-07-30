@@ -15,6 +15,30 @@ jQuery.fn.animateAuto = function(prop, speed, callback){
     });  
 }
 
+$.fn.autoComplete = function(props) {
+	return this.each(function (i, el) {
+		el = $(el);
+		fieldset = el.closest("fieldset");
+		hidden = fieldset.find(".autocomplete-output");
+
+		function addToHidden() {
+			fieldset.find(".org .organization").each(function(i) {
+				console.log("hello");
+				val = hidden.attr("value");
+				console.log(val);
+				console.log($(this).text())
+				hidden.attr("value", val + ", " + $(this).text());
+			});
+		}
+
+		addToHidden();
+
+		el.on("keyup", function() {
+
+		});
+	});
+}
+
 $(document).ready(function() {
 	var footer = $("footer");
 	var body = $("body");

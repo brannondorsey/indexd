@@ -153,6 +153,18 @@ if(isset($_POST) && !empty($_POST)){
                     ?>"/>
                 </fieldset>
 
+                <fieldset class="full">
+                    <label for="organization">Organization</label>
+                    <input type="text" id="organization-text" value="" />
+
+                    <div class="orgs">
+                        <span class="org"><a class="organization" href="#">MICA</a><a href="#">&times;</a></span>
+                        <span class="org"><a class="organization" href="#">SAIC</a><a href="#">&times;</a></span>
+                    </div>
+
+                    <input type="hidden" id="organization" value="" class="autocomplete-output"/>
+                </fieldset>
+
                 <fieldset class="half">
                     <label for="zip">Zip/Postal Code<?php echo (isset($validator->errors['zip']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="zip" name="zip" value="<?php 
@@ -227,6 +239,15 @@ if(isset($_POST) && !empty($_POST)){
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+        <script src="js/jquery.tokeninput.js"></script>
         <script src="js/main.js"></script>
+        <script type="text/javascript">
+            var completes = [
+                { "id" : "1", "name" : "MICA" },
+                { "id" : "2", "name" : "SAIC"}
+            ]
+
+            $("#organization-text").autoComplete(completes);
+        </script>
     </body>
 </html>

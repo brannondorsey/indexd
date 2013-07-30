@@ -129,6 +129,16 @@
                     ?>" placeholder="e.g. photorealism, print, large-format, etc."/>
                 </fieldset>
 
+                <fieldset class="full">
+                    <label for="organization">Organization</label>
+                    <input type="text" id="organization" name="organization" value="" />
+
+                    <div class="orgs">
+                        <span class="org"><a class="organization" href="#">MICA</a><a href="#">&times;</a></span>
+                        <span class="org"><a class="organization" href="#">SAIC</a><a href="#">&times;</a></span>
+                    </div>
+                </fieldset>
+
                 <fieldset class="half">
                     <label for="zip">Zip/Postal Code<?php echo (isset($validator->errors['zip']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="zip" name="zip" value="<?php 
