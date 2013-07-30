@@ -4,22 +4,11 @@ require_once("class.ContentOutput.inc.php");
 //class to form and execute MySQL insert and update statements
 class OrganizationAutocomplete {
 
-	public function __construct(){
-		
-	}
-
 	//returns JSON of all organizations that match the list of chars wrapped in a data object array
 	public function get_results_as_JSON($chars){
-		$query = "SELECT organization FROM " . Database::$organization_table . " WHERE organization LIKE '" . $chars . "%'";
+		$query = "SELECT organization FROM " . Database::$organization_table . " WHERE organization LIKE '" . $chars . "%' ORDER BY organization";
 		//if there are results for the current characters requested
 		if($matching_organizations = $this->get_results_as_numerical_array($query)){
-			// //if there is only one result wrap it in another array
-			// if(!isset($results[0])) $results = array($results);
-			// $matching_organizations = array();
-			// foreach($results as $result_row){
-			// 	$matching_organizations[] = $result_row['organization'];
-			// }
-			//var_dump($matching_organizations);
 			$obj = new stdClass();
 			$obj->data = $matching_organizations;
 			return json_encode($obj);
@@ -35,14 +24,19 @@ class OrganizationAutocomplete {
 			foreach($organizations as $organization){
 				if(!in_array($organization, $organization_list)) $this->add_organization($organization);
 			}
-		}else return false;
+		}else{ //if there is nothing in the organizations table
+			$organizations = ContentOutput::commas_to_list($organizations_list);
+			foreach($organizations as $organization){
+				$this->add_organization($organization);
+			}
+		}
 	}
 
 	//adds an organization to the organization table.
 	//returns true on success and false on failure.
 	protected function add_organization($organization){
-		$query = "INSERT INTO " . Database::$organizations_list . " (`organization`) VALUES ('" . $organization . "')";
-		return Database::execute_from_assoc($query);
+		$query = "INSERT INTO " . Database::$organization_table . " (`organization`) VALUES ('" . $organization . "')";
+		return Database::execute_sql($query);
 	}
 
 	//takes a MySQL query and returns a 1D indexd array of results.

@@ -10,8 +10,16 @@ class ContentOutput{
 	}
 
 	public static function commas_to_list($string) {
-		$output = explode(", ", $string);
+		$raw_output = explode(",", $string);
+		$output = array();
+		foreach ($raw_output as $list_item) {
+			$output[] = trim($list_item);
+		}
 		return $output;
+
+		//old function:
+		//$output = explode(",", $string);
+		//return $output;
 	}
 
 	//confirm signed in before calling this
