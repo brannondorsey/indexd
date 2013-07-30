@@ -154,7 +154,7 @@ if(isset($_POST) && !empty($_POST)){
                 </fieldset>
 
                 <fieldset class="full">
-                    <label for="organization">Organization</label>
+                    <label for="organization">Organizations</label>
                     <input type="text" id="organization-text" value="" />
 
                     <div class="orgs">

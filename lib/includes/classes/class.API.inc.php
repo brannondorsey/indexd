@@ -43,7 +43,7 @@ class API {
 		 	if($this->update_API_hits($this->API_key, $result['API_hit_date']) === false){
 		 	 $this->JSON_string = $this->get_error("API hit limit reached");
 		 	}
-		  }
+		 }
 		}
 		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
 		//if there was a search and it returned no results
@@ -287,7 +287,8 @@ class API {
 				Database::execute_sql($query);
 			}else return false;
 		}else{ //if the API has not been hit today set the hits to zero and the hit date to today
-			//  
+			echo date('Ymd') . "<br>";
+			echo date('Ymd', strtotime($API_hit_date)) . "<br>";
 			$now = new DateTime();
 			$query = "UPDATE " . Database::$table . " SET API_hits = 0, API_hit_date='" . $now->format(DateTime::ISO8601) . "' WHERE API_key='" . $API_key . "'";
 			Database::execute_sql($query);

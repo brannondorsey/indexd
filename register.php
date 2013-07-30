@@ -130,8 +130,8 @@
                 </fieldset>
 
                 <fieldset class="full">
-                    <label for="organization">Organization</label>
-                    <input type="text" id="organization" name="organization" value="" />
+                    <label for="organization">Organizations</label>
+                    <input type="text" id="organization" name="organizations" value="" />
 
                     <div class="orgs">
                         <span class="org"><a class="organization" href="#">MICA</a><a href="#">&times;</a></span>
