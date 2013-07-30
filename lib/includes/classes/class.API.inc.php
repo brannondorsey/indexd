@@ -6,6 +6,7 @@ class API {
 
 	public $public_columns_to_provide;
 
+	protected $API_key_required = true;
 	protected $columns_to_provide;
 	protected $default_output_limit = 25;
 	protected $max_output_limit = 250;
@@ -32,7 +33,18 @@ class API {
 	//Returns a valid JSON string from $_GET values. Array must be sanitized before using this function.
 	public function get_JSON_from_GET(&$get_array, $object_parent_name="data"){
 		$query = $this->form_query($get_array);
-		if($this->check_API_key()) $this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, $object_parent_name, true);
+		if($this->check_API_key()){
+		 $this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, $object_parent_name, true);
+		 //only attempt to increment the api hit count if this method is called from a PUBLIC API request
+		 if($this->API_key_required){
+		 	$query = "SELECT API_hit_date FROM " . Database::$table . " WHERE API_key = '" . $this->API_key . "' LIMIT 1";
+		 	$result = Database::get_all_results($query);
+		 	//increments the hit count and/or hit date OR sets the error message if the key has reached its hit limit for the day
+		 	if($this->update_API_hits($this->API_key, $result['API_hit_date']) === false){
+		 	 $this->JSON_string = $this->get_error("API hit limit reached");
+		 	}
+		  }
+		}
 		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
 		//if there was a search and it returned no results
 		if($this->search != "" &&
@@ -253,7 +265,7 @@ class API {
 	}
 
 	//boolean that determines if API call limit has been reached
-	public function call_limit_reached($API_key){
+	protected function call_limit_reached($API_key){
 		$query = "SELECT API_hits FROM " . Database::$table . " WHERE API_key='" . $API_key . "' LIMIT 1";
 		$results = Database::get_all_results($query);
 		$API_hits = $results['API_hits'];
@@ -263,19 +275,20 @@ class API {
 	//need to put call_limit_reached inside of update_API_hits or something.
 	//fails to reset api calls when the call once the call limit has been reached.
 
-	//handles the incrementing of a
+	//handles the incrementing of a key's API hits.
+	//returns false if user has maxed out hits for the day
 	public function update_API_hits($API_key, $API_hit_date){
-		$last_hit_date = new DateTime($API_hit_date);
 		//if the api has already been hit today
 		if(date('Ymd') == date('Ymd', strtotime($API_hit_date))){
-			echo "got in here!";
-			$query = "UPDATE " . Database::$table . " SET API_hits=API_hits+1 WHERE API_key='" . $API_key . "'";
-			return Database::execute_sql($query);
-		}else{
-			echo date('Ymd') . "<br>";
-			echo date('Ymd', strtotime($last_hit_date->getTimestamp())) . "<br>";
+			//make sure that the key hasn't hit its limit.
+			//if it has return false
+			if(!$this->call_limit_reached($API_key)){
+				$query = "UPDATE " . Database::$table . " SET API_hits=API_hits+1 WHERE API_key='" . $API_key . "'";
+				Database::execute_sql($query);
+			}else return false;
+		}else{ //if the API has not been hit today set the hits to zero and the hit date to today
+			//  
 			$now = new DateTime();
-			#reset the hits value to zero and the api hit date ISO8601 to right now
 			$query = "UPDATE " . Database::$table . " SET API_hits = 0, API_hit_date='" . $now->format(DateTime::ISO8601) . "' WHERE API_key='" . $API_key . "'";
 			Database::execute_sql($query);
 		}

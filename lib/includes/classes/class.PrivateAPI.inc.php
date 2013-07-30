@@ -5,6 +5,7 @@ require_once("class.API.inc.php");
 class PrivateAPI extends API {
 
 	protected $private_columns_to_provide;
+	protected $API_key_required = false;
 
 	public function __construct(){
 		parent::__construct();

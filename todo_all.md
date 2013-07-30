@@ -7,7 +7,6 @@
 - no results page handling ***
 - Verified system to easily check for real peeps on our site *
 - Make sure no echo statements will ever show up topside **
-- Implement API key call limits ***
 - Make API not output anything if no params ****
 - Add API Error Handling *
 - add front end form validation on sign in page and "email already exists" message on registration page. **** see includes/email_exists_test.php
@@ -59,3 +58,4 @@
 - capitalize both words in multi word tags and media?
 NO: no caps on tags and caps every word on media ****
 - update everything on github from AWU to indexd ***
+- Implement API key call limits ***

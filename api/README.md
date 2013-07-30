@@ -116,9 +116,13 @@ foreach($jsonObj->data as $user){
 
 ###Error Handling
 
-Often requests to the Indexd API return no results because no users were found that met the request's criteria. For this reason it is important to know how to handle our API `errors`. Currently there are only two error messages that our API will ever output.
+Often requests to the Indexd API return no results because no users were found that met the request's criteria. For this reason it is important to know how to handle our API `errors`. Currently there are only three error messages that our API will ever output.
 
-The `JSON` that is returned in these instances are `{"error": "no results found"}` and `{"error": "API key is invalid or was not provided"}`.
+The `JSON` that is returned in these instances are:
+
+- `{"error": "no results found"}`
+- `{"error": "API key is invalid or was not provided"}`
+- `{"error": "API hit limit reached"}`
 
 Handling `errors` is simple. All that you need to do is check if the `error` property exists in the resulting `JSON` object. If it does execute the code for when an error is present. Otherwise, continue with the program because the request returned at least one user.
 
