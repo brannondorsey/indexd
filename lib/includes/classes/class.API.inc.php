@@ -9,6 +9,7 @@ class API {
 	protected $columns_to_provide;
 	protected $default_output_limit = 25;
 	protected $max_output_limit = 250;
+	protected $hits_per_day = 1000;
 	protected $default_order_by = "ORDER BY last_name ";
 	protected $default_flow = "ASC ";
 	protected $search_in_boolean_mode = false; //used inside of form query for FULLTEXT searches
@@ -252,20 +253,31 @@ class API {
 	}
 
 	//boolean that determines if API call limit has been reached
-	protected function call_limit_reached($API_key){
-
+	public function call_limit_reached($API_key){
+		$query = "SELECT API_hits FROM " . Database::$table . " WHERE API_key='" . $API_key . "' LIMIT 1";
+		$results = Database::get_all_results($query);
+		$API_hits = $results['API_hits'];
+		return (intval($API_hits) >= $this->hits_per_day) ? true : false;
 	}
 
-	//handles the incrementing of a
-	protected function update_API_hit($API_key, $API_hit_date){
-		$last_hit_date = DateTime::createFromFormat(DateTime::ISO8601, $API_hit_date);
+	//need to put call_limit_reached inside of update_API_hits or something.
+	//fails to reset api calls when the call once the call limit has been reached.
 
+	//handles the incrementing of a
+	public function update_API_hits($API_key, $API_hit_date){
+		$last_hit_date = new DateTime($API_hit_date);
 		//if the api has already been hit today
-		if(date('Ymd') == date('Ymd', strtotime($last_hit_date->getTimestamp()))){
+		if(date('Ymd') == date('Ymd', strtotime($API_hit_date))){
+			echo "got in here!";
 			$query = "UPDATE " . Database::$table . " SET API_hits=API_hits+1 WHERE API_key='" . $API_key . "'";
 			return Database::execute_sql($query);
 		}else{
-			#reset the hits value to zero and the api hit date ISO8061 to right now
+			echo date('Ymd') . "<br>";
+			echo date('Ymd', strtotime($last_hit_date->getTimestamp())) . "<br>";
+			$now = new DateTime();
+			#reset the hits value to zero and the api hit date ISO8601 to right now
+			$query = "UPDATE " . Database::$table . " SET API_hits = 0, API_hit_date='" . $now->format(DateTime::ISO8601) . "' WHERE API_key='" . $API_key . "'";
+			Database::execute_sql($query);
 		}
 	}
 

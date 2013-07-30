@@ -27,7 +27,7 @@
             var_dump($validator->errors);
         } 
         //if validation of the sign in form passes do this stuff...
-        else {
+        else{
             $post_array = Database::clean($_POST);
             $success = $user->sign_in($post_array['email'], $post_array['password']);
             if($success){
@@ -40,8 +40,19 @@
             }
             $login_failed = true; 
         }
-
+    }else if(isset($_POST['reset_password_email'])){
+        $post_array = Database::clean($_POST);
+        if($user->email_already_exists($post_array['reset_password_email'])){
+            if($user->send_reset_password_email($post_array['reset_password_email'])){
+                $reset_password_email_sent = true;
+            }else{
+             ##handle email failed to send 
+            }
+        }else{
+            ##handle email doesn't exist
+        }
     }
+
 ?> 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -87,11 +98,18 @@
             <a href="#" class="forgot-password">Forgot Password?</a>
 
             <div class="password-reset-container">
-                <p>Enter your e-mail and we will send you a temporary password so you can log in and reset your password</p>
+                <?php if(isset($post_array['reset_password_email'])){
+                        if(isset($reset_password_email_sent)){?>
+                        <p>We sent you an email with a link to reset your password.</p>
+                        <p>If you can't find it check your spam folder.</p>
+                        <?php }else{?>
+                        <p>None of our users have <?php echo $post_array['reset_password_email']?> listed as their email address.</p>
+                        <?php } ?>
+                <?php }else { ?><p>Enter your e-mail and we will send you a link to reset your password</p><?php } ?>
                 <form id="password-reset" method="post" name="password-reset" action="">
                     <fieldset class="input-append">
                         <label for="email-password-reset">E-mail</label>
-                        <input type="email" id="email-password-reset" name="email-password-reset" />
+                        <input type="email" id="email-password-reset" name="reset_password_email" />
 
                         <input type="submit" id="submit-reset" name="submit-reset" value="Reset" />
                     </fieldset>

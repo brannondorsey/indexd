@@ -183,7 +183,7 @@ if(isset($_POST) && !empty($_POST)){
             <h2>Change Password</h2>
             <?php if(isset($_GET['temp']) &&
                      !empty($_GET['temp'])){?>
-            <p>Your new password is <?php echo $_GET['temp']?></p>
+            <p>Your password was set to <?php echo $_GET['temp']?></p>
             <p>You may want to change that to something more memorable now.</p>
                      <?php } ?>
             <?php if(isset($reset_password_errors_exist)){
