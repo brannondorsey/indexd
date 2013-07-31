@@ -58,7 +58,8 @@ class Database {
 			if(is_array($string)){
 				foreach($string as $string_array_key => $string_array_value){
 					if($string_array_key == 'media' ||
-					   $string_array_key == 'tags') $string_array_value = self::format_list_for_db($string_array_value);
+					   $string_array_key == 'tags' ||
+					   $string_array_key == 'organizations') $string_array_value = self::format_list_for_db($string_array_value);
 					if($string_array_key == 'email') $string_array_value = strtolower($string_array_value);
 					//$string_array_value = self::clean_string($string_array_value);
 					$new_string_array[$string_array_key] = $string_array_value;
@@ -74,24 +75,24 @@ class Database {
 
 //------------------------------------------------------------------------------
 //HELPERS
-
-	//series of cleans to be perfomed on one string
-	protected static function clean_string($string){
-		$string = htmlspecialchars($string);
-		$string = self::$mysqli->real_escape_string($string);
-		return $string;
-	}
-
+	
 	//formats lists like media and tags from POST to be comma-space delimited per our sites standard 
 	//called inside clean()
-	protected static function format_list_for_db($string){
-		$string = strtolower($string);
+	public static function format_list_for_db($string){
+		$string = rtrim(strtolower($string), ",");
 		$array = explode(",", $string);
 		$new_array = array();
 		foreach($array as $value){
 			$new_array[] = trim($value);
 		}
 		$string = implode(", ", $new_array);
+		return $string;
+	}
+
+	//series of cleans to be perfomed on one string
+	protected static function clean_string($string){
+		$string = htmlspecialchars($string);
+		$string = self::$mysqli->real_escape_string($string);
 		return $string;
 	}
 }
