@@ -5,9 +5,9 @@ require_once("class.InsertUpdate.inc.php");
 class API {
 
 	public $public_columns_to_provide;
+	public $columns_to_provide;
 
 	protected $API_key_required = true;
-	protected $columns_to_provide;
 	protected $default_output_limit = 25;
 	protected $max_output_limit = 250;
 	protected $hits_per_day = 1000;

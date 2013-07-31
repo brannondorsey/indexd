@@ -3,6 +3,7 @@ require_once("class.Database.inc.php");
 require_once("class.PrivateAPI.inc.php");
 require_once("class.Session.inc.php");
 require_once("class.InsertUpdate.inc.php");
+require_once("class.BookmarkHandler.inc.php");
 
 class User{
 	protected $api;
@@ -10,10 +11,12 @@ class User{
 	public $data; //holds all of the users info (PUBLIC ONLY)
 	protected $b_signed_in = false;
 	protected $IU; //InsertUpdate class
+	protected $bookmark_hand;
 
 	public function __construct(){
 		$this->api = new PrivateAPI();
 		$this->IU = new InsertUpdate();
+		$this->bookmark_hand = new BookmarkHandler();
 	}
 	//checks if user is signed in by their PHPSESSID cookie and returns what it finds
 	public function is_signed_in(){
@@ -102,6 +105,12 @@ class User{
 	//should type password before deleting account
 	public function delete_account(){
 		//drop user row using id from $this->data obj
+	}
+
+	//bookmarks a user by bookmarked user's id
+	//returns false on failure
+	public function add_bookmark($id_of_bookmarked_users){
+		return $this->bookmark_hand->add_bookmark($this->data->id, $id_of_bookmarked_users);
 	}
 
 	//returns $user_id on success, 0 if user exists but email is not confirmed, and false on falure. Used on sign in page.

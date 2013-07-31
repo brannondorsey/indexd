@@ -8,7 +8,7 @@ class OrganizationAutocomplete {
 	public function get_results_as_JSON($chars){
 		$query = "SELECT organization FROM " . Database::$organization_table . " WHERE organization LIKE '" . $chars . "%' ORDER BY organization";
 		//if there are results for the current characters requested
-		if($matching_organizations = $this->get_results_as_numerical_array($query)){
+		if($matching_organizations = Database::get_results_as_numerical_array($query, "organization")){
 			$obj = new stdClass();
 			$obj->data = $matching_organizations;
 			return json_encode($obj);
@@ -19,7 +19,7 @@ class OrganizationAutocomplete {
 	//returns false on failure
 	public function add_list_to_organization_table($organizations_list){
 		$query = "SELECT organization FROM " . Database::$organization_table;
-		if($organization_list = $this->get_results_as_numerical_array($query)){
+		if($organization_list = Databse::get_results_as_numerical_array($query, "organization")){
 			$organizations = ContentOutput::commas_to_list($organizations_list);
 			foreach($organizations as $organization){
 				if(!in_array($organization, $organization_list)) $this->add_organization($organization);
@@ -37,21 +37,6 @@ class OrganizationAutocomplete {
 	protected function add_organization($organization){
 		$query = "INSERT INTO " . Database::$organization_table . " (`organization`) VALUES ('" . $organization . "')";
 		return Database::execute_sql($query);
-	}
-
-	//takes a MySQL query and returns a 1D indexd array of results.
-	//i.e. it can only be used with SELECT statement that returns results of only one column
-	//returns array on success and false on failure.
-	//called from add_list_to_organization_table() and get_results_as_JSON()
-	protected function get_results_as_numerical_array($query){
-		if($results = Database::get_all_results($query)){
-			if(!isset($results[0])) $results = array($results); //wraps in array if $result is 1D
-			$numerical_array = array();
-			foreach($results as $result_row){
-				$numerical_array[] = $result_row['organization'];
-			}
-			return $numerical_array;
-		}else return false;
 	}
 	
 }
