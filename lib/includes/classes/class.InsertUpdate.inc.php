@@ -54,5 +54,11 @@ class InsertUpdate {
 		//echo $query;
 		return Database::execute_sql($query);
 	}
+
+	//increments an int column value 
+	public function increment($user_id, $column_name){
+		$query = "UPDATE " . Database::$table . " SET " . $column_name . "=" . $column_name . "+1 WHERE id='" . $user_id . "' LIMIT 1";
+		return Database::execute_sql($query);
+	}
 }
 ?>
