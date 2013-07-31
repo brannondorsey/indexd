@@ -15,6 +15,7 @@
 	 //perhaps the below method should also be called from inside of the user class.
 	 //like $user->get_bookmarked_users();
 	 //or maybe not... damn I don't know. It could be good as ContentOutput::get_bookmarks($id);
+	 echo $user->data->bookmarked_users . "<br>";
 	 echo $bookmark_hand->get_bookmarked_users_JSON($user->data->id);
 	 
 	 Database::close_connection();
