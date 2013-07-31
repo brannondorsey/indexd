@@ -8,12 +8,13 @@
 	Database::init_connection();
 
 	//number of users to add to the db
-	$numb_users_to_generate = 500;
+	$numb_users_to_generate = 2000;
 
 	//settings
 	$max_description_chars = 140;
 	$max_media = 4;
 	$max_tags = 8;
+	$max_organizations = 2;
 	$max_likes = 1400;
 
 	//load files
@@ -23,6 +24,7 @@
 	$lorem_string = file_get_contents("data/lorem.txt");
 	$media_array = file("data/media.txt");
 	$tags_array = file("data/tags.txt");
+	$organizations_array = file("data/organizations.txt");
 	$zip_array = explode("\r", file_get_contents("data/zip_codes.txt"));
 
 	//generate each user in here
@@ -46,8 +48,8 @@
 		$url = $url_prefixes[$url_prefix_index]; //select url prefix
 		$url .= $first_name . $last_name . ".com"; //set email to names combined
 		
-		//password is set to user's first name
-		$password = $first_name;
+		//password is set to user's first name concatonated with last name
+		$password = $first_name . $last_name;
 
 		//description
 		$description_length = floor(rand(71, $max_description_chars + 1)); //pick random length between 70 and 140
@@ -59,6 +61,9 @@
 
 		//tags
 		$tags = get_list($max_tags, $tags_array);
+
+		//organizations
+		$organizations = get_list($max_organizations, $organizations_array);
 
 		//zip
 		$zip = get_list(1, $zip_array);
@@ -74,6 +79,7 @@
 								 'description' => $description,
 								 'media' => $media,
 								 'tags' => $tags,
+								 'organizations' => $organizations,
 								 'likes' => $likes,
 								 'zip' => $zip,
 								 'country' => "us");
