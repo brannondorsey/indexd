@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 class Validation{
 
     public $registration_rules = array(
@@ -502,7 +501,6 @@ class Validation{
     {
         $this->sanitized[$var] = (string) filter_var($this->source[$var], FILTER_SANITIZE_STRING);
     }
-
+    
 } /*** end of class ***/
-
 ?>

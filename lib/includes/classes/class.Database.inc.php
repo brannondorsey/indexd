@@ -110,6 +110,29 @@ class Database {
 		$string = self::$mysqli->real_escape_string($string);
 		return $string;
 	}
+
+	//returns 82 char bycript password string when unhased string is passed in and
+	//if two parameters are passed it returns a boolean checking if they match
+	//adapted from harry at simans dot net post at http://php.net/manual/en/function.crypt.php
+	//instead of putting the salt at the end the salt is prepended to the beginning of the hashed password <-- NO LONGER TRUE
+	public static function hasher($unhashed_password, $encoded_data = false) { 
+	  $strength = "08"; 
+	  //if encrypted data is passed, check it against input ($unhashed_password) 
+	  if ($encoded_data) {
+	    if (substr($encoded_data, 0, 60) == crypt($unhashed_password, "$2a$".$strength."$".substr($encoded_data, 60))) return true; 
+	    else return false;  
+	  } 
+	  else { 
+	  //make a salt and hash it with input, and add salt to end 
+	  $salt = ""; 
+	  for ($i = 0; $i < 22; $i++) { 
+	    $salt .= substr("./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", mt_rand(0, 63), 1); 
+	  } 
+	  //return 82 char string (60 char hash & 22 char salt) 
+	  return crypt($unhashed_password, "$2a$".$strength."$".$salt) . $salt;
+	}
+
+	}
 }
 
 ?>

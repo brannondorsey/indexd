@@ -28,7 +28,7 @@ if(isset($_POST) && !empty($_POST)){
         if(sizeof($validator->errors) > 0) {
             $reset_password_errors_exist = true;
         } else {
-            if($user->reset_password($user->data->id, sha1($post_array['old_password']), $post_array['new_password'])){
+            if($user->reset_password($user->data->id, $post_array['old_password'], $post_array['new_password'])){
                 $password_changed = true;
                 #code to execute when a password is successfully changed
             }else{
@@ -193,7 +193,7 @@ if(isset($_POST) && !empty($_POST)){
                   }
                   else if(isset($password_changed)){ echo "Your password was changed successfully!";
             }?></p>
-            <form id="password-set" method="post" action="#change-password">
+            <form id="password-set" method="post" action="account.php#change-password">
                 <fieldset class="half">
                     <label for="old">New Password (twice)<?php echo ((isset($validator->errors['new_password']) || isset($validator->errors['new_password_conf'])) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="password" name="new_password" id="new1" />

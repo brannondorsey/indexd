@@ -21,6 +21,7 @@
 - Add relational algorithm parameter to API ***
 - Add organizations to db and algorithm and api and register and all that ****
 - Make passwords Bycript ****
+- BUG. Cannot sign out after having just changed password from the account page.***
 
 ##Notes
 - perhaps change "media" to something else. Art media is more like paint, charchoal, graphite, etc and could be confusing. Perhaps the word practice.

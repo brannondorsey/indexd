@@ -14,7 +14,7 @@
 	 1. User requests for password to be reset from loggin page by providing their email
 	 2. Automated email is sent with a link that will reset their password for them. That 
 	 	link will look like this: http://localhost:8888/resetpassword.php?id=1&reset_code=82ab3169d0a3774.
-	 	The reset_code value is the last 15 chars of their previous password sha1. They must click this link
+	 	The reset_code value is the last 15 chars of their previous bycripted password. They must click this link
 	 	for the password to be actually reset.
 	 3. User clicks link and is automatically logged in and redirected to account.php#reset_password?temp=L3Uss8Uz. 
 	 	User is then asket to change their password to something more memorable than: L3Uss8Uz
@@ -30,9 +30,9 @@
 	 	//if the user could be looked up from id
 	 	if($user_obj = $api->get_logged_in_user_obj((int) $get_array['id'], true)->data[0]){
 	 		//var_dump($user_obj);
-	 		$old_sha1_fragment = substr($user_obj->password, 25);
-	 		//echo $old_sha1_fragment;
-	 		if($old_sha1_fragment == $get_array['reset_code']){
+	 		$old_bycript_fragment = substr($user_obj->password, 67);
+	 		//echo $old_bycript_fragment;
+	 		if($old_bycript_fragment == $get_array['reset_code']){
 	 			$new_password = generate_password();
 	 			$user->reset_password($user_obj->id, $user_obj->password, $new_password);
 	 			

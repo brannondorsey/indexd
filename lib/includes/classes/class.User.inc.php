@@ -92,14 +92,20 @@ class User{
 		return $this->send_confirmation_email($post_array['email'], $post_array['first_name'], $post_array['email_confirmation_code']);
 	}
 
+	//NOTE: the $old_password param may be hashed OR unhashed
 	//resets the user's password in the database. Returns false if something went wrong
-	public function reset_password($user_id, $old_password_hashed, $new_password_unhashed){
-		if($old_password_hashed == $this->api->get_logged_in_user_obj((int) $user_id, true)->data[0]->password){
-			$assoc_array = array('id' => $user_id, 
-								'password' => sha1($new_password_unhashed));
-			return $this->IU->execute_from_assoc($assoc_array, 'UPDATE', 'password');
-		}
-		else return false;
+	public function reset_password($user_id, $old_password, $new_password_unhashed){
+		//if the user id is correct and a user was found
+		if($user_obj = $this->api->get_logged_in_user_obj((int) $user_id, true)->data[0]){
+			//if the old password is correct
+			//checks for hashed password OR unhashed
+			if($old_password == $user_obj->password ||
+				Database::hasher($old_password, $user_obj->password)){
+				$assoc_array = array('id' => $user_id, 
+									'password' => Database::hasher(	$new_password_unhashed));
+				return $this->IU->execute_from_assoc($assoc_array, 'UPDATE', 'password');
+			}else return false;
+		}else return false;
 	}
 
 	//should type password before deleting account
@@ -113,17 +119,20 @@ class User{
 		return $this->bookmark_hand->add_bookmark($this->data->id, $id_of_bookmarked_users);
 	}
 
-	//returns $user_id on success, 0 if user exists but email is not confirmed, and false on falure. Used on sign in page.
+	//returns $user_id on success, "EMAIL_NOT_CONFIRMED" if user exists but email is not confirmed, and false on falure. Used on sign in page.
 	public function check_sign_in_credentials($email, $unhashed_password){
-		$hashed_password = sha1($unhashed_password);
-		$query = "SELECT id, email_confirmed FROM " . Database::$table . " WHERE email = '" 
-		. $email . "' AND password = '" . $hashed_password . "' LIMIT 1";
+		//$hashed_password = Database::hasher($unhashed_password);
+		$query = "SELECT id, password, email_confirmed FROM " . Database::$table . " WHERE email = '" 
+		. $email . "' LIMIT 1";
 		if($user = Database::get_all_results($query)){
-			if($user['email_confirmed'] == 1) return $user['id'];
-			else{
-			 //echo "for some reason check sign in credentials things that the user's email was not confirmed";
-			 return "EMAIL_NOT_CONFIRMED";
-			}
+			//if unhashed password matches the password from the database lookup
+			if(Database::hasher($unhashed_password, $user['password'])){
+				if($user['email_confirmed'] == 1) return $user['id'];
+				else{
+				 //echo "for some reason check sign in credentials things that the user's email was not confirmed";
+				 return "EMAIL_NOT_CONFIRMED";
+				}
+			}else return false; //there were no matching users found
 		}
 		else return false; //there were no matching users found
 	}
@@ -142,7 +151,7 @@ class User{
 	protected function add_and_encode_register_fields($post_array){
 		$date_time = new DateTime();
 		$timestamp = $date_time->format(DateTime::ISO8601);
-		$post_array['password'] = sha1($post_array['password']); //encrypt password
+		$post_array['password'] = Database::hasher($post_array['password']); //encrypt password
 		$new_fields = array(
 		'datetime_joined' => $timestamp, //save joined to now
 		'API_key' => sha1(microtime(true).mt_rand(10000,90000)), //generate random key
@@ -191,7 +200,7 @@ class User{
 								 'exact' => 'true',
 								 'limit' => '1');
 			$user_obj = json_decode($this->api->get_json_from_GET($query_array))->data[0];
-			$password_reset_link = Database::$root_dir_link . "resetpassword.php?id=" . $user_obj->id . "&reset_code=" . substr($user_obj->password, 25);
+			$password_reset_link = Database::$root_dir_link . "resetpassword.php?id=" . $user_obj->id . "&reset_code=" . substr($user_obj->password, 67);
 			$path_to_email_JSON = Database::$root_dir_link . "lib/data/password_reset_message.json";
 			$file = file_get_contents($path_to_email_JSON);
 			$email_obj = json_decode($file);

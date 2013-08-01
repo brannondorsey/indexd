@@ -8,7 +8,7 @@
 	Database::init_connection();
 
 	//number of users to add to the db
-	$numb_users_to_generate = 2000;
+	$numb_users_to_generate = 400;
 
 	//settings
 	$max_description_chars = 140;
