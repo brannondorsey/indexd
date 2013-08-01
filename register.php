@@ -137,7 +137,7 @@
                 </fieldset>
 
                 <fieldset class="full">
-                    <label for="organization">Organizations (acronyms preferred)</label>
+                    <label for="organization">Organizations (acronyms suggested)</label>
                     <input type="text" id="organization" name="organizations" value="" />
 
                     <div class="orgs">
