@@ -16,6 +16,12 @@
     $unconfirmed_email = "";
     $login_failed = false;
 
+    //if the user got here after successfully registering
+    if(isset($_GET['from_registration']) && 
+       strtolower($_GET['from_registration']) == "true"){
+        $just_registered = "Thanks for joining Indexd.<br>Check your email for a message from us before logging in.";
+    }
+
     if(isset($_POST['email'])) {
 
         $validator = new Validation();
@@ -75,10 +81,12 @@
     <body>
         <section class="login-page">
             <h2>Sign In</h2>
-            <p><?php if ($unconfirmed_email != "") { echo $unconfirmed_email; } 
-            else if($login_failed){ echo "Invalid e-mail and password combination." ;}
+            <p><?php 
+            if(isset($just_registered)) echo $just_registered;
+            else if ($unconfirmed_email != "") echo $unconfirmed_email; 
+            else if($login_failed) echo "Invalid e-mail and password combination.";
             else { ?>Sign in to edit your account details. Don't have an account? <a href="register.php">Join now, it's free.</a> <?php } ?></p>
-            <form class="login-form" method="post" name="login-page-form" id="login-page-form" action="">
+            <form class="login-form" method="post" name="login-page-form" id="login-page-form" action="login.php">
 
                 <fieldset class="half">
                     <label for="email">E-mail</label>

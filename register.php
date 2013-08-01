@@ -44,8 +44,15 @@
                     $post_array = Database::clean($_POST);
                     $post_array['country'] = "us"; //add country manually for now
                     unset($post_array['password_conf']); //unset the password confirmation because we don't need it
-                    if($user->register($post_array) === "ZIP_LOOKUP_FAILED"){
+                    $registration = $user->register($post_array);
+                    if($registration){
+                        //registration success
+                        header("Location: login.php?from_registration=true");
+
+                    }else if($registration  === "ZIP_LOOKUP_FAILED"){
                         //handle zip lookup fail here...
+                    }else{
+                        //failed registration (something went wrong internally and is not neccisarily related to user input)
                     }
                     Database::close_connection();
                 }
@@ -130,7 +137,7 @@
                 </fieldset>
 
                 <fieldset class="full">
-                    <label for="organization">Organizations</label>
+                    <label for="organization">Organizations (acronyms preferred)</label>
                     <input type="text" id="organization" name="organizations" value="" />
 
                     <div class="orgs">

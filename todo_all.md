@@ -7,12 +7,10 @@
 - no results page handling ***
 - Verified system to easily check for real peeps on our site *
 - Make sure no echo statements will ever show up topside **
-- Make API not output anything if no params ****
 - Add API Error Handling *
 - add front end form validation on sign in page and "email already exists" message on registration page. **** see includes/email_exists_test.php
 - handle front end zip lookup fails ***
 - Add International Support ***
-- Add front end reset password email input on sign in page ****
 - Implement and entire like system ***
 - Implement bookmarks ***
 - add logo favicon ***
@@ -20,8 +18,9 @@
 - update contact us on API doc ***
 - get contact us email… perhaps info@indexd.io ***
 - give api its own repo **
-- Add relational algorithm opt to API ***
+- Add relational algorithm parameter to API ***
 - Add organizations to db and algorithm and api and register and all that ****
+- Make passwords Bycript ****
 
 ##Notes
 - perhaps change "media" to something else. Art media is more like paint, charchoal, graphite, etc and could be confusing. Perhaps the word practice.
@@ -59,3 +58,5 @@
 NO: no caps on tags and caps every word on media ****
 - update everything on github from AWU to indexd ***
 - Implement API key call limits ***
+- Add front end reset password email input on sign in page ****
+- Make API not output anything if no params ****

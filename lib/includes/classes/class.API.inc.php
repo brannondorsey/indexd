@@ -287,8 +287,6 @@ class API {
 				Database::execute_sql($query);
 			}else return false;
 		}else{ //if the API has not been hit today set the hits to zero and the hit date to today
-			echo date('Ymd') . "<br>";
-			echo date('Ymd', strtotime($API_hit_date)) . "<br>";
 			$now = new DateTime();
 			$query = "UPDATE " . Database::$table . " SET API_hits = 0, API_hit_date='" . $now->format(DateTime::ISO8601) . "' WHERE API_key='" . $API_key . "'";
 			Database::execute_sql($query);

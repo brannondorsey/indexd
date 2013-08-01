@@ -12,7 +12,7 @@ class OrganizationAutocomplete {
 			$obj = new stdClass();
 			$obj->data = $matching_organizations;
 			return json_encode($obj);
-		}else return "{ error : \"no results found\"}";
+		}else return "{ \"error\" : \"no results found\"}";
 	}
 
 	//adds the contents of a comma delimited organizations list to the organizations table

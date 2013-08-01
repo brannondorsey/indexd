@@ -1,11 +1,15 @@
 <?php
 	 require_once("../lib/includes/classes/class.PrivateAPI.inc.php");
 	 require_once("../lib/includes/classes/class.API.inc.php");
-	 //header("Content-Type: text/javascript; charset=utf-8");
-	 Database::init_connection();
+	 header("Content-Type: text/javascript; charset=utf-8");
+	 
 	 $api = new API();
-	 $get_array = Database::clean($_GET); //clean the $_GET array
-	 $data = $api->get_JSON_from_GET($get_array); //return user JSON objs based on API get params 
-	 Database::close_connection();
-	 echo $data;
+	 if(isset($_GET) && !empty($_GET)){
+	 	 Database::init_connection();
+		 $get_array = Database::clean($_GET); //clean the $_GET array
+		 $data = $api->get_JSON_from_GET($get_array); //return user JSON objs based on API get params
+		 Database::close_connection();
+	 	 echo $data;
+	 }
+	 
 ?>
