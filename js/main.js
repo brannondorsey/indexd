@@ -80,6 +80,7 @@ $.fn.autoComplete = function(props) {
 			if(fieldset.find(".autocomplete-results")) {
 				fieldset.find(".autocomplete-results").remove();
 			}
+			$(".return-prompt").removeClass("active");
 		}
 
 		function insertData(data) {
@@ -155,8 +156,11 @@ $.fn.autoComplete = function(props) {
 							listenForHover();
 						}
 					});
+
+					$(".return-prompt").addClass("active");
 				} else {
 					closeAutocomplete();
+					$(".return-prompt").removeClass("active");
 				}
 			});
 

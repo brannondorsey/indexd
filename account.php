@@ -156,7 +156,7 @@ if(isset($_POST) && !empty($_POST)){
                 <fieldset class="full">
                     <label for="organization">Organizations (acronyms suggested)</label>
                     <input type="text" id="organization-text" value="" placeholder="Type to add organizations" autocomplete="off"/>
-
+                    <span class="return-prompt">&crarr;</span>
                     <div class="orgs">
                         <span class="org"><a class="organization" href="#">MICA</a><a href="#" class="remove">&times;</a></span>
                         <span class="org"><a class="organization" href="#">SAIC</a><a href="#" class="remove">&times;</a></span>

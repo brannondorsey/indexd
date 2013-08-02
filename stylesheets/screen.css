@@ -156,6 +156,20 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 17, ../sass/_autocomplete.scss */
+.return-prompt {
+  position: absolute;
+  top: 1.4em;
+  right: 0;
+  padding: 1em;
+  opacity: 0;
+}
+
+/* line 25, ../sass/_autocomplete.scss */
+.return-prompt.active {
+  opacity: 1;
+}
+
+/* line 29, ../sass/_autocomplete.scss */
 .autocomplete-results {
   position: absolute;
   width: 100%;
@@ -163,23 +177,23 @@ you can use the generic selector below, but it's slower:
   margin-top: -2px;
   border-top: 1px solid #d3d4d5;
 }
-/* line 23, ../sass/_autocomplete.scss */
+/* line 35, ../sass/_autocomplete.scss */
 .autocomplete-results li {
   border: 1px solid #d3d4d5;
   border-top: none;
 }
-/* line 27, ../sass/_autocomplete.scss */
+/* line 39, ../sass/_autocomplete.scss */
 .autocomplete-results li.selected a {
   background: #d3d4d5;
   color: #1d5b89;
 }
-/* line 32, ../sass/_autocomplete.scss */
+/* line 44, ../sass/_autocomplete.scss */
 .autocomplete-results li a {
   display: block;
   padding: .2em .8em;
 }
 
-/* line 39, ../sass/_autocomplete.scss */
+/* line 51, ../sass/_autocomplete.scss */
 .org {
   -webkit-animation: flash 1s;
 }
