@@ -28,7 +28,7 @@
         <?php require_once 'lib/includes/classes/class.Validator.inc.php'; 
     
             if(isset($_POST['first_name'])) {
-
+                $failed_zip_msg = false;
                 $validator = new Validation();
                 $validator->addSource($_POST);
                 $validator->addRules($validator->registration_rules);
@@ -50,9 +50,9 @@
                         header("Location: login.php?from_registration=true");
 
                     }else if($registration  === "ZIP_LOOKUP_FAILED"){
-                        //handle zip lookup fail here...
+                        $failed_msg = "Zip lookup failed";
                     }else{
-                        //failed registration (something went wrong internally and is not neccisarily related to user input)
+                        $failed_msg = "Oops, something went wrong, please try again later.";
                     }
                     Database::close_connection();
                 }
@@ -71,6 +71,9 @@
                 if (sizeof($validator->errors) > 0) {
                     echo "<p>Oops, there were some errors with your submission. Please fix them and try again.</p>";
                     
+                }
+                if ($failed_msg != false) {
+                    echo "<p>".$failed_msg."</p>";
                 }
             }
 
