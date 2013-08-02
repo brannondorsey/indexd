@@ -221,7 +221,7 @@ you can use the generic selector below, but it's slower:
 }
 /* line 13, ../sass/_badge.scss */
 .badge-button span {
-  padding: .5em .5em .2em;
+  padding: .55em .5em .15em;
   background-color: #4a7ba0;
 }
 /* line 18, ../sass/_badge.scss */

@@ -222,10 +222,10 @@ if(isset($_POST) && !empty($_POST)){
             <input type="text" readonly value="&lt;a href='insert_account_url'&gt;&lt;img src='path_to_badge' /&gt;&lt;/a&gt;">
 
             <p>Badge Image Downloads</p>
-            <span class="badge-button full-color"><span class="badge-preview"><img src="/img/indexd_badge_full_s.png" /></span><a href="/img/indexd_badge_full_l">Full Color</a></span>
-            <span class="badge-button blue-color"><span class="badge-preview"><img src="/img/indexd_badge_blue_s.png" /></span><a href="/img/indexd_badge_blue_l">Blue</a></span>
-            <span class="badge-button red-color"><span class="badge-preview"><img src="/img/indexd_badge_red_s.png" /></span><a href="/img/indexd_badge_red_l">Red</a></span>
-            <span class="badge-button white-color"><span class="badge-preview"><img src="/img/indexd_badge_white_s.png" /></span><a href="/img/indexd_badge_white_l">White</a></span>
+            <span class="badge-button full-color"><span class="badge-preview"><img src="/img/indexd_badge_full_s.png" /></span><a href="/img/indexd_badge_full_l.png">Full Color</a></span>
+            <span class="badge-button blue-color"><span class="badge-preview"><img src="/img/indexd_badge_blue_s.png" /></span><a href="/img/indexd_badge_blue_l.png">Blue</a></span>
+            <span class="badge-button red-color"><span class="badge-preview"><img src="/img/indexd_badge_red_s.png" /></span><a href="/img/indexd_badge_red_l.png">Red</a></span>
+            <span class="badge-button white-color"><span class="badge-preview"><img src="/img/indexd_badge_white_s.png" /></span><a href="/img/indexd_badge_white_l.png">White</a></span>
            </section>
 
         <?php require_once("lib/includes/partials/footer.inc.php"); ?>
