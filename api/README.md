@@ -116,13 +116,15 @@ foreach($jsonObj->data as $user){
 
 ###Error Handling
 
-Often requests to the Indexd API return no results because no users were found that met the request's criteria. For this reason it is important to know how to handle our API `errors`. Currently there are only three error messages that our API will ever output.
+Often requests to the Indexd API return no results because no users were found that met the request's criteria. For this reason it is important to know how to handle our API `errors`. Currently there are only four error messages that our API will ever output.
 
 The `JSON` that is returned in these instances are:
 
 - `{"error": "no results found"}`
 - `{"error": "API key is invalid or was not provided"}`
 - `{"error": "API hit limit reached"}`
+- `{"error": "no users found with that id"}` (only possible when using the `related_users` parameter)
+
 
 Handling `errors` is simple. All that you need to do is check if the `error` property exists in the resulting `JSON` object. If it does execute the code for when an error is present. Otherwise, continue with the program because the request returned at least one user.
 
@@ -179,9 +181,21 @@ __Example__:
 
      http://api.indexd.io?last_name=Renolds&key=8a98253d8b01d4cf8c3fe183ef0862fa69a67b2e
      
-__Note:__ Failing to include a valid API or making more than 1000 requests in a day will throw a `error` object in place of a `data` object.
-     
+__Note:__ Failing to include a valid API or making more than 1000 requests in a day will throw an `error` object in place of a `data` object.
 
+###Related Users Parameter
+
+If you have ever been on the Indexd site you have probably noticed that below each user's profile there is a list of related users. This parameter gives developers direct access to the algorithm we use to find those related users. This parameter will return the most liked users with similar media, tags, organizations, and closest phisical proximity to the user with the `id` provided as this parameter's value. The `related_to` parameter returns a maximum of 10 user objects.
+
+Parameter __key:__ `related_to`
+
+Parameter __value:__ The `id` of the user to perform the related users search for.
+
+__Example__: 
+
+     http://api.indexd.io?related_to=314&key=...
+     
+__Note:__ This parameter overrides any other parameters found in this reference. Currently no more than 10 users will ever be returned when this parameter is included.
 
 ###Column Parameters
 Column parameters allow you to query any user's public data for a specific value where the url parameter key is specified to be the user's column in our database. Column parameters can be stacked for more specific queries.

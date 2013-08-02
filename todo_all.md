@@ -11,7 +11,6 @@
 - make a distinct visited color or something to notify users which links they have already seen. ***
 - update contact us on API doc ***
 - get contact us email… perhaps info@indexd.io ***
-- Add relational algorithm parameter to API ***
 - Add about page -Kevin Zweerink ***
 - no results page handling ***
 - Responsive Stuff -Kevin Zweerink **
@@ -61,3 +60,4 @@ NO: no caps on tags and caps every word on media ****
 - Make API not output anything if no params ****
 - Make passwords Bycript ****
 - Add organizations to db and algorithm and api ****
+- Add relational algorithm parameter to API ***

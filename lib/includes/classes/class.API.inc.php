@@ -1,6 +1,7 @@
 <?php
 require_once("class.Database.inc.php");
 require_once("class.InsertUpdate.inc.php");
+require_once("class.RelationalAlgorithm.inc.php");
 
 class API {
 
@@ -34,16 +35,20 @@ class API {
 	public function get_JSON_from_GET(&$get_array, $object_parent_name="data"){
 		$query = $this->form_query($get_array);
 		if($this->check_API_key()){
-		 $this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, $object_parent_name, true);
-		 //only attempt to increment the api hit count if this method is called from a PUBLIC API request
-		 if($this->API_key_required){
-		 	$query = "SELECT API_hit_date FROM " . Database::$table . " WHERE API_key = '" . $this->API_key . "' LIMIT 1";
-		 	$result = Database::get_all_results($query);
-		 	//increments the hit count and/or hit date OR sets the error message if the key has reached its hit limit for the day
-		 	if($this->update_API_hits($this->API_key, $result['API_hit_date']) === false){
-		 	 $this->JSON_string = $this->get_error("API hit limit reached");
-		 	}
-		 }
+			if(isset($get_array['related_to']) && !empty($get_array['related_to'])){
+				$rel = new RelationalAlgorithm();
+				return $rel->get_related_users((int) $get_array['related_to']);
+			}
+			$this->JSON_string = $this->query_results_as_array_of_JSON_objs($query, $object_parent_name, true);
+			//only attempt to increment the api hit count if this method is called from a PUBLIC API request
+			if($this->API_key_required){
+				$query = "SELECT API_hit_date FROM " . Database::$table . " WHERE API_key = '" . $this->API_key . "' LIMIT 1";
+				$result = Database::get_all_results($query);
+				//increments the hit count and/or hit date OR sets the error message if the key has reached its hit limit for the day
+				if($this->update_API_hits($this->API_key, $result['API_hit_date']) === false){
+				 $this->JSON_string = $this->get_error("API hit limit reached");
+		   		}
+			 }
 		}
 		else $this->JSON_string = $this->get_error("API key is invalid or was not provided");
 		//if there was a search and it returned no results
@@ -76,6 +81,11 @@ class API {
 		//if no results were found return a JSON error obj
 		else $JSON_output_string = $this->get_error($this->no_results_message);
 		return iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($JSON_output_string)); //make sure all database results are UTF-
+	}
+
+	//outputs JSON error object with error message argument
+	public function get_error($error_message){
+		return "{\"error\": \"$error_message\"}";
 	}
 
 	//outputs JSON object from 1D or 2D MySQL results array
@@ -115,11 +125,6 @@ class API {
 		return $JSON_output_string;
 	}
 
-	//outputs JSON error object with error message argument
-	protected function get_error($error_message){
-		return "{\"error\": \"$error_message\"}";
-	}
-
 	//builds a dynamic MySQL query statement from a $_GET array. Array must be sanitized before using this function.
 	protected function form_query(&$get_array){
 
@@ -152,7 +157,7 @@ class API {
 				    $parameter == 'count_only' &&
 				    $value == true){
 				$count_only = true;
-			} 
+			}
 			else if($parameter == 'exclude') $exclude = explode(",", $value);
 			else if($parameter == 'key') $this->API_key = $value; 
 		}

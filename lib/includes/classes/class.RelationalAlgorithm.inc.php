@@ -31,18 +31,20 @@ class RelationalAlgorithm{
 
 	//returns a string of 10 most related users as an array of JSON objects wrapped in a related_users obj
 	public function get_related_users($user_id){
-		$all_related_users_obj = json_decode($this->get_related_users_raw_JSON($user_id)); 
-		if(!is_object($all_related_users_obj)) echo "NOT AN OBJECT";
-		$numb_columns_used = ($this->organizations_exist) ? 4 : 3; //technically if all columns are used there are 5 instead of four but later on in the algorithm we combine lat and lon into location
-		$this->numb_of_each_column_for_algorithm = floor($this->numb_related_users_per_page/$numb_columns_used);
-		if($this->organizations_exist) $most_organizations_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->organizations, $this->numb_of_each_column_for_algorithm);
-		$most_media_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->media, $this->numb_of_each_column_for_algorithm);
-		$most_tags_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->tags, $this->numb_of_each_column_for_algorithm);
-		$most_location_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->location, $this->numb_of_each_column_for_algorithm);
-		//echo "The locations search returned " . sizeof($most_location_ids) . " results <br/>";
-		//var_dump($all_related_users_obj->location) . "<br/>";
-		if(!$this->organizations_exist) $most_organizations_ids = NULL;
-		return $this->get_related_users_using_arrays_of_ids($most_media_ids, $most_tags_ids, $most_location_ids, $most_organizations_ids);
+		if ($this->user_id_exists($user_id)){
+			$all_related_users_obj = json_decode($this->get_related_users_raw_JSON($user_id)); 
+			if(!is_object($all_related_users_obj)) echo "NOT AN OBJECT";
+			$numb_columns_used = ($this->organizations_exist) ? 4 : 3; //technically if all columns are used there are 5 instead of four but later on in the algorithm we combine lat and lon into location
+			$this->numb_of_each_column_for_algorithm = floor($this->numb_related_users_per_page/$numb_columns_used);
+			if($this->organizations_exist) $most_organizations_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->organizations, $this->numb_of_each_column_for_algorithm);
+			$most_media_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->media, $this->numb_of_each_column_for_algorithm);
+			$most_tags_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->tags, $this->numb_of_each_column_for_algorithm);
+			$most_location_ids = $this->get_most_occuring_by_array_of_ids($all_related_users_obj->location, $this->numb_of_each_column_for_algorithm);
+			//echo "The locations search returned " . sizeof($most_location_ids) . " results <br/>";
+			//var_dump($all_related_users_obj->location) . "<br/>";
+			if(!$this->organizations_exist) $most_organizations_ids = NULL;
+			return $this->get_related_users_using_arrays_of_ids($most_media_ids, $most_tags_ids, $most_location_ids, $most_organizations_ids);
+		}else return $this->api->get_error("no users found with that id");
 	}
 
 	//combines the three arrays of most related users from the three columns included in the algorithm 
@@ -174,6 +176,13 @@ class RelationalAlgorithm{
 		$JSON_output_string = rtrim($JSON_output_string, ","); //remove last comma 
 		$JSON_output_string .= '],';
 		return $JSON_output_string;
+	}
+
+	//returns true if user_id exists in database and false if it does not.
+	//basically the same function as User::email_already_exists() but for an id
+	protected function user_id_exists($user_id){
+		$query = "SELECT id FROM " . Database::$table . " WHERE id='" . $user_id . "' LIMIT 1";
+		return (Database::get_all_results($query)) ? true: false; 
 	}
 }
 ?>
