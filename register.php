@@ -138,12 +138,13 @@
 
                 <fieldset class="full">
                     <label for="organization">Organizations (acronyms suggested)</label>
-                    <input type="text" id="organization" name="organizations" value="" />
+                    <input type="text" id="organization-text" value="" placeholder="Type to add organizations" autocomplete="off"/>
 
                     <div class="orgs">
-                        <span class="org"><a class="organization" href="#">MICA</a><a href="#">&times;</a></span>
-                        <span class="org"><a class="organization" href="#">SAIC</a><a href="#">&times;</a></span>
+
                     </div>
+
+                    <input type="hidden" id="organization" value="" class="autocomplete-output"/>
                 </fieldset>
 
                 <fieldset class="half">
@@ -164,5 +165,8 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
         <script src="js/main.js"></script>
+        <script type="text/javascript">
+            $("#organization-text").autoComplete();
+        </script>
     </body>
 </html>

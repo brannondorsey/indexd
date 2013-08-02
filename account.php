@@ -155,7 +155,7 @@ if(isset($_POST) && !empty($_POST)){
 
                 <fieldset class="full">
                     <label for="organization">Organizations (acronyms suggested)</label>
-                    <input type="text" id="organization-text" value="" placeholder="Type to add organizations"/>
+                    <input type="text" id="organization-text" value="" placeholder="Type to add organizations" autocomplete="off"/>
 
                     <div class="orgs">
                         <span class="org"><a class="organization" href="#">MICA</a><a href="#" class="remove">&times;</a></span>
@@ -219,20 +219,13 @@ if(isset($_POST) && !empty($_POST)){
             <h2>Badge</h2>
             <p>The indexd badge will allow you to link your website to your piece of the community. You can download a full suite of brand materials, just the file you want, or just copy and paste the link we've built for you.</p>
 
-            <pre>
-<code>&lt;a href="insert_account_url"&gt;&lt;img src="path_to_badge" /&gt;&lt;/a&gt;</code>
-            </pre>
-
             <input type="text" readonly value="&lt;a href='insert_account_url'&gt;&lt;img src='path_to_badge' /&gt;&lt;/a&gt;">
 
-
-
-            <p>Small</p>
-            <a href="img/indexd_badge_full_s.png" class="download-button">Full Color</a> <a href="img/indexd_badge_blue_s.png" class="download-button">Blue</a> <a href="img/indexd_badge_red_s.png" class="download-button">Red</a> <a href="img/indexd_badge_white_s.png" class="download-button">White</a>
-
-            <p>Large</p>
-            <a href="img/indexd_badge_full_l.png" class="download-button">Full Color</a> <a href="img/indexd_badge_blue_l.png" class="download-button">Blue</a> <a href="img/indexd_badge_red_l.png" class="download-button">Red</a> <a href="img/indexd_badge_white_l.png" class="download-button">White</a>
-
+            <p>Badge Image Downloads</p>
+            <span class="badge-button full-color"><span class="badge-preview"><img src="/img/indexd_badge_full_s.png" /></span><a href="/img/indexd_badge_full_l">Full Color</a></span>
+            <span class="badge-button blue-color"><span class="badge-preview"><img src="/img/indexd_badge_blue_s.png" /></span><a href="/img/indexd_badge_blue_l">Blue</a></span>
+            <span class="badge-button red-color"><span class="badge-preview"><img src="/img/indexd_badge_red_s.png" /></span><a href="/img/indexd_badge_red_l">Red</a></span>
+            <span class="badge-button white-color"><span class="badge-preview"><img src="/img/indexd_badge_white_s.png" /></span><a href="/img/indexd_badge_white_l">White</a></span>
            </section>
 
         <?php require_once("lib/includes/partials/footer.inc.php"); ?>
@@ -242,12 +235,7 @@ if(isset($_POST) && !empty($_POST)){
         <script src="js/jquery.tokeninput.js"></script>
         <script src="js/main.js"></script>
         <script type="text/javascript">
-            var completes = [
-                { "id" : "1", "name" : "MICA" },
-                { "id" : "2", "name" : "SAIC"}
-            ]
-
-            $("#organization-text").autoComplete(completes);
+            $("#organization-text").autoComplete();
         </script>
     </body>
 </html>

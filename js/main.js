@@ -123,6 +123,9 @@ $.fn.autoComplete = function(props) {
 
 			if(fieldset.find(".selected").length === 0) {
 				el.val(content);
+				if(key === 13) {
+					el.val("");
+				}
 			}
 		}
 

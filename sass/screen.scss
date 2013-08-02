@@ -9,6 +9,7 @@
 @import "variables";
 @import "fonts";
 @import "autocomplete";
+@import "badge";
 
 * {
 	@include box-sizing(border-box);
@@ -317,65 +318,81 @@ a {
 form {
 	@include pie-clearfix;
 	margin-bottom: 2em;
-	fieldset {
-		float: left;
-		margin-top: 1em;
-		&.half {
-			width: 50%;
-			&:nth-of-type(even) {
-				padding-left: 1em;
-			}
+}
 
-			&:nth-of-type(odd) {
-				padding-right: 1em;
-			}
+input[type="text"], input[type="email"], input[type="password"], textarea {
+	@extend %default-text-style;
+	background-color: $_gray;
+	border: 1px solid shade($_gray, 10%);
+	padding: .55em;
+}
 
-			
-
-			&.no-label {
-				margin-top: 2.4em;
-			}
+input, textarea {
+	&:focus {
+		box-shadow: none;
+		appearance: none;
+		border: 1px solid shade($_gray, 10%);
+		outline: none;
+	}
+}
+fieldset {
+	float: left;
+	margin-top: 1em;
+	&.half {
+		width: 50%;
+		&:nth-of-type(even) {
+			padding-left: 1em;
 		}
 
-		#char-count {
-			color: $_lightBlue;
-			float: right;
-			display: inline-block;
-
-			&.under10 {
-				color: $_black;
-			}
-
-			&.negative {
-				color: $_red;
-			}
+		&:nth-of-type(odd) {
+			padding-right: 1em;
 		}
 
-		&.full {
-			width: 100%;
-			position: relative;
+		
+
+		&.no-label {
+			margin-top: 2.4em;
+		}
+	}
+
+	#char-count {
+		color: $_lightBlue;
+		float: right;
+		display: inline-block;
+
+		&.under10 {
+			color: $_black;
 		}
 
-		input[type="text"], input[type="email"], input[type="password"], textarea {
-			@extend %default-text-style;
+		&.negative {
+			color: $_red;
+		}
+	}
 
-			width: 100%;
-			background-color: $_gray;
+	&.full {
+		width: 100%;
+		position: relative;
+	}
+
+	input[type="text"], input[type="email"], input[type="password"], textarea {
+		@extend %default-text-style;
+
+		width: 100%;
+		background-color: $_gray;
+		border: 1px solid shade($_gray, 10%);
+		padding: .55em;
+	}
+
+	input, textarea {
+		&:focus {
+			box-shadow: none;
+			appearance: none;
 			border: 1px solid shade($_gray, 10%);
-			padding: .55em;
+			outline: none;
 		}
-
-		input, textarea {
-			&:focus {
-				box-shadow: none;
-				appearance: none;
-				border: 1px solid shade($_gray, 10%);
-				outline: none;
-			}
-		}
-		textarea {
-			resize: none;
-		}
+	}
+	textarea {
+		resize: none;
 	}
 }
 
@@ -604,27 +621,13 @@ label {
 	overflow: hidden;
 }
 
-.badge-info {
-	pre {
-		font-family: Monaco, Courier Prime, courier new, courier, monospace;
-		background-color: $_gray;
-		font-size: .8em;
-		padding: .1em;
-		border-radius: 2px;
-		display: inline;
-		code {
-			display: inline;
-		}
+.badge-section {
+	input {
+		margin: 1em 0 2em;
+		width: 100%;
 	}
-
-	.badge-demo-container {
-		.badge {
-			display: inline-block;
-			width: 100px;
-			&.dark {
-				background-color: $_black;
-			}
-		}
+	p {
+		margin-bottom: 1em;
 	}
 }
 

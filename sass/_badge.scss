@@ -1,0 +1,52 @@
+@import "variables";
+
+.badge-button {
+	display: inline-block;
+	border-radius: 0px;
+	overflow: hidden;
+	margin-right: 1em;
+	span, a {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	span {
+		padding: .5em .5em .2em;
+		background-color: tint($_black, 20%);
+	}
+
+	a {
+		@include transition(background-color .15s ease);
+		padding: 1em;
+		background-color: $_red;
+		color: $_white;
+		&:hover {
+			background-color: $_darkRed;
+			color: $_white;
+		}
+	}
+
+	/*
+	&.full-color {
+		span.badge-preview {
+			background-color: $_black;
+		}
+	}
+	&.blue-color {
+		span.badge-preview {
+			background-color: $_red;
+		}
+	}
+
+	&.red-color {
+		span.badge-preview {
+			background-color: $_black;
+		}
+	}
+	&.white-color {
+		span.badge-preview {
+			background-color: $_black;
+		}
+	}
+	*/
+}
