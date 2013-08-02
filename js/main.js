@@ -17,25 +17,142 @@ jQuery.fn.animateAuto = function(prop, speed, callback){
 
 $.fn.autoComplete = function(props) {
 	return this.each(function (i, el) {
-		el = $(el);
-		fieldset = el.closest("fieldset");
-		hidden = fieldset.find(".autocomplete-output");
+		var el = $(el);
+		var fieldset = el.closest("fieldset");
+		var hidden = fieldset.find(".autocomplete-output");
+		var orgs = fieldset.find(".orgs");
 
 		function addToHidden() {
 			fieldset.find(".org .organization").each(function(i) {
-				console.log("hello");
-				val = hidden.attr("value");
-				console.log(val);
-				console.log($(this).text())
-				hidden.attr("value", val + ", " + $(this).text());
+				var val = hidden.attr("value");
+				if(i != 0) {
+					hidden.attr("value", val + ", " + $(this).text());
+				} else {
+					hidden.attr("value", $(this).text());
+				}
 			});
 		}
 
-		addToHidden();
+		function listenForRemoval() {
+			fieldset.find(".remove").click(function(e) {
+				e.preventDefault();
+				var parent = $(this).closest(".org");
+				parent.remove();
+				addToHidden();
+			});
+			addToHidden();
+		}
 
-		el.on("keyup", function() {
+		function addOrg(org) {
+			var wrapper = $("<span />").addClass("org");
+			var title = $("<a />").attr("href", "#").addClass("organization").text(org);
+			var close = $("<a />").attr("href", "#").addClass("remove").text("×");
 
-		});
+			title.appendTo(wrapper);
+			close.appendTo(wrapper);
+			wrapper.appendTo(orgs);
+
+			addToHidden();
+			listenForRemoval();
+		}
+
+		function listenForSelection() {
+			fieldset.find(".autocomplete-results a").click(function(e) {
+				e.preventDefault();
+				org = $(this).text();
+				addOrg(org);
+				closeAutocomplete();
+				el.val("");
+			})
+		}
+
+		function listenForHover() {
+			$(".autocomplete-results li").on("mouseenter", function(e) {
+				$(this).closest(".autocomplete-results").find(".selected").removeClass("selected");
+				$(this).addClass("selected");
+			})
+		}
+
+		function closeAutocomplete() {
+			if(fieldset.find(".autocomplete-results")) {
+				fieldset.find(".autocomplete-results").remove();
+			}
+		}
+
+		function insertData(data) {
+			fieldset.find(".autocomplete-results").remove();
+			var ul = $("<ul />").addClass("autocomplete-results");
+			for(var i=0; i < data.length; i+=1) {
+				var result = data[i];
+				var li = $("<li />");
+				var a = $("<a />").attr("href", "#").text(result);
+				a.appendTo(li);
+				li.appendTo(ul);
+			}
+
+			ul.insertAfter(el);
+
+			listenForSelection();
+		}
+
+		function arrowKeyActions(key) {
+			if(key === 40) {
+				if(fieldset.find(".autocomplete-results li.selected").length != 0) {
+					fieldset.find(".autocomplete-results li.selected").removeClass("selected").next("li").addClass("selected");
+				} else {
+					fieldset.find(".autocomplete-results li").eq(0).addClass("selected");
+				}
+			} else if (key === 38) {
+				if(fieldset.find(".autocomplete-results li.selected").length != 0) {
+					fieldset.find(".autocomplete-results li.selected").removeClass("selected").prev("li").addClass("selected");
+				}
+			} else if (key === 13) {
+				console.log("this worked");
+				if (fieldset.find(".autocomplete-results li.selected").length != 0) {
+					fieldset.find(".autocomplete-results li.selected a").click();
+				}
+			}
+		}
+
+		function initialize() {
+
+			listenForRemoval();
+
+			el.on("keyup", function(e) {
+
+				var _this = $(this);
+				var content = $(this).val();
+
+				if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13) {
+					e.preventDefault();
+					return false;
+				}
+
+				if (content != "") {
+					// AJAX call to api page
+					var req = $.ajax({
+						url : "/api/organization_list.php?chars=" + content,
+						success : function(data) {
+							var contents = $.parseJSON(data);
+							var items = contents.data
+							insertData(items);
+							listenForHover();
+						}
+					});
+				} else {
+					closeAutocomplete();
+				}
+			});
+
+			el.on("keydown", function(e) {
+				if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13) {
+					e.preventDefault();
+					arrowKeyActions(e.keyCode);
+				}
+			})
+		}
+
+		initialize();
 	});
 }
 

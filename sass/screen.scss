@@ -5,8 +5,10 @@
 
 @import "compass/reset";
 @import "compass/css3";
+@import "compass/utilities/general/clearfix";
 @import "variables";
 @import "fonts";
+@import "autocomplete";
 
 * {
 	@include box-sizing(border-box);
@@ -113,7 +115,7 @@
 }
 
 %responsive-block {
-	overflow: hidden;
+	@include pie-clearfix;
 	min-width: 600px;
 
 	@media all and (min-width: 900px) {
@@ -312,7 +314,7 @@ a {
 // FORM STYLES 
 
 form {
-	overflow: hidden;
+	@include pie-clearfix;
 	margin-bottom: 2em;
 	fieldset {
 		float: left;
@@ -350,7 +352,7 @@ form {
 
 		&.full {
 			width: 100%;
-			float: left;
+			position: relative;
 		}
 
 		input[type="text"], input[type="email"], input[type="password"], textarea {
@@ -578,7 +580,7 @@ label {
 
 #registration {
 	margin-bottom: 2em;
-	overflow: hidden;
+	@include pie-clearfix;
 }
 
 .login-page {
@@ -641,6 +643,7 @@ label {
 	padding: .5em;
 	background-color: $_black;
 	color: $_white;
+	margin-right: .5em;
 	a {
 		padding: 0 .5em;
 		color: $_white;

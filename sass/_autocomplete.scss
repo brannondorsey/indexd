@@ -1,0 +1,41 @@
+@import "variables";
+
+@-webkit-keyframes flash {
+	0% {
+		background: $_black;
+	}
+
+	50% {
+		background: tint($_black, 30%);
+	}
+
+	100% {
+		background: $_black;
+	}
+}
+
+.autocomplete-results {
+	position: absolute;
+	width: 100%;
+	background: $_gray;
+	margin-top: -2px;
+	border-top: 1px solid shade($_gray, 10%);
+	li {
+		border: 1px solid shade($_gray, 10%);
+		border-top: none;
+
+		&.selected a {
+			background: shade($_gray, 10%);
+			color: $_black;
+		}
+
+		a {
+			display: block;
+			padding: .2em .8em;
+		}
+	}
+}
+
+.org {
+	-webkit-animation: flash 1s;
+}
