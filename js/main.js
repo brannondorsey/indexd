@@ -21,6 +21,7 @@ $.fn.autoComplete = function(props) {
 		var fieldset = el.closest("fieldset");
 		var hidden = fieldset.find(".autocomplete-output");
 		var orgs = fieldset.find(".orgs");
+		var content;
 
 		function addToHidden() {
 			fieldset.find(".org .organization").each(function(i) {
@@ -52,8 +53,10 @@ $.fn.autoComplete = function(props) {
 			close.appendTo(wrapper);
 			wrapper.appendTo(orgs);
 
+			closeAutocomplete();
 			addToHidden();
 			listenForRemoval();
+			el.val("");
 		}
 
 		function listenForSelection() {
@@ -99,18 +102,27 @@ $.fn.autoComplete = function(props) {
 			if(key === 40) {
 				if(fieldset.find(".autocomplete-results li.selected").length != 0) {
 					fieldset.find(".autocomplete-results li.selected").removeClass("selected").next("li").addClass("selected");
+					el.val(fieldset.find(".selected a").text());
 				} else {
 					fieldset.find(".autocomplete-results li").eq(0).addClass("selected");
+					el.val(fieldset.find(".selected a").text());
 				}
 			} else if (key === 38) {
 				if(fieldset.find(".autocomplete-results li.selected").length != 0) {
 					fieldset.find(".autocomplete-results li.selected").removeClass("selected").prev("li").addClass("selected");
+					el.val(fieldset.find(".selected a").text());
 				}
 			} else if (key === 13) {
 				console.log("this worked");
 				if (fieldset.find(".autocomplete-results li.selected").length != 0) {
 					fieldset.find(".autocomplete-results li.selected a").click();
+				} else {
+					addOrg(el.val());
 				}
+			}
+
+			if(fieldset.find(".selected").length === 0) {
+				el.val(content);
 			}
 		}
 
@@ -121,11 +133,12 @@ $.fn.autoComplete = function(props) {
 			el.on("keyup", function(e) {
 
 				var _this = $(this);
-				var content = $(this).val();
 
 				if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13) {
 					e.preventDefault();
 					return false;
+				} else {
+					content = $(this).val();
 				}
 
 				if (content != "") {

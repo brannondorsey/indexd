@@ -177,6 +177,7 @@ a {
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 999;
 
 	a.home-button {
 		float: left;
@@ -371,6 +372,9 @@ form {
 				border: 1px solid shade($_gray, 10%);
 				outline: none;
 			}
+		}
+		textarea {
+			resize: none;
 		}
 	}
 }
