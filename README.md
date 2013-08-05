@@ -1,10 +1,11 @@
 #Indexd.io
 
-<img src="github_images/screenshot_1.png" style="border: 1px solid #757575">
+![Screenshot 1](github_images/screenshot_1.png)
 
-<img src="github_images/screenshot_2.png" style="border: 1px solid #757575">
+![Screenshot 2](github_images/screenshot_2.png)
 
-<img src="github_images/screenshot_3.png" style="border: 1px solid #757575">
+![Screenshot 3](github_images/screenshot_3.png)
+
 
 ##Abstract
 Indexd is an open sourced web development project that aims to archive and connect an extensive collection of independent artists websites. The project intends to give independent artist's websites the same virality perks that artists have access to when they host their websites through large web conglomerates like Cargo Collective, Carbonmade, Behance, and Wordpress. We hope to create an attractive and powerful database to explore unique homemade websites.
