@@ -175,7 +175,7 @@ if(isset($_POST) && !empty($_POST)){
                     <span class="return-prompt">&crarr;</span>
                     <div class="orgs">
                         <?php 
-                        if(isset($org_array)){
+                        if(isset($org_array) && $org_array[0] != ""){
                             foreach($org_array as $organization) { ?>
                         <span class="org"><a class="organization" href="#"><?php echo $organization ?></a><a href="#" class="remove">&times;</a></span>
                         <?php }
