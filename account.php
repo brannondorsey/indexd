@@ -5,14 +5,16 @@ require_once("lib/includes/classes/class.User.inc.php");
 require_once("lib/includes/classes/class.Session.inc.php");
 require_once("lib/includes/classes/class.Validator.inc.php");
 require_once("lib/includes/classes/class.ContentOutput.inc.php");
+require_once("lib/includes/classes/class.OrganizationAutocomplete.inc.php");
 
 Session::start();
 $api = new PrivateAPI();
 $user = new User();
 if (!$user->is_signed_in()) header('Location: login.php');
 else $user->load_data();
-$org_array = ContentOutput::commas_to_list($user->data->organizations);
+
 if(isset($_POST) && !empty($_POST)){
+    //var_dump($_POST);
     Database::init_connection();
     $validator = new Validation();
     $post_array = Database::clean($_POST);
@@ -65,11 +67,22 @@ if(isset($_POST) && !empty($_POST)){
                 }
             }
 
+            //submits new organizations to organizations list table
+            if($user->data->organizations != $post_array['organizations']){
+                $autocomplete = new OrganizationAutocomplete();
+                if($autocomplete->add_list_to_organization_table($post_array['organizations']) === false){
+                    echo "something went wrong";
+                }
+            }
+
             //reloads the session vars because they were updated
             $user_data_obj = $user->get_user_data_obj($user->data->id);
             $user_properties = get_object_vars($user_data_obj);
             Session::add_session_vars($user_properties);
             $user->load_data();
+
+            //re-loads the new organization list
+            if(isset($user->data->organizations)) $org_array = ContentOutput::commas_to_list($user->data->organizations);
             }
         }
 }
@@ -161,9 +174,12 @@ if(isset($_POST) && !empty($_POST)){
                     <input type="text" id="organization-text" value="" placeholder="Type to add organizations" autocomplete="off"/>
                     <span class="return-prompt">&crarr;</span>
                     <div class="orgs">
-                        <?php foreach($org_array as $organization) { ?>
+                        <?php 
+                        if(isset($org_array)){
+                            foreach($org_array as $organization) { ?>
                         <span class="org"><a class="organization" href="#"><?php echo $organization ?></a><a href="#" class="remove">&times;</a></span>
-                        <?php } ?>
+                        <?php }
+                        } ?>
                     </div>
 
                     <input type="hidden" id="organization" name="organizations" value="" class="autocomplete-output"/>

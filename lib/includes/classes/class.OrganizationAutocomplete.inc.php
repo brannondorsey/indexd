@@ -19,7 +19,7 @@ class OrganizationAutocomplete {
 	//returns false on failure
 	public function add_list_to_organization_table($organizations_list){
 		$query = "SELECT organization FROM " . Database::$organization_table;
-		if($organization_list = Databse::get_results_as_numerical_array($query, "organization")){
+		if($organization_list = Database::get_results_as_numerical_array($query, "organization")){
 			$organizations = ContentOutput::commas_to_list($organizations_list);
 			foreach($organizations as $organization){
 				if(!in_array($organization, $organization_list)) $this->add_organization($organization);

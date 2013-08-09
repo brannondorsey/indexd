@@ -2,11 +2,54 @@
     require_once("lib/includes/classes/class.PrivateAPI.inc.php");
     require_once("lib/includes/classes/class.User.inc.php");
     require_once("lib/includes/classes/class.Session.inc.php");
+    require_once("lib/includes/classes/class.OrganizationAutocomplete.inc.php");
+    require_once 'lib/includes/classes/class.Validator.inc.php'; 
 
     Session::start();
     $api = new PrivateAPI();
     $user = new User();
     if($user->is_signed_in()) $user->sign_out(); //don't let a signed in user register
+    
+    if(isset($_POST['first_name'])) {
+        $failed_zip_msg = false;
+        $validator = new Validation();
+        $validator->addSource($_POST);
+        $validator->addRules($validator->registration_rules);
+        $validator->matchPasswords();
+        $validator->run();
+ 
+        if(sizeof($validator->errors) > 0) {
+            //var_dump($validator->errors);
+        } else {
+            //register the user
+            Database::init_connection();
+            $_POST['url'] = $validator->processURLString($_POST['url']);
+            $post_array = Database::clean($_POST);
+            $post_array['country'] = "us"; //add country manually for now
+            unset($post_array['password_conf']); //unset the password confirmation because we don't need it
+
+            //submits new organizations to organizations list table
+            if(isset($post_array['organizations'])){
+                //var_dump($post_array['organizations']);
+                $autocomplete = new OrganizationAutocomplete();
+                $autocomplete->add_list_to_organization_table($post_array['organizations']);
+            }
+            
+            $registration = $user->register($post_array);
+            if($registration){
+                //registration success
+                header("Location: login.php?from_registration=true");
+
+            }else if($registration  === "ZIP_LOOKUP_FAILED"){
+                $failed_msg = "Zip lookup failed";
+            }else{
+                $failed_msg = "Something went wrong, please try again later.";
+            }
+            Database::close_connection();
+        }
+
+    }
+            
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -24,55 +67,16 @@
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     </head>
     <body>
-
-        <?php require_once 'lib/includes/classes/class.Validator.inc.php'; 
-    
-            if(isset($_POST['first_name'])) {
-                $failed_zip_msg = false;
-                $validator = new Validation();
-                $validator->addSource($_POST);
-                $validator->addRules($validator->registration_rules);
-                $validator->matchPasswords();
-                $validator->run();
-
-                if(sizeof($validator->errors) > 0) {
-                    //var_dump($validator->errors);
-                } else {
-                    //register the user
-                    Database::init_connection();
-                    $_POST['url'] = $validator->processURLString($_POST['url']);
-                    $post_array = Database::clean($_POST);
-                    $post_array['country'] = "us"; //add country manually for now
-                    unset($post_array['password_conf']); //unset the password confirmation because we don't need it
-                    $registration = $user->register($post_array);
-                    if($registration){
-                        //registration success
-                        header("Location: login.php?from_registration=true");
-
-                    }else if($registration  === "ZIP_LOOKUP_FAILED"){
-                        $failed_msg = "Zip lookup failed";
-                    }else{
-                        $failed_msg = "Oops, something went wrong, please try again later.";
-                    }
-                    Database::close_connection();
-                }
-
-            }
-            
-        ?>
-        
         <?php require_once("lib/includes/partials/header.inc.php"); ?>
-
         <section class="register-user">
             <h2>Register</h2>
 
             <?php 
             if (isset($validator)) {
                 if (sizeof($validator->errors) > 0) {
-                    echo "<p>Oops, there were some errors with your submission. Please fix them and try again.</p>";
-                    
+                    echo "<p>Oops, there were some errors with your submission. Please fix them and try again.</p>"; 
                 }
-                if ($failed_msg != false) {
+                if (isset($failed_msg)) {
                     echo "<p>".$failed_msg."</p>";
                 }
             }
@@ -147,7 +151,7 @@
 
                     </div>
 
-                    <input type="hidden" id="organization" value="" class="autocomplete-output"/>
+                    <input type="hidden" id="organization" name="organizations" value="" class="autocomplete-output"/>
                 </fieldset>
 
                 <fieldset class="half">
