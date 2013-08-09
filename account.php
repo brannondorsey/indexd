@@ -4,16 +4,19 @@ require_once("lib/includes/classes/class.PrivateAPI.inc.php");
 require_once("lib/includes/classes/class.User.inc.php");
 require_once("lib/includes/classes/class.Session.inc.php");
 require_once("lib/includes/classes/class.Validator.inc.php");
+require_once("lib/includes/classes/class.ContentOutput.inc.php");
 
 Session::start();
 $api = new PrivateAPI();
 $user = new User();
 if (!$user->is_signed_in()) header('Location: login.php');
 else $user->load_data();
+$org_array = ContentOutput::commas_to_list($user->data->organizations);
 if(isset($_POST) && !empty($_POST)){
     Database::init_connection();
     $validator = new Validation();
     $post_array = Database::clean($_POST);
+
     //if POST is coming from the change password form
     if(isset($post_array['new_password'])){
         $rules = array(
@@ -158,11 +161,12 @@ if(isset($_POST) && !empty($_POST)){
                     <input type="text" id="organization-text" value="" placeholder="Type to add organizations" autocomplete="off"/>
                     <span class="return-prompt">&crarr;</span>
                     <div class="orgs">
-                        <span class="org"><a class="organization" href="#">MICA</a><a href="#" class="remove">&times;</a></span>
-                        <span class="org"><a class="organization" href="#">SAIC</a><a href="#" class="remove">&times;</a></span>
+                        <?php foreach($org_array as $organization) { ?>
+                        <span class="org"><a class="organization" href="#"><?php echo $organization ?></a><a href="#" class="remove">&times;</a></span>
+                        <?php } ?>
                     </div>
 
-                    <input type="hidden" id="organization" value="" class="autocomplete-output"/>
+                    <input type="hidden" id="organization" name="organizations" value="" class="autocomplete-output"/>
                 </fieldset>
 
                 <fieldset class="half">
