@@ -677,6 +677,35 @@ code {
 	font-size: .8em;
 }
 
+.bookmark {
+	@extend %icon;
+	@include transition(background .15s ease);
+	float: right;
+	padding: .5em;
+	cursor: pointer;
+	border-radius: 50%;
+	margin-top: .3em;
+	color: $_white;
+
+	&.true {
+		background-color: $_red;
+
+		&:hover {
+			color: $_white;
+			background-color: $_darkRed;
+		}
+	}
+
+	&.false {
+		background-color: $_gray;
+
+		&:hover {
+			color: $_white;
+			background-color: mix($_gray, $_red, 50%)
+		}
+	}
+}
+
 // FOOTER STYLES
 
 footer {

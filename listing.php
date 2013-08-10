@@ -34,6 +34,7 @@
         <section class="listings">
             <section class="query">
                 <div class="profile">
+                    <a class="bookmark false">b</a>
                     <h2><?php echo $profile_data->first_name . " " . $profile_data->last_name; ?></h2>
                     <div class="media">
                     <?php 

@@ -127,7 +127,7 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 53, ../sass/_fonts.scss */
-.search-button, .pagination .prev, .pagination .next {
+.search-button, .pagination .prev, .pagination .next, .bookmark {
   font-family: 'icomoon' !important;
   speak: none !important;
   font-style: normal !important;
@@ -925,28 +925,60 @@ code {
   font-size: .8em;
 }
 
-/* line 682, ../sass/screen.scss */
+/* line 680, ../sass/screen.scss */
+.bookmark {
+  -webkit-transition: background 0.15s ease;
+  -moz-transition: background 0.15s ease;
+  -o-transition: background 0.15s ease;
+  transition: background 0.15s ease;
+  float: right;
+  padding: .5em;
+  cursor: pointer;
+  border-radius: 50%;
+  margin-top: .3em;
+  color: white;
+}
+/* line 690, ../sass/screen.scss */
+.bookmark.true {
+  background-color: #ef7878;
+}
+/* line 693, ../sass/screen.scss */
+.bookmark.true:hover {
+  color: white;
+  background-color: #c96767;
+}
+/* line 699, ../sass/screen.scss */
+.bookmark.false {
+  background-color: #ebeced;
+}
+/* line 702, ../sass/screen.scss */
+.bookmark.false:hover {
+  color: white;
+  background-color: #edb2b2;
+}
+
+/* line 711, ../sass/screen.scss */
 footer {
   background-color: #ef7878;
   padding: 3em;
   margin-top: 3em;
 }
-/* line 686, ../sass/screen.scss */
+/* line 715, ../sass/screen.scss */
 footer img {
   display: block;
   margin: auto;
 }
-/* line 691, ../sass/screen.scss */
+/* line 720, ../sass/screen.scss */
 footer .footer-button {
   color: #1d5b89;
   text-decoration: none;
   margin: 0 1em;
 }
-/* line 696, ../sass/screen.scss */
+/* line 725, ../sass/screen.scss */
 footer .footer-button:hover {
   border-bottom: 1px solid #1d5b89;
 }
-/* line 701, ../sass/screen.scss */
+/* line 730, ../sass/screen.scss */
 footer .footer-nav {
   text-align: center;
   margin-bottom: 2em;
