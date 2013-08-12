@@ -2,7 +2,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 17, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,45 +24,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -127,7 +127,7 @@ you can use the generic selector below, but it's slower:
 }
 
 /* line 53, ../sass/_fonts.scss */
-.search-button, .pagination .prev, .pagination .next, .bookmark {
+.search-button, .pagination .prev, .pagination .next, input[type="submit"].bookmark {
   font-family: 'icomoon' !important;
   speak: none !important;
   font-style: normal !important;
@@ -338,7 +338,7 @@ body, input[type="text"], input[type="email"], input[type="password"], textarea,
   *zoom: 1;
   min-width: 600px;
 }
-/* line 38, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+/* line 38, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
 .query:after, .result:after, .brand:after, .about:after, .pagination .pagination-container:after, .register-user:after, .login-page:after, .account-settings:after, .change-password:after, .badge-section:after {
   content: "";
   display: table;
@@ -584,7 +584,7 @@ form {
   *zoom: 1;
   margin-bottom: 2em;
 }
-/* line 38, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+/* line 38, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
 form:after {
   content: "";
   display: table;
@@ -862,7 +862,7 @@ label {
   margin-bottom: 2em;
   *zoom: 1;
 }
-/* line 38, ../../../.rvm/gems/ruby-1.9.3-p286@development/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+/* line 38, ../../../.rvm/gems/ruby-1.9.3-p286@jekyll/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
 #registration:after {
   content: "";
   display: table;
@@ -926,59 +926,64 @@ code {
 }
 
 /* line 680, ../sass/screen.scss */
-.bookmark {
+#bookmark-form {
+  display: inline;
+  float: right;
+}
+
+/* line 685, ../sass/screen.scss */
+input[type="submit"].bookmark {
   -webkit-transition: background 0.15s ease;
   -moz-transition: background 0.15s ease;
   -o-transition: background 0.15s ease;
   transition: background 0.15s ease;
-  float: right;
   padding: .5em;
   cursor: pointer;
   border-radius: 50%;
   margin-top: .3em;
   color: white;
 }
-/* line 690, ../sass/screen.scss */
-.bookmark.true {
+/* line 694, ../sass/screen.scss */
+input[type="submit"].bookmark.true {
   background-color: #ef7878;
 }
-/* line 693, ../sass/screen.scss */
-.bookmark.true:hover {
+/* line 697, ../sass/screen.scss */
+input[type="submit"].bookmark.true:hover {
   color: white;
   background-color: #c96767;
 }
-/* line 699, ../sass/screen.scss */
-.bookmark.false {
+/* line 703, ../sass/screen.scss */
+input[type="submit"].bookmark.false {
   background-color: #ebeced;
 }
-/* line 702, ../sass/screen.scss */
-.bookmark.false:hover {
+/* line 706, ../sass/screen.scss */
+input[type="submit"].bookmark.false:hover {
   color: white;
   background-color: #edb2b2;
 }
 
-/* line 711, ../sass/screen.scss */
+/* line 715, ../sass/screen.scss */
 footer {
   background-color: #ef7878;
   padding: 3em;
   margin-top: 3em;
 }
-/* line 715, ../sass/screen.scss */
+/* line 719, ../sass/screen.scss */
 footer img {
   display: block;
   margin: auto;
 }
-/* line 720, ../sass/screen.scss */
+/* line 724, ../sass/screen.scss */
 footer .footer-button {
   color: #1d5b89;
   text-decoration: none;
   margin: 0 1em;
 }
-/* line 725, ../sass/screen.scss */
+/* line 729, ../sass/screen.scss */
 footer .footer-button:hover {
   border-bottom: 1px solid #1d5b89;
 }
-/* line 730, ../sass/screen.scss */
+/* line 734, ../sass/screen.scss */
 footer .footer-nav {
   text-align: center;
   margin-bottom: 2em;

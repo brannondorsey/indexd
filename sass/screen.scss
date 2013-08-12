@@ -677,10 +677,14 @@ code {
 	font-size: .8em;
 }
 
-.bookmark {
+#bookmark-form {
+	display: inline;
+	float: right;
+}
+
+input[type="submit"].bookmark {
 	@extend %icon;
 	@include transition(background .15s ease);
-	float: right;
 	padding: .5em;
 	cursor: pointer;
 	border-radius: 50%;
