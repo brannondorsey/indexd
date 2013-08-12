@@ -2,7 +2,6 @@
 - __Add Account page w/ editable profile page and badge stuff -Kevin Zweerink__ *****
 - Working front end organizations input forms ****
 - BUG. Cannot sign out after having just changed password from the account page.****
-- add front end form validation on sign in page and "email already exists" message on registration page. see includes/email_exists_test.php **** 
 - Add International Support ***
 - Implement bookmarks ***
 - add logo favicon ***
@@ -25,6 +24,7 @@
 
 ##Completed
 
+- add front end form validation on sign in page and "email already exists" message on registration page. see includes/email_exists_test.php **** 
 - handle front end zip lookup fails ***
 - Front end bookmark icons (that are actually single input form submit buttons) ****
 - Search relevancy recursion
