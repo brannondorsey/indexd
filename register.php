@@ -34,13 +34,18 @@
                 $autocomplete = new OrganizationAutocomplete();
                 $autocomplete->add_list_to_organization_table($post_array['organizations']);
             }
-            
-            $registration = $user->register($post_array);
-            if($registration){
+            //Kevin added this to check for the email set, couldn't tell whether it was being checked in the user class itself but looked like it probably wasn't
+            //feel free to rearrange this code.
+            if(!$user->email_already_exists($_POST['email'])) {
+                $registration = $user->register($post_array);
+            } else {
+                $email_fail = "Looks like that e-mail address is already in use. Did you forget your password?";
+            }
+            if(isset($registration) && $registration != false){
                 //registration success
                 header("Location: login.php?from_registration=true");
 
-            }else if($registration  === "ZIP_LOOKUP_FAILED"){
+            }else if(isset($registration) && $registration  === "ZIP_LOOKUP_FAILED"){
                 $failed_msg = "Zip lookup failed";
             }else{
                 $failed_msg = "Something went wrong, please try again later.";
@@ -79,6 +84,9 @@
                 if (isset($failed_msg)) {
                     echo "<p>".$failed_msg."</p>";
                 }
+                if (isset($email_fail)) {
+                    echo "<p>".$email_fail."</p>";
+                }
             }
 
             ?>
@@ -88,33 +96,33 @@
                     <label for="first-name">First Name<?php echo (isset($validator->errors['first_name']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="first-name" name="first_name" value="<?php 
                        echo (isset($_POST['first_name']) ? $_POST['first_name'] : '');
-                    ?>" placeholder="John"/>
+                    ?>" placeholder="John" class="<?php echo (isset($validator->errors['first_name']) ? 'invalid' : ''); ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="last-name">Last Name<?php echo (isset($validator->errors['last_name']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="last-name" name="last_name" value="<?php 
                         echo (isset($_POST['last_name']) ? $_POST['last_name'] : '');
-                    ?>" placeholder="Doe"/>
+                    ?>" placeholder="Doe" class="<?php echo (isset($validator->errors['last_name']) ? 'invalid' : ''); ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="email">Email<?php echo (isset($validator->errors['email']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="email" id="email" name="email" value="<?php 
                         echo (isset($_POST['email']) ? $_POST['email'] : '');
-                    ?>" placeholder="johndoe@gmail.com"/>
+                    ?>" placeholder="johndoe@gmail.com" class="<?php echo (isset($validator->errors['email']) || isset($email_fail) ? 'invalid' : ''); ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="url">Website<?php echo (isset($validator->errors['url']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="url" name="url" value="<?php 
                         echo (isset($_POST['url']) ? $_POST['url'] : '');
-                    ?>" placeholder="www.johndoe.com"/>
+                    ?>" placeholder="www.johndoe.com" class="<?php echo (isset($validator->errors['url']) ? 'invalid' : ''); ?>"/>
                 </fieldset>
 
                 <fieldset class="half">
                     <label for="password">Password (twice)<?php echo ((isset($validator->errors['password']) || isset($validator->errors['password_conf'])) ? '<span class="form-error">*</span>' : ''); ?></label>
-                    <input type="password" id="password" name="password"/>
+                    <input type="password" id="password" name="password" class="<?php echo (isset($validator->errors['password']) ? 'invalid' : ''); ?>"/>
                 </fieldset>
 
                 <fieldset class="half no-label">
@@ -124,7 +132,7 @@
                 <fieldset class="full">
                     <label for="description">Description<?php echo (isset($validator->errors['description']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <span id="char-count">140</span>
-                    <textarea id="description" name="description" placeholder="What are you into?"><?php 
+                    <textarea id="description" name="description" placeholder="What are you into?" class="<?php echo (isset($validator->errors['description']) ? 'invalid' : ''); ?>"><?php 
                         echo (isset($_POST['description']) ? $_POST['description'] : '');
                     ?></textarea>
                 </fieldset>
@@ -133,14 +141,14 @@
                     <label for="media">Media<?php echo (isset($validator->errors['media']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="media" name="media" value="<?php 
                         echo (isset($_POST['media']) ? $_POST['media'] : '');
-                    ?>" placeholder="e.g. Painting, Design, Sculpture, Etc."/>
+                    ?>" placeholder="e.g. Painting, Design, Sculpture, Etc." class="<?php echo (isset($validator->errors['media']) ? 'invalid' : ''); ?>"/>
                 </fieldset>
 
                 <fieldset class="full">
                     <label for="tags">Tags<?php echo (isset($validator->errors['tags']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="tags" name="tags" value="<?php 
                         echo (isset($_POST['tags']) ? $_POST['tags'] : '');
-                    ?>" placeholder="e.g. photorealism, print, large-format, etc."/>
+                    ?>" placeholder="e.g. photorealism, print, large-format, etc." class="<?php echo (isset($validator->errors['tags']) ? 'invalid' : ''); ?>"/>
                 </fieldset>
 
                 <fieldset class="full">
@@ -158,7 +166,7 @@
                     <label for="zip">Zip/Postal Code<?php echo (isset($validator->errors['zip']) ? '<span class="form-error">*</span>' : ''); ?></label>
                     <input type="text" id="zip" name="zip" value="<?php 
                         echo (isset($_POST['zip']) ? $_POST['zip'] : '');
-                    ?>"/>
+                    ?>" class="<?php echo (isset($validator->errors['zip']) ? 'invalid' : ''); ?>"/>
                 </fieldset>
 
                 <fieldset class="half">

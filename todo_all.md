@@ -1,10 +1,8 @@
 ##Todo
 - __Add Account page w/ editable profile page and badge stuff -Kevin Zweerink__ *****
 - Working front end organizations input forms ****
-- Front end bookmark icons (that are actually single input form submit buttons) ****
 - BUG. Cannot sign out after having just changed password from the account page.****
 - add front end form validation on sign in page and "email already exists" message on registration page. see includes/email_exists_test.php **** 
-- handle front end zip lookup fails ***
 - Add International Support ***
 - Implement bookmarks ***
 - add logo favicon ***
@@ -27,6 +25,8 @@
 
 ##Completed
 
+- handle front end zip lookup fails ***
+- Front end bookmark icons (that are actually single input form submit buttons) ****
 - Search relevancy recursion
 - Make sure API & PrivateAPI ONLY output UTF-8 JSON
 - Dynamically change options for signed in vs. not

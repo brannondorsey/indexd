@@ -381,6 +381,11 @@ fieldset {
 		background-color: $_gray;
 		border: 1px solid shade($_gray, 10%);
 		padding: .55em;
+
+		&.invalid {
+			border: 1px solid $_red;
+			background-color: tint($_red, 80%);
+		}
 	}
 
 	input, textarea {
@@ -708,6 +713,10 @@ input[type="submit"].bookmark {
 			background-color: mix($_gray, $_red, 50%)
 		}
 	}
+}
+
+input.invalid {
+	border: 1px solid $_red;
 }
 
 // FOOTER STYLES
