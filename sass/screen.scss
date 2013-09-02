@@ -541,6 +541,8 @@ input[type="submit"] {
 .result {
 	@extend %listing-block;
 
+	position: relative;
+
 	p {
 		margin: .5em 0;
 	}
@@ -685,6 +687,13 @@ code {
 #bookmark-form {
 	display: inline;
 	float: right;
+
+	&.pre {
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		left: -3em;
+	}
 }
 
 input[type="submit"].bookmark {
@@ -701,7 +710,7 @@ input[type="submit"].bookmark {
 
 		&:hover {
 			color: $_white;
-			background-color: $_darkRed;
+			background-color: mix($_gray, $_red, 50%);
 		}
 	}
 
