@@ -105,9 +105,14 @@ class RelationalAlgorithm{
 			if($j != sizeof($most_related_users_ids) -1) $query .= "OR ";
 			$j++;
 		}
+		$json_obj = new stdClass();
 		$query .= "ORDER BY likes DESC LIMIT " . sizeof($most_related_users_ids);
-		//return a string of JSON using that wraps an array of user objects in a related_users object
-		return $this->api->query_results_as_array_of_JSON_objs($query, "data", true);
+		if($results = Database::get_all_results($query)){
+			$json_obj->data = $results;
+		}else{
+			$json_obj->error = "no results found"; //COME BACK and make this $this->api->no_results_message
+		}
+		return json_encode($json_obj);
 	}
 
 	//returns an array of user ids of the most repeated most relevant users in the column
@@ -130,8 +135,8 @@ class RelationalAlgorithm{
 	protected function init_user_column_vars($user_id){
 		$query = "SELECT " . $this->columns_for_algorithm . " FROM " . Database::$table . " WHERE id = '" . $user_id . "' LIMIT 1";
 		//echo $query;
-		$results = Database::get_all_results($query); //this actually only returns a 1D array of column key => vals
-		//var_dump($result);
+		$results = Database::get_all_results($query);
+		$results = $results[0];
 		if($results['organizations'] != "") $this->organizations_exist = true;
 		if($this->organizations_exist) $this->users_organizations = explode(", ", $results['organizations']);
 		$this->users_tags = explode(", ", $results['tags']);
@@ -182,7 +187,8 @@ class RelationalAlgorithm{
 	//basically the same function as User::email_already_exists() but for an id
 	protected function user_id_exists($user_id){
 		$query = "SELECT id FROM " . Database::$table . " WHERE id='" . $user_id . "' LIMIT 1";
-		return (Database::get_all_results($query)) ? true: false; 
+		$result = Database::get_all_results($query);
+		return ($result[0]) ? true: false; 
 	}
 }
 ?>

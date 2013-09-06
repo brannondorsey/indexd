@@ -17,9 +17,15 @@ class BookmarkHandler {
 	//returns false on failure
 	public function get_bookmarked_users_JSON($user_id){
 		if($bookmark_list = $this->get_bookmarks_list($user_id)){
+			$json_obj = new stdClass();
 			$bookmarks_list_array = ContentOutput::commas_to_list($bookmark_list);
 			$query = $this->form_query($bookmarks_list_array);
-			return $this->api->query_results_as_array_of_JSON_objs($query, "data", true);
+			if($results = Database::get_all_results($query)){
+				$json_obj->data = $results;
+			}else{
+				$json_obj->error = "no results found"; //COME BACK and make this $this->api->no_results_message
+			}
+			return json_encode($json_obj);
 		}else return false;
 	}
 
@@ -55,7 +61,7 @@ class BookmarkHandler {
 	protected function get_bookmarks_list($user_id){
 		$query = "SELECT bookmarked_users FROM " . Database::$table . " WHERE id='" . $user_id . "' LIMIT 1";
 		//if there was a user that matched the $user_id
-		if($results = Database::get_all_results($query)) $bookmark_list = $results['bookmarked_users'];
+		if($results = Database::get_all_results($query)) $bookmark_list = $results[0]['bookmarked_users'];
 		else return false;
 		return $bookmark_list;
 	}

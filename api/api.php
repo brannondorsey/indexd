@@ -3,7 +3,7 @@
 	 require_once("../lib/includes/classes/class.API.inc.php");
 	 header("Content-Type: text/javascript; charset=utf-8");
 	 
-	 $api = new API();
+	 $api = new PrivateAPI();
 	 if(isset($_GET) && !empty($_GET)){
 	 	 Database::init_connection();
 		 $get_array = Database::clean($_GET); //clean the $_GET array

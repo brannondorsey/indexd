@@ -125,6 +125,7 @@ class User{
 		$query = "SELECT id, password, email_confirmed FROM " . Database::$table . " WHERE email = '" 
 		. $email . "' LIMIT 1";
 		if($user = Database::get_all_results($query)){
+			$user = $user[0];
 			//if unhashed password matches the password from the database lookup
 			if(Database::hasher($unhashed_password, $user['password'])){
 				if($user['email_confirmed'] == 1) return $user['id'];
@@ -226,6 +227,7 @@ class User{
 		$query = "SELECT id, email, email_confirmation_code FROM " . Database::$table . " WHERE email = '" 
 		. $email . "' LIMIT 1";
 		if($user = Database::get_all_results($query)){
+			$user = $user[0];
 			//if the email and confirmation code from $_GET match the ones from the db
 			if($user['email_confirmation_code'] == $confirmation_code &&
 				$user['email'] == $email){
@@ -240,7 +242,8 @@ class User{
 	//returns true if email already exists and false if it does not. 
 	public function email_already_exists($email){
 		$query = "SELECT email FROM " . Database::$table . " WHERE email = '" . $email . "' LIMIT 1";
-		return ($user = Database::get_all_results($query) ? true: false); 
+		$user = Database::get_all_results($query);
+		return ($user[0]) ? true: false; 
 	}
 
 //-------------------------------------------------------------------------------
