@@ -44,7 +44,7 @@ class RelationalAlgorithm{
 			//var_dump($all_related_users_obj->location) . "<br/>";
 			if(!$this->organizations_exist) $most_organizations_ids = NULL;
 			return $this->get_related_users_using_arrays_of_ids($most_media_ids, $most_tags_ids, $most_location_ids, $most_organizations_ids);
-		}else return $this->api->get_error("no users found with that id");
+		}else return "{ \"error\": \"no users found with that id\"}"; //COME BACK
 	}
 
 	//combines the three arrays of most related users from the three columns included in the algorithm 

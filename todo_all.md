@@ -21,10 +21,11 @@
 ##Todo for API Builder lib migration
 - Remove InsertUpdate class
 - Optimize ContentOutput class (should act as front end/back end proxy on all pages where content is delivered)
-- Make an `api_config.inc.php` include file that has our database setup.
+- ~~Make an `api_config.inc.php` include file that has our database setup.~~
+- Make another one for the public API
 - Remove all instances of `API::query_results_as_array_of_JSON_objs()`
 - Remove all instances of `API::output_objects()`
-- Remove all instances of `API::get_error)()`
+- ~~Remove all instances of `API::get_error)()`~~
 - Completely remove the old API and Database classes and replace them with the new ones
 - Remove `Database::init_connection()` because it is included in the API constructor because it will be inside of the `api_config.inc.php`.
 
