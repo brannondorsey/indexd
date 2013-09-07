@@ -1,11 +1,17 @@
 <?php
 require_once("class.Database.inc.php");
-require_once("new.class.API.inc.php");
+require_once("class.API.inc.php");
 
 class PrivateAPI extends API {
 
-	public function __construct($host, $db, $table, $username, $password){
-		parent::__construct($host, $db, $table, $username, $password);
+	protected $private_columns_to_provide;
+	protected $API_key_required = false;
+
+	public function __construct(){
+		parent::__construct();
+		$this->private_columns_to_provide = $this->columns_to_provide . ", password, API_key, API_hits, verified, bookmarked_users";
+		$this->columns_to_provide = $this->private_columns_to_provide; //default columns to provide to private
+		$this->max_output_limit = 1000;
 	}
 
 	//bypass API key

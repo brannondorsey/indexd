@@ -2,22 +2,34 @@
 
 class Database {
 
-	public static $table    = "users";
-	public static $organization_table   = "organizations";
-	public static $root_dir_link = "http://localhost:8888/";
+	public static $root_dir_link = "http://localhost:8888/api_builder";
+	public static $private_key;
 
-	protected static $user     = "root";
-	protected static $password = "root";
-	protected static $db       = "AWU";
-	protected static $host     = "localhost";
+	//MySQL database info
+	public static $db;
+	public static $table;
+	protected static $host;	
+	public static $users_table = "users";
+	protected static $user;
+	protected static $password;
+
 	protected static $mysqli;
 
 	//initialize the database connection
-	public static function init_connection(){
+	public static function init_connection($host, $db, $table, $username, $password){
+		self::$host = $host;
+		self::$db = $db;
+		self::$table = $table;
+		self::$user = $username;
+		self::$password = $password;
 		self::$mysqli = new mysqli(self::$host, self::$user, self::$password, self::$db);
+		return self::$mysqli->ping();
 	}
 
-	//close the database connection
+	/**
+	 * closes the database connection
+	 * @return void
+	 */
 	public static function close_connection(){
 		self::$mysqli->close();
 	}
@@ -25,8 +37,39 @@ class Database {
 	//execute sql query statement. Used for INSERT and UPDATE mostly. Returns false if query fails
 	public static function execute_sql($query) {
 		if(self::$mysqli->query($query)) return true;
-		else echo self::$mysqli->error;
 		return false;
+	}
+
+	//handles dynamic formation of INSERT and UPDATE queries from $_POST and executes them
+	//post array should be cleaned before using this function
+	public static function execute_from_assoc($post_array, $table_name, $statement_type="INSERT", $set_statement=NULL){
+		$statement_type = strtoupper($statement_type);
+		if($statement_type == "INSERT"){
+			$query = $statement_type . " INTO " . $table_name . " ("; 
+			foreach($post_array as $key => $value){
+				$query .= " `" . $key . "`,";
+			}
+			$query = rtrim($query, ",");
+			$query .= ") VALUES (";
+			foreach($post_array as $key => $value){
+				//if($key == 'lat' || $key == 'lon' || $value == 0) $query .= " " . $value . ",";
+				$query .= " '" . $value . "',";
+			}
+			$query = rtrim($query, ",");
+			$query .= ");";
+		}
+		//if statement type is UPDATE, the id of the row to update was specified in the $post_array,
+		//and what to update (set) was specified
+		else if($statement_type == "UPDATE" &&
+			    $set_statement != NULL){
+			$query = $statement_type . " " . $table_name . " SET " . $set_statement . " = '" . $post_array[$set_statement]
+			. "' LIMIT 1";
+		}
+		else{
+			echo "incorrect parameters passed to InsertUpdate::execute_from_assoc()";
+		 	return false;
+		}
+		return self::execute_sql($query);
 	}
 	
 	//returns array of one result row if one result was found or 2D array of all returned rows if multiple were found
@@ -38,15 +81,11 @@ class Database {
 					$result_to_return[$i] = $row;
 					$i++;	
 				}
-			if (count($result_to_return) > 1) {
+			if (count($result_to_return) >= 1) {
 				return $result_to_return;
 			} 
-			else if(count($result_to_return) == 1) {
-				return $result_to_return[0];
-			} 
 			else return false; //there were no results found
-		}
-		else echo " MYSQL QUERY FAILED";
+		}else echo " MYSQL QUERY FAILED";
 	}
 
 	//takes a MySQL query and returns a 1D indexd array of results.
@@ -76,13 +115,13 @@ class Database {
 					   $string_array_key == 'tags') $string_array_value = self::format_list_for_db($string_array_value);
 					else if($string_array_key == 'organizations') $string_array_value = self::format_list_for_db($string_array_value, false);
 					else if($string_array_key == 'email') $string_array_value = strtolower($string_array_value);
-					//$string_array_value = self::clean_string($string_array_value);
+					$string_array_value = self::clean_string($string_array_value);
 					$new_string_array[$string_array_key] = $string_array_value;
 				}
 				$string = $new_string_array;
 			}
 			//else just clean it
-			//else $string = self::clean_string($string, self::$mysqli);
+			else $string = self::clean_string($string);
 			return $string;
 		}
 		else return false; //nothing was passed as an argument
@@ -106,6 +145,11 @@ class Database {
 	}
 
 	//series of cleans to be perfomed on one string
+	/**
+	 * [clean_string description]
+	 * @param  string $string
+	 * @return string
+	 */
 	protected static function clean_string($string){
 		$string = htmlspecialchars($string);
 		$string = self::$mysqli->real_escape_string($string);
@@ -122,17 +166,16 @@ class Database {
 	  if ($encoded_data) {
 	    if (substr($encoded_data, 0, 60) == crypt($unhashed_password, "$2a$".$strength."$".substr($encoded_data, 60))) return true; 
 	    else return false;  
-	  } 
-	  else { 
-	  //make a salt and hash it with input, and add salt to end 
-	  $salt = ""; 
-	  for ($i = 0; $i < 22; $i++) { 
-	    $salt .= substr("./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", mt_rand(0, 63), 1); 
-	  } 
-	  //return 82 char string (60 char hash & 22 char salt) 
-	  return crypt($unhashed_password, "$2a$".$strength."$".$salt) . $salt;
-	}
-
+		  } 
+		  else { 
+		  //make a salt and hash it with input, and add salt to end 
+		  $salt = ""; 
+		  for ($i = 0; $i < 22; $i++) { 
+		    $salt .= substr("./ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", mt_rand(0, 63), 1); 
+		  } 
+		  //return 82 char string (60 char hash & 22 char salt) 
+		  return crypt($unhashed_password, "$2a$".$strength."$".$salt) . $salt;
+		}
 	}
 }
 
