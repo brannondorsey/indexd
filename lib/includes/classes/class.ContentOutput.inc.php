@@ -6,7 +6,7 @@ require_once("class.User.inc.php");
 class ContentOutput{
 	protected $api;
 	public function __construct(){
-		$this->api = new PrivateAPI();
+		$this->api = new PrivateAPI("localhost", "AWU", "users", "root", "root");
 	}
 
 	public static function commas_to_list($string) {
@@ -16,23 +16,19 @@ class ContentOutput{
 			$output[] = trim($list_item);
 		}
 		return $output;
-
-		//old function:
-		//$output = explode(",", $string);
-		//return $output;
 	}
 
 	//confirm signed in before calling this
 	public function output_profile($user_id){
 		$search_array = array('id' => $user_id,
 							  'limit' => 1);
-		$search_obj = json_decode($this->api->get_JSON_from_GET($search_array));
+		$search_obj = json_decode($this->api->get_json_from_assoc($search_array));
 		return $search_obj;
 	}
 
 	//NOW TAKES API PARAMETERS ARRAY
 	public function output_search_results($search_array){
-		$search_obj = json_decode($this->api->get_JSON_from_GET($search_array));
+		$search_obj = json_decode($this->api->get_json_from_assoc($search_array));
 		return $search_obj;
 	}
 
@@ -40,7 +36,7 @@ class ContentOutput{
 		$search_array = array('order_by' => 'likes',
 							  'limit' => $numb_results,
 							  'flow' => 'DESC');
-		$search_obj = json_decode($this->api->get_JSON_from_GET($search_array));
+		$search_obj = json_decode($this->api->get_json_from_assoc($search_array));
 		return $search_obj;
 	}
 
@@ -55,7 +51,7 @@ class ContentOutput{
 		$search_array['count_only'] = true;
 		if(array_key_exists('limit', $search_array)) unset($search_array['limit']);
 		if(array_key_exists('page', $search_array)) unset($search_array['page']);
-		$obj = json_decode($this->api->get_JSON_from_GET($search_array));
+		$obj = json_decode($this->api->get_json_from_assoc($search_array));
 		return $obj->data[0]->count;
 	}
 

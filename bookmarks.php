@@ -8,7 +8,8 @@ require_once("lib/includes/classes/class.ContentOutput.inc.php");
 require_once("lib/includes/classes/class.OrganizationAutocomplete.inc.php");
 
 Session::start();
-$api = new PrivateAPI();
+require_once 'lib/includes/database_info.inc.php';
+$api = new PrivateAPI($host, $database, $table, $username, $password);
 $user = new User();
 if (!$user->is_signed_in()) header('Location: login.php');
 else $user->load_data();

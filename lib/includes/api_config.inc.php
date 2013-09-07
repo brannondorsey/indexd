@@ -1,5 +1,5 @@
 <?php
-require_once 'classes/new.class.API.inc.php';
+require_once 'classes/class.API.inc.php';
 
 $private_columns =  "id, 
 					first_name, 
@@ -24,7 +24,9 @@ $private_columns =  "id,
 					verified, 
 					bookmarked_users";
 
-$api = new PrivateAPI('localhost', 'AWU', 'users', 'root', 'root');
+require_once 'database_info.inc.php';
+
+$api = new PrivateAPI($host, $database, $table, $username, $password);
 $api->setup($public_columns);
 $api->set_default_order("last_name");
 $api->set_default_flow("ASC");

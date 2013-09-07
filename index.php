@@ -3,7 +3,10 @@
     require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
     require_once("lib/includes/classes/class.User.inc.php");
     require_once("lib/includes/classes/class.Session.inc.php");
-    Database::init_connection();
+    
+    require_once 'lib/includes/database_info.inc.php';
+    Database::init_connection($host, $database, $table, $username, $password);
+
     Session::start();
     $user = new User();
 

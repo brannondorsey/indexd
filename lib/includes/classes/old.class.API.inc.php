@@ -32,7 +32,7 @@ class API {
 	}
 
 	//Returns a valid JSON string from $_GET values. Array must be sanitized before using this function.
-	public function get_JSON_from_GET(&$get_array, $object_parent_name="data"){
+	public function get_json_from_assoc(&$get_array, $object_parent_name="data"){
 		$query = $this->form_query($get_array);
 		if($this->check_API_key()){
 			if(isset($get_array['related_to']) && !empty($get_array['related_to'])){
@@ -57,7 +57,7 @@ class API {
 			strstr($this->JSON_string, $this->no_results_message) != false){
 				$this->search_in_boolean_mode = true; //set search in boolean mode to true
 				$this->search_has_been_repeated = true; //note that the search will now have been repeated
-			 	$this->JSON_string = $this->get_JSON_from_GET($get_array, $object_parent_name); //recurse the function (thus re-searching)
+			 	$this->JSON_string = $this->get_json_from_assoc($get_array, $object_parent_name); //recurse the function (thus re-searching)
 			}
 		return $this->JSON_string;
 	}

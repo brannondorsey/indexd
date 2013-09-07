@@ -1,7 +1,10 @@
 <?php
 	require_once 'lib/includes/classes/class.User.inc.php';
 	require_once 'lib/includes/classes/class.Database.inc.php';
-	Database::init_connection();
+	
+	require_once '../../lib/includes/database_info.inc.php';
+	Database::init_connection($host, $database, $table, $username, $password);
+	
 	$user = new User();
 	$get_array = Database::clean($_GET);
 	if(isset($get_array['email']) &&

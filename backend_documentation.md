@@ -25,24 +25,24 @@ This class handles the translation of the [API parameters](https://github.com/br
      public $public_columns_to_provide //string that holds comma-space delimited column names for the public API to output
 
 ###Public Methods
-     public function API::get_JSON_from_GET(&$get_array, $object_parent_name="data") //Returns a valid JSON string from $_GET
+     public function API::get_json_from_assoc(&$get_array, $object_parent_name="data") //Returns a valid JSON string from $_GET
             values or another associative array with values where keys as desired column names. Array must be sanitized before
             using this function.
      public function API::query_results_as_array_of_JSON_objs($query, $object_parent_name=NULL, $b_wrap_as_obj=false)  
             //returns a string of JSON objects. The optional parameters specify wether or not the method should wrap the 
             objects in a larger JSON obj, and if so, what it should be called. 
 
-While `get_JSON_from_GET()` usually accepts a cleaned`$_GET` array filled with API params it is not uncommon to form a custom assoc array when calling this function in another class. That looks like this 
+While `get_json_from_assoc()` usually accepts a cleaned`$_GET` array filled with API params it is not uncommon to form a custom assoc array when calling this function in another class. That looks like this 
                 
       $array_of_parameters = array( "tags" => $desired_tag, "order_by" => $desired_order, "limit" => 10);
-      $obj = json_decode($this->api->get_JSON_from_GET);
+      $obj = json_decode($this->api->get_json_from_assoc);
 
 It is important to remember to `json_decode()` output before using it in a function. 
 ####Catching the results
-The results from `get_JSON_from_GET` once `json_decoded`ed can be accessed like this  
+The results from `get_json_from_assoc` once `json_decoded`ed can be accessed like this  
      
    
-	  $obj = $api->get_JSON_from_GET($cleaned_get_array);
+	  $obj = $api->get_json_from_assoc($cleaned_get_array);
 	  $obj->data[0]->first_name
 	  $obj->error //catches the error if there is one
 

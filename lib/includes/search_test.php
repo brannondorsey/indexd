@@ -4,10 +4,11 @@
 	 require_once("classes/class.Session.inc.php");
 	 require_once("classes/class.ContentOutput.inc.php");
 
-	 Database::init_connection();
+	 require_once 'database_info.inc.php';
+	 $api = new PrivateAPI($host, $database, $table, $username, $password);
 	 Session::start();
-	 $api = new PrivateAPI();
+	 
 	 $get_array = Database::clean($_GET);
-	 echo $api->get_JSON_from_GET($get_array);
+	 echo $api->get_json_from_assoc($get_array);
 	 Database::close_connection();
 ?> 

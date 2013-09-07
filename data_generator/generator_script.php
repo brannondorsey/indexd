@@ -5,7 +5,8 @@
 	$user = new User();
 	$validator = new Validation();
 
-	Database::init_connection();
+	require_once '../../lib/includes/database_info.inc.php';
+	Database::init_connection($host, $database, $table, $username, $password);
 
 	//number of users to add to the db
 	$numb_users_to_generate = 400;

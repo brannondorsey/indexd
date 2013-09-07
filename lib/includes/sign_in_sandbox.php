@@ -3,9 +3,9 @@
 	 require_once("classes/class.RelationalAlgorithm.inc.php");
 	 require_once("classes/class.User.inc.php");
 	 require_once("classes/class.Session.inc.php");
-	 Database::init_connection();
+	
+	 $api = new PrivateAPI($host, $database, $table, $username, $password);
 	 Session::start();
-	 $api = new PrivateAPI();
 	 $user = new User();
 	 if(!empty($_GET) && isset($_GET)){ 
 	 	$get_array = Database::clean($_GET);

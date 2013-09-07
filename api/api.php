@@ -7,7 +7,7 @@
 	 if(isset($_GET) && !empty($_GET)){
 	 	 Database::init_connection();
 		 $get_array = Database::clean($_GET); //clean the $_GET array
-		 $data = $api->get_JSON_from_GET($get_array); //return user JSON objs based on API get params
+		 $data = $api->get_json_from_assoc($get_array); //return user JSON objs based on API get params
 		 Database::close_connection();
 	 	 echo $data;
 	 }

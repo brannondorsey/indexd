@@ -2,7 +2,7 @@
     require_once("lib/includes/classes/class.User.inc.php");
     require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
     require_once("lib/includes/classes/class.Session.inc.php");
-    Database::init_connection();
+    
     Session::start();
     $content_obj = new ContentOutput();
     $user_id = $_GET['id'];

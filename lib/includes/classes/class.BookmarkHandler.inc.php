@@ -9,7 +9,7 @@ class BookmarkHandler {
 	protected $IU;
 
 	public function __construct(){
-		$this->api = new PrivateAPI();
+		$this->api = new PrivateAPI("localhost", "AWU", "users", "root", "root");
 		$this->IU = new InsertUpdate();
 	}
 

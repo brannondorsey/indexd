@@ -1,6 +1,6 @@
 <?php
 require_once("class.Database.inc.php");
-require_once("new.class.API.inc.php");
+require_once("class.API.inc.php");
 
 class PrivateAPI extends API {
 
@@ -20,7 +20,7 @@ class PrivateAPI extends API {
 							  'limit' => 1);
 		//set the columns to provide to public so as not to store private data in session unless otherwise specified
 		if(!$get_private_data) $this->columns_to_provide = $this->public_columns_to_provide; 
-		$JSON_obj = json_decode($this->get_JSON_from_get($query_array));
+		$JSON_obj = json_decode($this->get_json_from_assoc($query_array));
 		//reset columns to provide to private for the rest of the PrivateAPI class
 		if(!$get_private_data) $this->columns_to_provide = $this->private_columns_to_provide;
 		if(is_object($JSON_obj)) return $JSON_obj;

@@ -6,7 +6,8 @@
     require_once 'lib/includes/classes/class.Validator.inc.php'; 
 
     Session::start();
-    $api = new PrivateAPI();
+    require_once 'lib/includes/database_info.inc.php';
+    $api = new PrivateAPI($host, $database, $table, $username, $password);
     $user = new User();
     if($user->is_signed_in()) $user->sign_out(); //don't let a signed in user register
     
@@ -22,7 +23,6 @@
             //var_dump($validator->errors);
         } else {
             //register the user
-            Database::init_connection();
             $_POST['url'] = $validator->processURLString($_POST['url']);
             $post_array = Database::clean($_POST);
             $post_array['country'] = "us"; //add country manually for now

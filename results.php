@@ -1,6 +1,6 @@
 <?php 
     require_once("lib/includes/classes/class.ContentOutput.inc.php"); 
-    Database::init_connection();
+
     Session::start();
     $content_obj = new ContentOutput();
     $numb_results = 10;

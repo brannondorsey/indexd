@@ -14,7 +14,7 @@ class User{
 	protected $bookmark_hand;
 
 	public function __construct(){
-		$this->api = new PrivateAPI();
+	 	$api = new PrivateAPI("localhost", "AWU", "users", "root", "root");
 		$this->IU = new InsertUpdate();
 		$this->bookmark_hand = new BookmarkHandler();
 	}
@@ -200,7 +200,7 @@ class User{
 			$query_array = array('email' => $email,
 								 'exact' => 'true',
 								 'limit' => '1');
-			$user_obj = json_decode($this->api->get_json_from_GET($query_array))->data[0];
+			$user_obj = json_decode($this->api->get_json_from_assoc($query_array))->data[0];
 			$password_reset_link = Database::$root_dir_link . "resetpassword.php?id=" . $user_obj->id . "&reset_code=" . substr($user_obj->password, 67);
 			$path_to_email_JSON = Database::$root_dir_link . "lib/data/password_reset_message.json";
 			$file = file_get_contents($path_to_email_JSON);

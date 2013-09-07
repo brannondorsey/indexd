@@ -6,8 +6,9 @@
 
 	 //note that this user object doesn't actually represent a specific user in this page.
 	 //It is used to give access to its reset password function.
-	 $user = new User(); 
-	 $api = new PrivateAPI();
+	 require_once 'lib/includes/database_info.inc.php';
+	 $api = new PrivateAPI($host, $database, $table, $username, $password);
+	 $user = new User();
 
 	 /*
 	 How reseting a password works:
@@ -24,7 +25,6 @@
 	 	!empty($_GET) &&
 	 	isset($_GET['reset_code']) &&
 	 	isset($_GET['id'])){
-	 	Database::init_connection();
 	 	$get_array = Database::clean($_GET);
 	 	$user_obj = new stdClass();
 	 	//if the user could be looked up from id

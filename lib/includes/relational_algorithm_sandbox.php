@@ -3,7 +3,8 @@
 
 	$algorithm = new RelationalAlgorithm();
 	$user = new User();
-	Database::init_connection();
+	require_once 'database_info.inc.php';
+	Database::init_connection($host, $database, $table, $username, $password);
 	$get_array = Database::clean($_GET);
 	if(isset($get_array['id'])){
 		$user_id = $get_array['id'];

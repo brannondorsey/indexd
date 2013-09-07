@@ -4,7 +4,8 @@
     require_once("lib/includes/classes/class.Session.inc.php");
 
     Session::start();
-    $api = new PrivateAPI();
+    require_once 'lib/includes/database_info.inc.php';
+    $api = new PrivateAPI($host, $database, $table, $username, $password);
     $user = new User(); 
     if($user->is_signed_in()){
         $user->load_data();

@@ -4,7 +4,9 @@
     require_once("lib/includes/classes/class.User.inc.php");
     require_once("lib/includes/classes/class.Session.inc.php");
 
-    Database::init_connection();
+
+    require_once 'database_info.inc.php';
+    Database::init_connection($host, $database, $table, $username, $password);
     $user = new User();
     Session::start();
 
